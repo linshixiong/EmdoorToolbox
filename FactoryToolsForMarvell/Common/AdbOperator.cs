@@ -379,6 +379,15 @@ namespace Common
                     if (result.Contains("0"))
                     {
                         imei = receiver.ResultLines[0];
+                        if (imei != null)
+                        {
+                            if (imei.Length < 14)
+                            {
+                                imei = null;
+                            }
+                            imei = imei.Substring(0, 14);
+                            imei = Util.CalculateIMEI(imei);
+                        }
                     }
                 }
 

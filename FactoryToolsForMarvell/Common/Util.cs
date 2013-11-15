@@ -323,9 +323,9 @@ namespace Common
             return buff;
         }
 
-        public static String CalculateIMEI(String header, String sn)
+        public static String CalculateIMEI(String imeiString)
         {
-            String imeiString = header + sn;
+           // String imeiString = header + sn;
 
             return imeiString + GetIMEICheckDigit(imeiString);
         }
