@@ -319,6 +319,7 @@ namespace Common
 
 
                     form.Invoke(handler, Messages.MSG_WRITE_SUCCESS, results);
+
                     DateTime dtStop = DateTime.Now;
 
                     TimeSpan ts = dtStop - dtStart;
@@ -338,6 +339,65 @@ namespace Common
            // CleanUpAdbProcess();
         }
 
+
+
+        public void StartExcuteTcmd(object o)
+        {
+
+            string cmd = o.ToString();
+            bool success = true;
+            string error_msg = null;
+            if (!StartAdbProcess())
+            {
+                error_msg = "adb进程启动失败";
+                success = false;
+            }
+            if (isCanceled)
+            {
+                goto END;
+            }
+
+            if (isCanceled)
+            {
+                goto END;
+            }
+            if (success)
+            {
+                form.Invoke(handler, Messages.MSG_WRITE_STATE_CHANGE, "正在检查设备...");
+                int deviceCount = GetDeviceCount();
+
+                if (isCanceled)
+                {
+                    goto END;
+                }
+                if (deviceCount == 0)
+                {
+                    //无设备
+                    error_msg = "未找到adb设备，确保设备已连接并请重试";
+                    success = false;
+                }
+                else if (deviceCount > 1)
+                {
+                    //太多设备
+                    error_msg = "无法对大于1台设备进行烧录，请拔除多余的设备";
+                    success = false;
+
+                }
+                else
+                {
+                    ExcuteTCMD(cmd);
+
+                }
+            }
+
+        END:
+            if (!success && !isCanceled)
+            {
+
+            }
+
+
+        }
 
 
         private string ExcuteIMEIReadCmd(out string error)
@@ -838,6 +898,39 @@ namespace Common
 
         }
 
+
+
+        private void ExcuteTCMD(string tcmd)
+        {
+            CommandResultReceiver receiver = new CommandResultReceiver();
+            receiver.TrimLines = true;
+            bool success;
+            for (int i = 0; i <= 10; i++)
+            {
+                if (isCanceled)
+                {
+                    return ;
+                }
+                success = true;
+                try
+                {
+                    AdbHelper.Instance.GetDevices(AndroidDebugBridge.SocketAddress)[0].ExecuteShellCommand("tcmd-subcase.sh " + tcmd, receiver);
+                }
+                catch (Exception)
+                {
+                    success = false;
+                    Thread.Sleep(1000);
+                }
+
+                if (success)
+                {
+                    break;
+                }
+
+            }
+
+           
+        }
 
         private int GetDeviceCount()
         {

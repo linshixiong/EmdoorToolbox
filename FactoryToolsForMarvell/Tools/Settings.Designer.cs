@@ -550,5 +550,17 @@ namespace IMEI_Reader {
                 this["USB_MI"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ActionAfterWrite {
+            get {
+                return ((int)(this["ActionAfterWrite"]));
+            }
+            set {
+                this["ActionAfterWrite"] = value;
+            }
+        }
     }
 }

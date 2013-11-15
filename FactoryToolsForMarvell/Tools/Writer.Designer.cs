@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Writer));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.linkLabelUsbConfig = new System.Windows.Forms.LinkLabel();
+            this.linkLabelPrinterConfig = new System.Windows.Forms.LinkLabel();
             this.panelProgress = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -53,8 +55,8 @@
             this.buttonWrite = new System.Windows.Forms.Button();
             this.labelMsg = new System.Windows.Forms.Label();
             this.buttonPrint = new System.Windows.Forms.Button();
-            this.linkLabelUsbConfig = new System.Windows.Forms.LinkLabel();
-            this.linkLabelPrinterConfig = new System.Windows.Forms.LinkLabel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.comboBoxAction = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.panelProgress.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -89,6 +91,26 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "烧写项";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // linkLabelUsbConfig
+            // 
+            this.linkLabelUsbConfig.AutoSize = true;
+            this.linkLabelUsbConfig.Location = new System.Drawing.Point(115, 257);
+            this.linkLabelUsbConfig.Name = "linkLabelUsbConfig";
+            this.linkLabelUsbConfig.Size = new System.Drawing.Size(71, 12);
+            this.linkLabelUsbConfig.TabIndex = 21;
+            this.linkLabelUsbConfig.TabStop = true;
+            this.linkLabelUsbConfig.Text = "USB连接配置";
+            // 
+            // linkLabelPrinterConfig
+            // 
+            this.linkLabelPrinterConfig.AutoSize = true;
+            this.linkLabelPrinterConfig.Location = new System.Drawing.Point(121, 280);
+            this.linkLabelPrinterConfig.Name = "linkLabelPrinterConfig";
+            this.linkLabelPrinterConfig.Size = new System.Drawing.Size(65, 12);
+            this.linkLabelPrinterConfig.TabIndex = 20;
+            this.linkLabelPrinterConfig.TabStop = true;
+            this.linkLabelPrinterConfig.Text = "打印机配置";
             // 
             // panelProgress
             // 
@@ -319,7 +341,7 @@
             // labelMsg
             // 
             this.labelMsg.AutoSize = true;
-            this.labelMsg.Location = new System.Drawing.Point(12, 351);
+            this.labelMsg.Location = new System.Drawing.Point(12, 345);
             this.labelMsg.Name = "labelMsg";
             this.labelMsg.Size = new System.Drawing.Size(41, 12);
             this.labelMsg.TabIndex = 2;
@@ -335,31 +357,35 @@
             this.buttonPrint.UseVisualStyleBackColor = true;
             this.buttonPrint.Click += new System.EventHandler(this.buttonPrint_Click);
             // 
-            // linkLabelUsbConfig
+            // label6
             // 
-            this.linkLabelUsbConfig.AutoSize = true;
-            this.linkLabelUsbConfig.Location = new System.Drawing.Point(115, 257);
-            this.linkLabelUsbConfig.Name = "linkLabelUsbConfig";
-            this.linkLabelUsbConfig.Size = new System.Drawing.Size(71, 12);
-            this.linkLabelUsbConfig.TabIndex = 21;
-            this.linkLabelUsbConfig.TabStop = true;
-            this.linkLabelUsbConfig.Text = "USB连接配置";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(125, 345);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(65, 12);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "烧写成功后";
             // 
-            // linkLabelPrinterConfig
+            // comboBoxAction
             // 
-            this.linkLabelPrinterConfig.AutoSize = true;
-            this.linkLabelPrinterConfig.Location = new System.Drawing.Point(121, 280);
-            this.linkLabelPrinterConfig.Name = "linkLabelPrinterConfig";
-            this.linkLabelPrinterConfig.Size = new System.Drawing.Size(65, 12);
-            this.linkLabelPrinterConfig.TabIndex = 20;
-            this.linkLabelPrinterConfig.TabStop = true;
-            this.linkLabelPrinterConfig.Text = "打印机配置";
+            this.comboBoxAction.FormattingEnabled = true;
+            this.comboBoxAction.Items.AddRange(new object[] {
+            "无动作",
+            "关机",
+            "重启"});
+            this.comboBoxAction.Location = new System.Drawing.Point(196, 342);
+            this.comboBoxAction.Name = "comboBoxAction";
+            this.comboBoxAction.Size = new System.Drawing.Size(65, 20);
+            this.comboBoxAction.TabIndex = 5;
+            this.comboBoxAction.SelectedIndexChanged += new System.EventHandler(this.comboBoxAction_SelectedIndexChanged);
             // 
             // Writer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(449, 375);
+            this.Controls.Add(this.comboBoxAction);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.buttonPrint);
             this.Controls.Add(this.labelMsg);
             this.Controls.Add(this.buttonWrite);
@@ -407,5 +433,7 @@
         private System.Windows.Forms.Button buttonPrint;
         private System.Windows.Forms.LinkLabel linkLabelUsbConfig;
         private System.Windows.Forms.LinkLabel linkLabelPrinterConfig;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox comboBoxAction;
     }
 }

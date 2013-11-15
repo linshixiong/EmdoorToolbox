@@ -330,7 +330,20 @@ namespace Common
             return imeiString + GetIMEICheckDigit(imeiString);
         }
 
+        /// <summary>
+        /// 是否有效的IMEI号
+        /// </summary>
+        /// <param name="imeiString"></param>
+        /// <returns></returns>
+        public static bool IsValidIMEI(String imeiString)
+        {
+            if (imeiString.Length != 15)
+            {
+                return false;
+            }
+            return imeiString.Equals(CalculateIMEI(imeiString.Substring(0, 14)));
 
+        }
 
         public static char GetIMEICheckDigit(String imei)
         {

@@ -56,6 +56,7 @@ namespace IMEI_Reader
                     checkBoxWifi.Enabled = true;
                     checkBoxBt.Enabled = true;
                     buttonWrite.Enabled = true;
+                    DoActionAfterWrite();
                     //MessageBox.Show("烧写成功！", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
                 case Messages.MSG_WRITE_FAIL:
@@ -255,6 +256,29 @@ namespace IMEI_Reader
 
 
 
+        private void DoActionAfterWrite()
+        {
+            int action = comboBoxAction.SelectedIndex;
+            String cmd = null;
+            switch (action)
+            {
+                case 1:
+                    cmd = "poweroff";
+                    break;
+                case 2:
+                    cmd = "reboot";
+                    break;
+                default:
+                    return;
+            }
+
+            AdbOperator ao = new AdbOperator(mHandler, this);
+            Thread thread = new Thread(new ParameterizedThreadStart(ao.StartExcuteTcmd));
+            
+            thread.Start(cmd);
+        }
+
+
         private void checkBoxSN_CheckedChanged(object sender, EventArgs e)
         {
             textBoxSN.Enabled = checkBoxSN.Checked;
@@ -326,6 +350,7 @@ namespace IMEI_Reader
             checkBoxIMEI.Checked = Settings.Default.WriteIMEIChecked;
             checkBoxWifi.Checked = Settings.Default.WriteWIFIChecked;
             checkBoxBt.Checked = Settings.Default.WriteBTChecked;
+            comboBoxAction.SelectedIndex = Settings.Default.ActionAfterWrite;
         }
 
         private void textBoxSN_TextChanged(object sender, EventArgs e)
@@ -389,6 +414,12 @@ namespace IMEI_Reader
         {
             Printer printer = new Printer();
             printer.ShowDialog();
+        }
+
+        private void comboBoxAction_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Settings.Default.ActionAfterWrite = comboBoxAction.SelectedIndex;
+            Settings.Default.Save();
         }
 
 
