@@ -22,9 +22,9 @@ Name: chs; MessagesFile: compiler:Default.isl
 
 
 [Files]
-Source: "..\IMEI_Reader\bin\Release\BarcodeTools.exe"; DestDir: "{app}";Flags:ignoreversion
-Source: "..\IMEI_Reader\bin\Release\Common.dll"; DestDir: "{app}";Flags:ignoreversion
-Source: "..\IMEI_Reader\bin\Release\Managed.AndroidDebugBridge.dll"; DestDir: "{app}";Flags:ignoreversion
+Source: "..\Tools\bin\Release\BarcodeTools.exe"; DestDir: "{app}";Flags:ignoreversion
+Source: "..\Tools\bin\Release\Common.dll"; DestDir: "{app}";Flags:ignoreversion
+Source: "..\Tools\bin\Release\Managed.AndroidDebugBridge.dll"; DestDir: "{app}";Flags:ignoreversion
 Source: "barcode.ico"; DestDir: "{app}";Flags:ignoreversion
 Source: "download.ico"; DestDir: "{app}";Flags:ignoreversion
 Source: "setting.ico"; DestDir: "{app}";Flags:ignoreversion
