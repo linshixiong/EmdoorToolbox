@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAIAEBAAAAAAIABoBAAAJgAAACAgAAAAACAAqBAAAI4EAAAoAAAAEAAAACAAAAABACAAAAAAAEAE
+        AAAAAAAAAAAAAAAAAAAAAAAA////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wEAAAAJaDobS3pDHY1NUE6NT1FOjU9RTo1PUU6NT1FOjU9R
+        To1PUU6NYkk1jXpDHY17Qx2LfEUeawAAAAUAAAADZTgZU6+CXvPYso//naCf/8LGxP+cnpz/sLSy/8DG
+        w//Jzsv/zNDO/5J+af/Wr4r/y51z/6t3Tv0AAAAVAAAAA3tDHYvatZT/zp5x/5ufnf+LkY7/ypls/4uQ
+        jv+5wLz/vsTB/9HW1P+QeWL/0aZ9/8WTZv+seFD/AAAAFf///wGFSR+B2bSS/86ecf+YnZr/g4uH/72H
+        WP+PlJL/wsjF/7e+u//L0c7/jnhg/82fdf/DkGP/rHhQ/wAAAAP///8Bh0ogf9q1lP/OnnH/kZeU/7K5
+        tf+eoqD/x8rI/9re3P/Q1dL/ztPR/494Yf/Jmm7/v4te/6t4UP////8B////AYdKIH/at5X/zp5x/5+D
+        Zv+QeWL/j3lh/454YP+Od1//jXZe/412Xv+vgVn/uYRX/8GNX/+reFH/////Af///wGHSiB/27iX/7iQ
+        b//BppH/waaQ/8ClkP/ApY//wKWP/8Ckj/+/pI7/v6SO/7+kjv+0flD/q3hS/////wH///8Bh0ogf9u4
+        mP/AppD//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/u8PD/rnZJ/6t4Uv////8B////AYdK
+        IH/at5f/wKWP/8TGxP/a3dz/2t3c/9rd3P/a3dz/2t3c/9rd3P/a3dz/x8jH/6x0Rv+reVP/////Af//
+        /wGHSiB/2LWV/8Ckj//DxcP/2Nzb/9jc2//Y3Nv/2Nzb/9jc2//Y3Nv/2Nzb/8bIx/+qcUT/q3lU////
+        /wH///8Bh0ogf9ezk/+/pI7/9PX1//T19f/09fX/9PX1//T19f/09fX/9PX1//T19f/p6+v/qW9C/6t6
+        Vf////8B////AYdKIH/auZz/v6ON/7y/vf/S1tX/0tbV/9LW1f/S1tX/0tbV/9LW1f/S1tX/wsXE/613
+        Tf+relb/////Af///wGHSiB/xZ5+/46Plv92s/H/drPx/3az8f92s/H/drPx/3az8f92s/H/drPx/3ay
+        7v+eYjb/q3tY/////wH///8BiUwiYbSLa/1whKT/LILj/yyC4/8sguP/LILj/yyC4/8sguP/LILj/yyC
+        4/8ug+P/qntX/5plPt3///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////AQAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA
+        //8AAP//AAD//wAA//8AAP//AAD//wAA//8oAAAAIAAAAEAAAAABACAAAAAAAIAQAAAAAAAAAAAAAAAA
+        AAAAAAAA////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wH///8B////Af///wEAAAADAAAAAwAAAAMAAAADAAAAAwAA
+        AAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAA
+        AAP///8B////Af///wH///8B////Af///wH///8B////AQAAAAUAAAAPAAAAFQAAABkAAAAbAAAAGwAA
+        ABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAA
+        ABsAAAAbAAAAGwAAABcAAAATAAAACf///wH///8B////Af///wEAAAAHAAAAGSYWCy+GSyPdh0og/4dK
+        IP9TV1X/WFpX/1haV/9YWlf/WFpW/1haVv9YWlb/V1lW/1haVv9YWlb/WFpX/1haV/9YWlf/WFpW/1NX
+        Vf+HSiD/h0og/4dKIP+HSiD/h0og/4hLIf1/SCGRAAAAD////wH///8B////AQAAABUkFAozhEsj26p5
+        Uvvhw6j/4MKm/1NXVf/n6un/6+3t/+rs6//i5OP/2t3b/9bZ1//O0tD/yM3L/8nOzP/Lz83/ztLQ/8zP
+        zf/CxsT/U1dV/9aviv/Wroj/3bye/8ugef/TqYL/zaF4/4hLIvsAAAAbAAAACf///wEAAAAHAAAAG4dL
+        IuuqelT74cKn/9Oof//OnnH/U1dV/+fr6f/O1dL/aGtn/1tdWv9bXVn/YWVh/7zDwP+1vbn/usG9/8LI
+        xf/K0M3/09fV/9DV0/9TV1X/zp5x/86ecf/ZtJL/wpBj/8ycbv/SqH//h0og/wAAACMAAAAP////AQAA
+        AAcAAAAbh0og/+PIr//TqID/zp5x/86ecf9TV1X/5enn/8fPy/9TV1X/zp5x/86ecf9TV1X/wcjF/7rB
+        vv+0vLj/vcPA/8XLyP/N0tD/2d3b/1NXVf/OnXD/zZxv/9izkP/Bj2H/y5pt/9GngP+HSiD/AAAAIwAA
+        AA////8B////AQAAABWHSiD/5Mmw/86ecf/OnnH/zp5x/1NXVf/i5uT/v8nE/1NXVf/IlWf/x5Vo/1NX
+        Vf/GzMn/vsbC/7i/u/+3v7v/v8bD/8jNyv/Z3Nv/U1dV/8ycb//Mm27/1a6K/7+NYP/KmGv/0aaA/4dK
+        IP8AAAAbAAAACf///wH///8BAAAAB4dKIP/ly7P/zp5x/86ecf/OnnH/U1dV/9/k4v+4w77/U1dV/8GM
+        Xv/BjF7/U1dV/8rQzv/Dysf/vMPA/7W9uf+6wb3/wsjF/9jc2v9TV1X/y5pt/8uZbP/TqYP/vote/8mX
+        af/Rp4D/h0og/wAAAA3///8B////Af///wH///8Bh0og/+XMtP/OnnH/zp5x/86ecf9TV1X/3OLf/7G9
+        t/9TV1X/uoNT/7mCVP9TV1X/z9XS/8jOy//ByMT/usG+/7S8uP+9xMD/2Nza/1NXVf/KmWv/yZhq/9Ck
+        fP++il3/yJVo/9Gmgf+HSiD/////Af///wH///8B////Af///wGHSiD/5s22/86ecf/OnnH/zp5x/1NX
+        Vf/Z39z/rbq0/2tvav9aXlz/Wl5c/3Fyb//V2tn/z9TS/8fOy//ByMT/usG9/7nBvf/Z3dv/U1dV/8mX
+        a//Ilmr/zZ92/7uGWv/Gk2b/0aeB/4dKIP////8B////Af///wH///8B////AYdKIP/mzrj/zp5x/86e
+        cf/OnnH/VVlW/8XNyv/X3dr/3OHf/+Hl4//l6ef/6u3s/+7w7//r7uz/6Ovp/+Xo5//h5OP/2t7c/87S
+        0f9XWlf/ypht/8mabv/HmW3/toFV/8WSZP/Qp4L/h0og/////wH///8B////Af///wH///8Bh0og/+fP
+        uf/OnnH/zp5x/86ecf+OeWP/VVhW/1NXVf9TV1X/U1dV/1NXVf9TV1X/U1dV/1NXVf9TV1X/U1dV/1NX
+        Vf9TV1X/VllW/4RrU/+tdkn/rnhL/7B6Tv+8h1n/xJBi/9Cog/+HSiD/////Af///wH///8B////Af//
+        /wGHSiD/6NG7/86ecf/OnnH/zp5x/86ecf/OnnH/zp1w/82cb//MnG7/zJtu/8uabf/KmWz/yphr/8mX
+        av/Jl2n/yJZo/8eVZ//HlGb/xpNl/8WSZP/FkWP/xJBi/8OQYv/Dj2H/0KeE/4dKIP////8B////Af//
+        /wH///8B////AYdKIP/o0r3/zp5x/7mFWP+lbUH/o2tA/6NrQP+jaj//o2o//6JqP/+iaT7/omk+/6Fo
+        Pf+haD3/oWg9/6FoPP+hZzz/oGc7/6BmO/+gZjv/n2Y7/59mOv+gZjr/sXpO/8KNX//Qp4T/h0og////
+        /wH///8B////Af///wH///8Bh0og/+nTv//OnnH/pW1C/9/i4v/f4uL/3+Li/9/i4v/f4uL/3+Li/9/i
+        4v/f4uL/3+Li/9/i4v/f4uL/3+Li/9/i4v/f4uL/3+Li/9/i4v/f4uL/3+Li/9/i4v+fZjn/wItd/9Co
+        hP+HSiD/////Af///wH///8B////Af///wGHSiD/6dTB/82dcP+jaj//3+Li//7+/v/+/v7//v7+//7+
+        /v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7/3+Li/55k
+        OP+/ilv/0KiF/4dKIP////8B////Af///wH///8B////AYdKIP/q1cL/zJtu/6JqP//f4uL//v7+//7+
+        /v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+
+        /v/f4uL/nWM3/76IWv/Pp4b/h0og/////wH///8B////Af///wH///8Bh0og/+rWw//Lmmz/omk+/9/i
+        4v9gYVz/tr26/7a9uv+2vbr/tr26/7a9uv+2vbr/tr26/7a9uv+2vbr/tr26/7a9uv+2vbr/tr26/7a9
+        uv+2vbr/YGFc/9/i4v+dYjf/vYdY/8+ph/+HSiD/////Af///wH///8B////Af///wGHSiD/6tbE/8qY
+        a/+haD3/3+Li//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+
+        /v/+/v7//v7+//7+/v/+/v7/3+Li/5xiNv+8hVb/z6mI/4dKIP////8B////Af///wH///8B////AYdK
+        IP/p1cP/yZdp/6FoPf/f4uL/+/z8//v8/P/7/Pz/+/z8//v8/P/7/Pz/+/z8//v8/P/7/Pz/+/z8//v8
+        /P/7/Pz/+/z8//v8/P/7/Pz/+/z8//v8/P/f4uL/nGE1/7uEVf/PqYn/h0og/////wH///8B////Af//
+        /wH///8Bh0og/+nVw//HlWf/oWc8/9/i4v9gYVz/tr26/7a9uv+2vbr/tr26/7a9uv+2vbr/tr26/7a9
+        uv+2vbr/tr26/7a9uv+2vbr/tr26/7a9uv+2vbr/YGFc/9/i4v+bYDX/uYJT/9Cqiv+HSiD/////Af//
+        /wH///8B////Af///wGHSiD/6dTC/8aTZv+gZjv/3+Li//b39//29/f/9vf3//b39//29/f/9vf3//b3
+        9//29/f/9vf3//b39//29/f/9vf3//b39//29/f/9vf3//b39//29/f/3+Li/5tgNP+4gFH/z6qL/4dK
+        IP////8B////Af///wH///8B////AYdKIP/o1MH/xZJk/59mO//f4uL/8/T0//P09P/z9PT/8/T0//P0
+        9P/z9PT/8/T0//P09P/z9PT/8/T0//P09P/z9PT/8/T0//P09P/z9PT/8/T0//P09P/f4uL/m18z/7d/
+        UP/Pq4z/h0og/////wH///8B////Af///wH///8Bh0og/+jTwf/EkGL/n2U6/9/i4v9fYFz/tr26/7a9
+        uv+2vbr/tr26/7a9uv+2vbr/tr26/7a9uv+2vbr/tr26/7a9uv+2vbr/tr26/7a9uv+2vbr/X2Bc/9/i
+        4v+aXjP/tn1O/9Crjf+HSiD/////Af///wH///8B////Af///wGHSiD/59LA/9WwkP+fZTn/3+Li/+7w
+        8P/u8PD/7vDw/+7w8P/u8PD/7vDw/+7w8P/u8PD/7vDw/+7w8P/u8PD/7vDw/+7w8P/u8PD/7vDw/+7w
+        8P/u8PD/3+Li/5leMv/Lo4H/0KyO/4dKIP////8B////Af///wH///8B////AYdKIP/n0r//h0og/6Fn
+        PP/f4uL/7O7u/+zu7v/s7u7/7O7u/+zu7v/s7u7/7O7u/+zu7v/s7u7/7O7u/+zu7v/s7u7/7O7u/+zu
+        7v/s7u7/7O7u/+zu7v/f4uL/m2Az/4dKIP/QrJD/h0og/////wH///8B////Af///wH///8Bh0og/+bR
+        v//Ai13/rXVI/w1/9P8AefX/AHn1/wB59f8AefX/AHn1/wB59f8AefX/AHn1/wB59f8AefX/AHn1/wB5
+        9f8AefX/AHn1/wB59f8AefX/AHn1/w1/9P+laTz/snhJ/9CtkP+HSiD/////Af///wH///8B////Af//
+        /wGISyH738aw/+XQvf/awav/Yaz4/1mo+P9ZqPj/Waj4/1mo+P9ZqPj/Waj4/1mo+P9ZqPj/Waj4/1mo
+        +P9ZqPj/Waj4/1mo+P9ZqPj/Waj4/1mo+P9ZqPj/Yaz4/8univ/SsZX/y6aH/4dLIfv///8B////Af//
+        /wH///8B////AYtOJIeHSyH7h0og/4dKIP8AXM7/AFzO/wBczv8AXM7/AFzO/wBczv8AXM7/AFzO/wBc
+        zv8AXM7/AFzO/wBczv8AXM7/AFzO/wBczv8AXM7/AFzO/wBczv8AXM7/h0og/4dKIP+HSiH7ikwjg///
+        /wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af///wH///8B////Af//
+        /wH///8B////Af///wH///8B////AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>导出配置文件</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>ExportConfig</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.Name" xml:space="preserve">
+    <value>btnCancel</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnCancel.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;btnExport.Name" xml:space="preserve">
+    <value>btnExport</value>
+  </data>
+  <data name="&gt;&gt;btnExport.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;btnExport.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnExport.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Name" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;label3.Name" xml:space="preserve">
+    <value>label3</value>
+  </data>
+  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;label5.Name" xml:space="preserve">
+    <value>label5</value>
+  </data>
+  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;label5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;textBoxHost.Name" xml:space="preserve">
+    <value>textBoxHost</value>
+  </data>
+  <data name="&gt;&gt;textBoxHost.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;textBoxHost.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxHost.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;textBoxModelId.Name" xml:space="preserve">
+    <value>textBoxModelId</value>
+  </data>
+  <data name="&gt;&gt;textBoxModelId.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;textBoxModelId.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxModelId.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;textBoxPassword.Name" xml:space="preserve">
+    <value>textBoxPassword</value>
+  </data>
+  <data name="&gt;&gt;textBoxPassword.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;textBoxPassword.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxPassword.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;textBoxPort.Name" xml:space="preserve">
+    <value>textBoxPort</value>
+  </data>
+  <data name="&gt;&gt;textBoxPort.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;textBoxPort.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxPort.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;textBoxUserName.Name" xml:space="preserve">
+    <value>textBoxUserName</value>
+  </data>
+  <data name="&gt;&gt;textBoxUserName.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+  <data name="&gt;&gt;textBoxUserName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxUserName.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="btnExport.Text" xml:space="preserve">
+    <value>导出</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>导出内容</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>服务器地址：</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>端口：</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>用户名：</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>密码：</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>设备型号：</value>
+  </data>
+</root>
