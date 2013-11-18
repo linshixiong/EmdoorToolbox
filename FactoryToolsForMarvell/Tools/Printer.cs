@@ -29,6 +29,7 @@ namespace IMEI_Reader
         {
             checkBoxAutoRead.Checked = Settings.Default.Auto_Read;
             checkBoxAutoPrint.Checked = Settings.Default.AutoPrint;
+            checkBoxAutoPoweroff.Checked = Settings.Default.AutoPoweroff;
 
             this.checkBoxSN.Checked = Settings.Default.SN_Selected;
             textBoxSN.Enabled = checkBoxSN.Checked;
@@ -52,6 +53,11 @@ namespace IMEI_Reader
             textBoxSwVersion.BackColor = checkBoxSwVersion.Checked ? Color.White :  System.Drawing.SystemColors.Control;
 
             textBoxPrintCount.Text = Settings.Default.PrintCount.ToString();
+
+            AutoReadToolStripMenuItem.Checked = Settings.Default.Auto_Read;
+            AutoPoweroffToolStripMenuItem.Checked = Settings.Default.AutoPoweroff;
+            AutoPrintToolStripMenuItem1.Checked = Settings.Default.AutoPrint;
+
         }
 
         public void HandleMessge(int msgId, object obj)
@@ -69,7 +75,11 @@ namespace IMEI_Reader
 
                     panelProgress.Visible = true;
                     buttonRefresh.Enabled = false;
-
+                    buttonPrint.Enabled = false;
+                    ReadToolStripMenuItem.Enabled = false;
+                    PrintToolStripMenuItem.Enabled = false;
+                    PoweroffToolStripMenuItem.Enabled = false;
+                    RebootToolStripMenuItem.Enabled = false;
                     checkBoxSN.Enabled = false;
                     checkBoxIMEI.Enabled = false;
                     checkBoxWifi.Enabled = false;
@@ -108,6 +118,12 @@ namespace IMEI_Reader
                     }
                     panelProgress.Visible = false;
                     buttonRefresh.Enabled = true;
+                    buttonPrint.Enabled = true;
+                    ReadToolStripMenuItem.Enabled = true;
+                    PrintToolStripMenuItem.Enabled = true;
+                    PoweroffToolStripMenuItem.Enabled = true;
+                    RebootToolStripMenuItem.Enabled = true;
+
 
                     checkBoxSN.Enabled = true;
                     checkBoxIMEI.Enabled = true;
@@ -125,6 +141,11 @@ namespace IMEI_Reader
                 case Messages.MSG_READ_FAIL:
                     panelProgress.Visible = false;
                     buttonRefresh.Enabled = true;
+                    buttonPrint.Enabled = true;
+                    ReadToolStripMenuItem.Enabled = true;
+                    PrintToolStripMenuItem.Enabled = true;
+                    PoweroffToolStripMenuItem.Enabled = true;
+                    RebootToolStripMenuItem.Enabled = true;
                     checkBoxSN.Enabled = true;
                     checkBoxIMEI.Enabled = true;
                     checkBoxWifi.Enabled = true;
@@ -150,14 +171,11 @@ namespace IMEI_Reader
             {
                 labelMsg.Text = "请连接设备";
                 labelMsg.ForeColor = Color.Red;
-              
-                buttonRefresh.Enabled = false;
             }
             else if (deviceCount == 1)
             {
                 labelMsg.Text = "设备已连接";
                 labelMsg.ForeColor = Color.Green;
-                buttonRefresh.Enabled = true;
                 if (checkBoxAutoRead.Checked)
                 {
                     ReadAll(true);
@@ -167,9 +185,14 @@ namespace IMEI_Reader
             {
                 labelMsg.Text = "连接设备过多";
                 labelMsg.ForeColor = Color.Red;
-
-                buttonRefresh.Enabled = false;
+               
             }
+            buttonRefresh.Enabled = (deviceCount == 1);
+            buttonPrint.Enabled = (deviceCount == 1);
+            ReadToolStripMenuItem.Enabled = (deviceCount == 1);
+            PrintToolStripMenuItem.Enabled = (deviceCount == 1);
+            PoweroffToolStripMenuItem.Enabled = (deviceCount == 1);
+            RebootToolStripMenuItem.Enabled = (deviceCount == 1);
 
         }
 
@@ -319,8 +342,14 @@ namespace IMEI_Reader
             {
                 goto ERROR;
             }
-
-            print(codes);
+            try
+            {
+                print(codes);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "打印机错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             return;
 
         ERROR:
@@ -336,6 +365,7 @@ namespace IMEI_Reader
 
         }
 
+        /*
         private void textBox_TextChanged(object sender, EventArgs e)
         {
 
@@ -352,7 +382,7 @@ namespace IMEI_Reader
             {
                 buttonPrint.Enabled = true;
             }
-        }
+        }*/
 
  
 
@@ -546,13 +576,17 @@ namespace IMEI_Reader
         private void checkBoxAuto_CheckedChanged(object sender, EventArgs e)
         {
             Settings.Default.Auto_Read = checkBoxAutoRead.Checked;
+            AutoReadToolStripMenuItem.Checked = checkBoxAutoRead.Checked;
             Settings.Default.Save();
         }
 
         private void textBoxPrintCount_TextChanged(object sender, EventArgs e)
         {
-            Settings.Default.PrintCount = Convert.ToInt32(textBoxPrintCount.Text);
-            Settings.Default.Save();
+            if (textBoxPrintCount.Text.Length > 0)
+            {
+                Settings.Default.PrintCount = Convert.ToInt32(textBoxPrintCount.Text);
+                Settings.Default.Save();
+            }
         }
 
         private void textBoxPrintCount_KeyPress(object sender, KeyPressEventArgs e)
@@ -567,10 +601,16 @@ namespace IMEI_Reader
         private void checkBoxAutoPrint_CheckedChanged(object sender, EventArgs e)
         {
             Settings.Default.AutoPrint = checkBoxAutoPrint.Checked;
+            AutoPrintToolStripMenuItem1.Checked = checkBoxAutoPrint.Checked;
             Settings.Default.Save();
         }
 
-
+        private void checkBoxAutoPoweroff_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.AutoPoweroff = checkBoxAutoPoweroff.Checked;
+            AutoPoweroffToolStripMenuItem.Checked = checkBoxAutoPoweroff.Checked;
+            Settings.Default.Save();
+        }
         private string getBarcodeLabel(int codeType)
         {
             switch (codeType)
@@ -600,6 +640,79 @@ namespace IMEI_Reader
                 detetor.updateDeviceCount();
             }
         }
+
+
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ReadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReadAll(false);
+        }
+
+        private void PrintToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CheckAndStartPrint();
+        }
+
+        private void PoweroffToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AdbOperator ao = new AdbOperator(mHandler, this);
+            Thread thread = new Thread(new ParameterizedThreadStart(ao.StartExcuteTcmd));
+
+            thread.Start("poweroff");
+        }
+
+        private void RebootToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AdbOperator ao = new AdbOperator(mHandler, this);
+            Thread thread = new Thread(new ParameterizedThreadStart(ao.StartExcuteTcmd));
+
+            thread.Start("reboot");
+        }
+
+        private void AutoReadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Settings.Default.Auto_Read = AutoReadToolStripMenuItem.Checked;
+            checkBoxAutoRead.Checked = AutoReadToolStripMenuItem.Checked;
+            Settings.Default.Save();
+        }
+
+        private void AutoPrintToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Settings.Default.AutoPrint = AutoPrintToolStripMenuItem1.Checked;
+            checkBoxAutoPrint.Checked = AutoPrintToolStripMenuItem1.Checked;
+            Settings.Default.Save();
+        }
+
+        private void AutoPoweroffToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Settings.Default.AutoPoweroff = AutoPoweroffToolStripMenuItem.Checked;
+            checkBoxAutoPoweroff.Checked = AutoPoweroffToolStripMenuItem.Checked;
+            Settings.Default.Save();
+        }
+
+        private void PrinterConfigToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PrinterConfig config = new PrinterConfig();
+            config.ShowDialog();
+        }
+
+        private void USBConfigToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UsbConfig config = new UsbConfig();
+            config.ShowDialog();
+        }
+
+        private void AboutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            AboutBox about = new AboutBox();
+            about.ShowDialog();
+        }
+
+
 
     }
 }

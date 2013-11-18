@@ -38,9 +38,11 @@ Source: "readme.txt"; DestDir: "{app}"; Flags:ignoreversion isreadme
 
 [Icons]
 Name: "{group}\Ãı¬Î¥Ú”°(Marvell)"; Filename: "{app}\BarcodeTools.exe";IconFilename:"{app}\barcode.ico"
-Name: "{group}\USB¡¨Ω”…Ë÷√"; Filename: "{app}\BarcodeTools.exe";Parameters:"usb_config";IconFilename:"{app}\setting.ico";Name: "{group}\¥Æ∫≈…’¬º(Marvell)"; Filename: "{app}\BarcodeTools.exe";Parameters:"write";IconFilename:"{app}\download.ico"
+Name: "{group}\USB¡¨Ω”…Ë÷√"; Filename: "{app}\BarcodeTools.exe";Parameters:"usb_config";IconFilename:"{app}\setting.ico"
+Name: "{group}\¥Æ∫≈…’¬º(Marvell)"; Filename: "{app}\BarcodeTools.exe";Parameters:"write";IconFilename:"{app}\download.ico"
 Name: "{group}\–∂‘ÿ"; Filename: "{app}\unins000.exe"
-Name: "{commondesktop}\Ãı¬Î¥Ú”°(Marvell)"; Filename: "{app}\BarcodeTools.exe";IconFilename:"{app}\barcode.ico";Name: "{commondesktop}\¥Æ∫≈…’¬º(Marvell)"; Filename: "{app}\BarcodeTools.exe";Parameters:"write";IconFilename:"{app}\download.ico"
+;Name: "{commondesktop}\Ãı¬Î¥Ú”°(Marvell)"; Filename: "{app}\BarcodeTools.exe";IconFilename:"{app}\barcode.ico"
+;Name: "{commondesktop}\¥Æ∫≈…’¬º(Marvell)"; Filename: "{app}\BarcodeTools.exe";Parameters:"write";IconFilename:"{app}\download.ico"
 
 [Code]
 
