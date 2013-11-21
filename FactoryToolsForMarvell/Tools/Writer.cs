@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using Common;
 using System.Threading;
+using IMEI_Reader.Properties;
 
 namespace IMEI_Reader
 {
@@ -15,6 +16,7 @@ namespace IMEI_Reader
         private MessageHandler mHandler;
         private DeviceDetector detetor;
         private int deviceCount;
+        private bool isWriting;
 
         public Writer()
         {
@@ -25,7 +27,7 @@ namespace IMEI_Reader
         }
 
 
-        public void HandleMessge(int msgId, object obj)
+        public void HandleMessge(int msgId, int requestCode, object obj)
         {
             string errorMsg = null;
             switch (msgId)
@@ -36,10 +38,11 @@ namespace IMEI_Reader
                     this.UpdateUI();
                     break;
                 case Messages.MSG_WRITE_START:
-
+                    isWriting = true;
                     panelProgress.Visible = true;
                     checkBoxSN.Enabled = false;
                     checkBoxIMEI.Enabled = false;
+                    checkBoxIMEI2.Enabled = false;
                     checkBoxWifi.Enabled = false;
                     checkBoxBt.Enabled = false;
                     buttonWrite.Enabled = false;
@@ -49,12 +52,19 @@ namespace IMEI_Reader
 
                     break;
                 case Messages.MSG_WRITE_STATE_CHANGE:
+                    isWriting = true;
+                    if (requestCode > 0)
+                    {
+                        HandleProgress(requestCode, Convert.ToInt32(obj));
+                    }
 
                     break;
                 case Messages.MSG_WRITE_SUCCESS:
+                    isWriting = false;
                     panelProgress.Visible = false;
                     checkBoxSN.Enabled = true;
                     checkBoxIMEI.Enabled = true;
+                    checkBoxIMEI2.Enabled = true;
                     checkBoxWifi.Enabled = true;
                     checkBoxBt.Enabled = true;
                     buttonWrite.Enabled = true;
@@ -62,12 +72,13 @@ namespace IMEI_Reader
                     PoweroffToolStripMenuItem.Enabled = true;
                     RebootToolStripMenuItem.Enabled = true;
                     DoActionAfterWrite();
-                    //MessageBox.Show("烧写成功！", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
                 case Messages.MSG_WRITE_FAIL:
+                    isWriting = false;
                     panelProgress.Visible = false;
                     checkBoxSN.Enabled = true;
                     checkBoxIMEI.Enabled = true;
+                    checkBoxIMEI2.Enabled = true;
                     checkBoxWifi.Enabled = true;
                     checkBoxBt.Enabled = true;
                     buttonWrite.Enabled = true;
@@ -83,13 +94,50 @@ namespace IMEI_Reader
         }
 
 
+        private void HandleProgress(int requestCode,int progress)
+        {
+
+            PictureBox pictureBox = null;
+            switch (requestCode)
+            {
+                case CodeType.TYPE_SN:
+                    pictureBox = pictureBoxSN;
+                    break;
+                case CodeType.TYPE_IMEI:
+                    pictureBox = pictureBoxIMEI;
+                    break;
+                case CodeType.TYPE_IMEI2:
+                    pictureBox = pictureBoxIMEI2;
+                    break;
+                case CodeType.TYPE_WIFI_MAC:
+                    pictureBox = pictureBoxWIFI;
+                    break;
+                case CodeType.TYPE_BT_MAC:
+                    pictureBox = pictureBoxBT;
+                    break;
+            }
+            if (pictureBox != null)
+            {
+                pictureBox.Visible = true;
+                if (progress == 0)
+                {
+                    pictureBox.Image = Resources.Lading;
+                }
+                else if (progress == 1)
+                {
+                    pictureBox.Image = Resources.Tick;
+                }
+                else if(progress==2)
+                {
+                    pictureBox.Image = Resources.Error;
+                }
+                pictureBox.Enabled = (progress==2);
+                
+            }
+        }
+
         private void UpdateUI()
         {
-            textBoxSN.Clear();
-            textBoxIMEI.Clear();
-            textBoxWifi.Clear();
-            textBoxBt.Clear();
-
             if (deviceCount <= 0)
             {
                 labelMsg.Text = "请连接设备";
@@ -99,6 +147,10 @@ namespace IMEI_Reader
             {
                 labelMsg.Text = "设备已连接";
                 labelMsg.ForeColor = Color.Green;
+                if (checkBoxAutoWrite.Checked&& !isWriting)
+                {
+                    CheckAndStartWrite();
+                }
             }
             else
             {
@@ -110,21 +162,31 @@ namespace IMEI_Reader
             PoweroffToolStripMenuItem.Enabled = (deviceCount == 1);
             RebootToolStripMenuItem.Enabled = (deviceCount == 1);
 
+            pictureBoxSN.Visible = false;
+            pictureBoxIMEI.Visible = false;
+            pictureBoxIMEI2.Visible = false;
+            pictureBoxWIFI.Visible = false;
+            pictureBoxBT.Visible = false;
+
         }
 
         private void textBoxSN_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (textBoxIMEI.Enabled)
+                if (textBoxIMEI.Enabled && !textBoxIMEI.ReadOnly)
                 {
                     textBoxIMEI.Focus();
                 }
-                else if (textBoxWifi.Enabled)
+                else if (textBoxIMEI2.Enabled && !textBoxIMEI2.ReadOnly)
+                {
+                    textBoxIMEI.Focus();
+                }
+                else if (textBoxWifi.Enabled && !textBoxWifi.ReadOnly)
                 {
                     textBoxWifi.Focus();
                 }
-                else if (textBoxBt.Enabled)
+                else if (textBoxBt.Enabled && !textBoxBt.ReadOnly)
                 {
                     textBoxBt.Focus();
                 }
@@ -141,11 +203,34 @@ namespace IMEI_Reader
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (textBoxWifi.Enabled)
+                if (textBoxIMEI2.Enabled && !textBoxIMEI2.ReadOnly)
+                {
+                    textBoxIMEI2.Focus();
+                }
+                else if (textBoxWifi.Enabled&&!textBoxWifi.ReadOnly)
                 {
                     textBoxWifi.Focus();
                 }
-                else if (textBoxBt.Enabled)
+                else if (textBoxBt.Enabled && !textBoxBt.ReadOnly)
+                {
+                    textBoxBt.Focus();
+                }
+                else
+                {
+                    CheckAndStartWrite();
+                }
+            }
+        }
+
+        private void textBoxIMEI2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (textBoxWifi.Enabled && !textBoxWifi.ReadOnly)
+                {
+                    textBoxWifi.Focus();
+                }
+                else if (textBoxBt.Enabled && !textBoxBt.ReadOnly)
                 {
                     textBoxBt.Focus();
                 }
@@ -160,7 +245,7 @@ namespace IMEI_Reader
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (textBoxBt.Enabled)
+                if (textBoxBt.Enabled && !textBoxBt.ReadOnly)
                 {
                     textBoxBt.Focus();
                 }
@@ -183,6 +268,7 @@ namespace IMEI_Reader
 
         private void CheckAndStartWrite()
         {
+            isWriting = true;
             List<KeyValuePair<int, string>> codes = new List<KeyValuePair<int, string>>();
             int count = Settings.Default.PrintCount;
             if (checkBoxSN.Checked)
@@ -212,7 +298,19 @@ namespace IMEI_Reader
 
                 }
             }
+            if (checkBoxIMEI2.Checked)
+            {
+                if (string.IsNullOrEmpty(textBoxIMEI2.Text.Trim()))
+                {
+                    goto ERROR;
+                }
+                else
+                {
 
+                    codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_IMEI2, textBoxIMEI2.Text.Trim()));
+
+                }
+            }
             if (checkBoxWifi.Checked)
             {
                 if (string.IsNullOrEmpty(textBoxWifi.Text.Trim()))
@@ -222,7 +320,7 @@ namespace IMEI_Reader
                 else
                 {
 
-                    codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_WIFI_MAC, textBoxWifi.Text.Trim()));
+                    codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_WIFI_MAC, Util.GetMACToWrite( textBoxWifi.Text.Trim())));
 
                 }
             }
@@ -236,11 +334,15 @@ namespace IMEI_Reader
                 else
                 {
 
-                    codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_BT_MAC, textBoxBt.Text.Trim()));
+                    codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_BT_MAC, Util.GetMACToWrite(textBoxBt.Text.Trim())));
 
                 }
             }
-
+            pictureBoxSN.Visible = false;
+            pictureBoxIMEI.Visible = false;
+            pictureBoxIMEI2.Visible = false;
+            pictureBoxWIFI.Visible = false;
+            pictureBoxBT.Visible = false;
 
             Write(codes);
             return;
@@ -248,6 +350,7 @@ namespace IMEI_Reader
         ERROR:
             {
                 MessageBox.Show("请确保选择的项中包含有效的数据！", "无效的数据", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isWriting = false;
             }
         }
 
@@ -257,6 +360,7 @@ namespace IMEI_Reader
             AdbOperator ao = new AdbOperator(mHandler, this);
             Thread thread = new Thread(new ParameterizedThreadStart(ao.StartExcuteWriteCmd));
             thread.Start(codes);
+            
         }
 
 
@@ -290,7 +394,10 @@ namespace IMEI_Reader
             textBoxSN.Enabled = checkBoxSN.Checked;
             textBoxSN.BackColor = checkBoxSN.Checked ? Color.White : System.Drawing.SystemColors.Control;
             linkLabelSN.Visible = checkBoxSN.Checked;
-
+            if (!checkBoxSN.Checked)
+            {
+                pictureBoxSN.Visible = false;
+            }
             Settings.Default.WriteSNChecked = checkBoxSN.Checked;
             Settings.Default.Save();
         }
@@ -300,15 +407,38 @@ namespace IMEI_Reader
             textBoxIMEI.Enabled = checkBoxIMEI.Checked;
             textBoxIMEI.BackColor = checkBoxIMEI.Checked ? Color.White : System.Drawing.SystemColors.Control;
             linkLabelIMEI.Visible = checkBoxIMEI.Checked;
+            if (!checkBoxIMEI.Checked)
+            {
+                pictureBoxIMEI.Visible = false;
+            }
             Settings.Default.WriteIMEIChecked = checkBoxIMEI.Checked;
             Settings.Default.Save();
         }
+
+
+        private void checkBoxIMEI2_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxIMEI2.Enabled = checkBoxIMEI2.Checked;
+            textBoxIMEI2.BackColor = checkBoxIMEI2.Checked ? Color.White : System.Drawing.SystemColors.Control;
+            linkLabelIMEI2.Visible = checkBoxIMEI2.Checked;
+            if (!checkBoxIMEI2.Checked)
+            {
+                pictureBoxIMEI2.Visible = false;
+            }
+            Settings.Default.WriteIMEI2Checked = checkBoxIMEI2.Checked;
+            Settings.Default.Save();
+        }
+
 
         private void checkBoxWifi_CheckedChanged(object sender, EventArgs e)
         {
             textBoxWifi.Enabled = checkBoxWifi.Checked;
             textBoxWifi.BackColor = checkBoxWifi.Checked ? Color.White : System.Drawing.SystemColors.Control;
             linkLabelWifi.Visible = checkBoxWifi.Checked;
+            if (!checkBoxWifi.Checked)
+            {
+                pictureBoxWIFI.Visible = false;
+            }
             Settings.Default.WriteWIFIChecked = checkBoxWifi.Checked;
             Settings.Default.Save();
         }
@@ -318,6 +448,10 @@ namespace IMEI_Reader
             textBoxBt.Enabled = checkBoxBt.Checked;
             textBoxBt.BackColor = checkBoxBt.Checked ? Color.White : System.Drawing.SystemColors.Control;
             linkLabelBt.Visible = checkBoxBt.Checked;
+            if (!checkBoxBt.Checked)
+            {
+                pictureBoxBT.Visible = false;
+            }
             Settings.Default.WriteBTChecked = checkBoxBt.Checked;
             Settings.Default.Save();
         }
@@ -338,13 +472,27 @@ namespace IMEI_Reader
             config.Top = this.Top+70;
             config.Left = this.Left+60;
             config.Tag = tag;
-            config.ShowDialog();
+            if (config.ShowDialog() == DialogResult.OK)
+            {
+                this.updateInputBox();
+            }
 
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
 
+        private void updateInputBox()
+        {
+            textBoxSN.ReadOnly = !(Settings.Default.InputSNType == 0);
+            textBoxIMEI.ReadOnly = !(Settings.Default.InputIMEIType == 0);
+            textBoxIMEI2.ReadOnly = !(Settings.Default.InputIMEI2Type == 0);
+            textBoxWifi.ReadOnly = !(Settings.Default.InputWIFIType == 0);
+            textBoxBt.ReadOnly = !(Settings.Default.InputBTType == 0);
+
+            textBoxSN.Text = (Settings.Default.InputSNType == 0) ? "" : Settings.Default.SN_CUR;
+            textBoxIMEI.Text = (Settings.Default.InputIMEIType == 0) ? "" : Settings.Default.IMEI_CUR;
+            textBoxIMEI2.Text = (Settings.Default.InputIMEI2Type == 0) ? "" : Settings.Default.IMEI2_CUR;
+            textBoxWifi.Text = (Settings.Default.InputWIFIType == 0) ? "" : Settings.Default.WIFI_CUR;
+            textBoxBt.Text = (Settings.Default.InputBTType == 0) ? "" : Settings.Default.BT_CUR;
         }
 
         private void buttonWrite_Click(object sender, EventArgs e)
@@ -356,6 +504,7 @@ namespace IMEI_Reader
         {
             checkBoxSN.Checked = Settings.Default.WriteSNChecked;
             checkBoxIMEI.Checked = Settings.Default.WriteIMEIChecked;
+            checkBoxIMEI2.Checked = Settings.Default.WriteIMEI2Checked;
             checkBoxWifi.Checked = Settings.Default.WriteWIFIChecked;
             checkBoxBt.Checked = Settings.Default.WriteBTChecked;
             checkBoxPrint.Checked = Settings.Default.PrintAfterWrite;
@@ -365,6 +514,13 @@ namespace IMEI_Reader
             AutoWriteToolStripMenuItem.Checked = Settings.Default.AutoWrite;
             PrintAfterWriteToolStripMenuItem.Checked = Settings.Default.PrintAfterWrite;
             textBoxPrintCount.Text = Settings.Default.PrintCount.ToString();
+            pictureBoxSN.Tag = CodeType.TYPE_SN;
+            pictureBoxIMEI.Tag = CodeType.TYPE_IMEI;
+            pictureBoxIMEI2.Tag = CodeType.TYPE_IMEI2;
+            pictureBoxWIFI.Tag = CodeType.TYPE_WIFI_MAC;
+            pictureBoxBT.Tag = CodeType.TYPE_BT_MAC;
+      
+            updateInputBox();
         }
 
         private void textBoxSN_TextChanged(object sender, EventArgs e)
@@ -393,7 +549,7 @@ namespace IMEI_Reader
             {
                 text = text.Substring(0, 12);
             }
-            if (Util.IsHexString(text))
+            if (Util.IsValidMAC(text))
             {
                 textBox.Text = text;
             }
@@ -424,15 +580,6 @@ namespace IMEI_Reader
             }
         }
 
-        private void buttonPrint_Click(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void 关于ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void checkBoxPoweroff_CheckedChanged(object sender, EventArgs e)
         {
@@ -495,10 +642,6 @@ namespace IMEI_Reader
             this.Close();
         }
 
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void checkBoxPrint_CheckedChanged(object sender, EventArgs e)
         {
@@ -542,6 +685,54 @@ namespace IMEI_Reader
                 e.Handled = true;
             }
         }
+
+        private void textBox_ReadOnlyChanged(object sender, EventArgs e)
+        {
+
+            TextBox textBox = (TextBox)sender;
+                         
+            textBox.BorderStyle = textBox.ReadOnly ? BorderStyle.FixedSingle : BorderStyle.Fixed3D;       
+           
+        }
+
+        private void pictureBox_Click(object sender, EventArgs e)
+        {
+            int tag = Convert.ToInt32(((PictureBox)sender).Tag);
+
+            List<KeyValuePair<int, string>> codes = new List<KeyValuePair<int, string>>();
+
+            switch (tag)
+            {
+                case CodeType.TYPE_SN:
+                    codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_SN, textBoxSN.Text.Trim()));
+                    break;
+                case CodeType.TYPE_IMEI:
+                    codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_IMEI, textBoxIMEI.Text.Trim()));
+                    break;
+                case CodeType.TYPE_IMEI2:
+                    codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_IMEI2, textBoxIMEI2.Text.Trim()));
+                    break;
+                case CodeType.TYPE_WIFI_MAC:
+                    codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_WIFI_MAC, Util.GetMACToWrite(textBoxWifi.Text.Trim())));
+                    break;
+                case CodeType.TYPE_BT_MAC:
+                    codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_BT_MAC, Util.GetMACToWrite(textBoxBt.Text.Trim())));
+                    break;
+            }
+            if (codes.Count > 0)
+            {
+
+                Write(codes);
+            }
+
+        }
+
+        private void pictureBox_MouseEnter(object sender, EventArgs e)
+        {
+            toolTip1.SetToolTip((Control)sender, "点击重新烧写");
+        }
+
+
 
 
     }

@@ -113,7 +113,7 @@ namespace Common
             {
                 return;
             }
-            form.Invoke(handler, Messages.MSG_READ_START, null);
+            form.Invoke(handler, Messages.MSG_READ_START,0, null);
 
 
 
@@ -129,26 +129,13 @@ namespace Common
             {
                 goto END;
             }
-            /*
-            try
-            {          
-                AndroidDebugBridge.Initialize(true);
-                AndroidDebugBridge.CreateBridge();
-                AndroidDebugBridge.Instance.Start();
-            }
-
-            catch (Exception)
-            {
-                error_msg = "adb服务启动失败";
-                success = false;
-            }*/
             if (isCanceled)
             {
                 goto END;
             }
             if (success)
             {
-                form.Invoke(handler, Messages.MSG_READ_STATE_CHANGE, "正在检查设备...");
+                form.Invoke(handler, Messages.MSG_READ_STATE_CHANGE,0, "正在检查设备...");
                 int deviceCount = GetDeviceCount();
 
 
@@ -171,7 +158,7 @@ namespace Common
                 }
                 else
                 {
-                    form.Invoke(handler, Messages.MSG_READ_STATE_CHANGE, "正在读取序列号...");
+                    form.Invoke(handler, Messages.MSG_READ_STATE_CHANGE,0, "正在读取序列号...");
                     string cmdResult = null;
                     Dictionary<int, string> results = new Dictionary<int, string>();
                     foreach (int cmd in cmds)
@@ -183,8 +170,12 @@ namespace Common
                                 results.Add(CodeType.TYPE_SN, sn);
                                 break;
                             case CodeType.TYPE_IMEI:
-                                string imei = ExcuteIMEIReadCmd(out cmdResult);
+                                string imei = ExcuteIMEIReadCmd(0,out cmdResult);
                                 results.Add(CodeType.TYPE_IMEI, imei);
+                                break;
+                            case CodeType.TYPE_IMEI2:
+                                string imei2 = ExcuteIMEIReadCmd(1,out cmdResult);
+                                results.Add(CodeType.TYPE_IMEI2, imei2);
                                 break;
                             case CodeType.TYPE_WIFI_MAC:
                                 string wifi = ExcuteWifiAddressReadCmd(out cmdResult);
@@ -205,7 +196,7 @@ namespace Common
                     }
 
 
-                    form.Invoke(handler, Messages.MSG_READ_SUCCESS, results);
+                    form.Invoke(handler, Messages.MSG_READ_SUCCESS,0, results);
                     DateTime dtStop = DateTime.Now;
 
                     TimeSpan ts = dtStop - dtStart;
@@ -217,11 +208,8 @@ namespace Common
         END:
             if (!success && !isCanceled)
             {
-                form.Invoke(handler, Messages.MSG_READ_FAIL, error_msg);
+                form.Invoke(handler, Messages.MSG_READ_FAIL,0, error_msg);
             }
-
-            //AndroidDebugBridge.Instance.Stop();
-            //CleanUpAdbProcess();
 
         }
 
@@ -234,7 +222,7 @@ namespace Common
             {
                 return;
             }
-            form.Invoke(handler, Messages.MSG_WRITE_START, null);
+            form.Invoke(handler, Messages.MSG_WRITE_START,0, null);
 
             bool success = true;
             string error_msg = null;
@@ -247,26 +235,13 @@ namespace Common
             {
                 goto END;
             }
-            /*
-            try
-            {
-                AndroidDebugBridge.Initialize(true);
-                AndroidDebugBridge.CreateBridge();
-                AndroidDebugBridge.Instance.Start();
-            }
-
-            catch (Exception)
-            {
-                error_msg = "adb服务启动失败";
-                success = false;
-            }*/
             if (isCanceled)
             {
                 goto END;
             }
             if (success)
             {
-                form.Invoke(handler, Messages.MSG_WRITE_STATE_CHANGE, "正在检查设备...");
+                form.Invoke(handler, Messages.MSG_WRITE_STATE_CHANGE,0, "正在检查设备...");
                 int deviceCount = GetDeviceCount();
 
 
@@ -289,7 +264,7 @@ namespace Common
                 }
                 else
                 {
-                    form.Invoke(handler, Messages.MSG_WRITE_STATE_CHANGE, "正在读取序列号...");
+                    form.Invoke(handler, Messages.MSG_WRITE_STATE_CHANGE,0, "正在读取序列号...");
                     string cmdResult = null;
                     Dictionary<int, string> results = new Dictionary<int, string>();
                     foreach (KeyValuePair<int, string> item in cmds)
@@ -297,28 +272,34 @@ namespace Common
 
                         int cmd = item.Key;
                         string value = item.Value;
+                        bool result = false;
+                        form.Invoke(handler, Messages.MSG_WRITE_STATE_CHANGE, cmd, 0);
                         switch (cmd)
                         {
                             case CodeType.TYPE_SN:
-                                ExcuteSNWriteCmd(out cmdResult, value);
+                                result = ExcuteSNWriteCmd(out cmdResult, value);
                                 break;
                             case CodeType.TYPE_IMEI:
-                                ExcuteIMEIWriteCmd(out cmdResult, value);
+                                result = ExcuteIMEIWriteCmd(out cmdResult, value, 0);
+                                break;
+                            case CodeType.TYPE_IMEI2:
+                                result = ExcuteIMEIWriteCmd(out cmdResult, value, 1);
                                 break;
                             case CodeType.TYPE_WIFI_MAC:
-                                ExcuteWifiAddressWriteCmd(out cmdResult, value);
+                                result = ExcuteWifiAddressWriteCmd(out cmdResult, value);
                                 break;
                             case CodeType.TYPE_BT_MAC:
-                                ExcuteBtAddressWriteCmd(out cmdResult, value);
+                                result = ExcuteBtAddressWriteCmd(out cmdResult, value);
                                 break;
                             default:
                                 break;
                         }
+                        form.Invoke(handler, Messages.MSG_WRITE_STATE_CHANGE, cmd,result?1:2);
 
                     }
 
 
-                    form.Invoke(handler, Messages.MSG_WRITE_SUCCESS, results);
+                    form.Invoke(handler, Messages.MSG_WRITE_SUCCESS,0, results);
 
                     DateTime dtStop = DateTime.Now;
 
@@ -332,13 +313,10 @@ namespace Common
         END:
             if (!success && !isCanceled)
             {
-                form.Invoke(handler, Messages.MSG_WRITE_FAIL, error_msg);
+                form.Invoke(handler, Messages.MSG_WRITE_FAIL,0, error_msg);
             }
 
-           // AndroidDebugBridge.Instance.Stop();
-           // CleanUpAdbProcess();
         }
-
 
 
         public void StartExcuteTcmd(object o)
@@ -363,7 +341,7 @@ namespace Common
             }
             if (success)
             {
-                form.Invoke(handler, Messages.MSG_WRITE_STATE_CHANGE, "正在检查设备...");
+                form.Invoke(handler, Messages.MSG_WRITE_STATE_CHANGE, 0,"正在检查设备...");
                 int deviceCount = GetDeviceCount();
 
                 if (isCanceled)
@@ -400,7 +378,7 @@ namespace Common
         }
 
 
-        private string ExcuteIMEIReadCmd(out string error)
+        private string ExcuteIMEIReadCmd(int index, out string error)
         {
             CommandResultReceiver receiver = new CommandResultReceiver();
             receiver.TrimLines = true;
@@ -413,9 +391,10 @@ namespace Common
                     return null;
                 }
                 success = true;
+                string cmd = index == 0 ? "tcmd-subcase.sh read-mrd-imei" : "tcmd-subcase.sh read-mrd-imei-2";
                 try
                 {
-                    AdbHelper.Instance.GetDevices(AndroidDebugBridge.SocketAddress)[0].ExecuteShellCommand("tcmd-subcase.sh read-mrd-imei", receiver);
+                    AdbHelper.Instance.GetDevices(AndroidDebugBridge.SocketAddress)[0].ExecuteShellCommand(cmd, receiver);
                 }
                 catch (Exception)
                 {
@@ -464,8 +443,9 @@ namespace Common
 
         }
 
-        private bool ExcuteIMEIWriteCmd(out string error, string imei)
+        private bool ExcuteIMEIWriteCmd(out string error, string imei,int index)
         {
+            //Thread.Sleep(2000);
             CommandResultReceiver receiver = new CommandResultReceiver();
             receiver.TrimLines = true;
             error = null;
@@ -478,9 +458,10 @@ namespace Common
                     return false;
                 }
                 success = true;
+                string cmd = index == 0 ? "tcmd-subcase.sh update-mrd-imei" : "tcmd-subcase.sh update-mrd-imei-2";
                 try
                 {
-                    AdbHelper.Instance.GetDevices(AndroidDebugBridge.SocketAddress)[0].ExecuteShellCommand("tcmd-subcase.sh update-mrd-imei " + imei, receiver);
+                    AdbHelper.Instance.GetDevices(AndroidDebugBridge.SocketAddress)[0].ExecuteShellCommand(cmd+" "+ imei, receiver);
                 }
                 catch (Exception)
                 {

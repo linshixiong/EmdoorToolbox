@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBoxCurrent = new System.Windows.Forms.PictureBox();
+            this.pictureBoxMax = new System.Windows.Forms.PictureBox();
+            this.pictureBoxMin = new System.Windows.Forms.PictureBox();
             this.label7 = new System.Windows.Forms.Label();
             this.textBoxCurrent = new System.Windows.Forms.TextBox();
             this.textBoxMax = new System.Windows.Forms.TextBox();
@@ -55,9 +55,9 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCurrent)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMin)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBoxTop.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -66,9 +66,9 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.pictureBox3);
-            this.groupBox1.Controls.Add(this.pictureBox2);
-            this.groupBox1.Controls.Add(this.pictureBox1);
+            this.groupBox1.Controls.Add(this.pictureBoxCurrent);
+            this.groupBox1.Controls.Add(this.pictureBoxMax);
+            this.groupBox1.Controls.Add(this.pictureBoxMin);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.textBoxCurrent);
             this.groupBox1.Controls.Add(this.textBoxMax);
@@ -83,35 +83,35 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "配置范围";
             // 
-            // pictureBox3
+            // pictureBoxCurrent
             // 
-            this.pictureBox3.Image = global::IMEI_Reader.Properties.Resources.Warning;
-            this.pictureBox3.Location = new System.Drawing.Point(355, 108);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(20, 20);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox3.TabIndex = 6;
-            this.pictureBox3.TabStop = false;
+            this.pictureBoxCurrent.Image = global::IMEI_Reader.Properties.Resources.Warning;
+            this.pictureBoxCurrent.Location = new System.Drawing.Point(355, 108);
+            this.pictureBoxCurrent.Name = "pictureBoxCurrent";
+            this.pictureBoxCurrent.Size = new System.Drawing.Size(20, 20);
+            this.pictureBoxCurrent.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxCurrent.TabIndex = 6;
+            this.pictureBoxCurrent.TabStop = false;
             // 
-            // pictureBox2
+            // pictureBoxMax
             // 
-            this.pictureBox2.Image = global::IMEI_Reader.Properties.Resources.Warning;
-            this.pictureBox2.Location = new System.Drawing.Point(355, 70);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(20, 20);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 6;
-            this.pictureBox2.TabStop = false;
+            this.pictureBoxMax.Image = global::IMEI_Reader.Properties.Resources.Warning;
+            this.pictureBoxMax.Location = new System.Drawing.Point(355, 70);
+            this.pictureBoxMax.Name = "pictureBoxMax";
+            this.pictureBoxMax.Size = new System.Drawing.Size(20, 20);
+            this.pictureBoxMax.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxMax.TabIndex = 6;
+            this.pictureBoxMax.TabStop = false;
             // 
-            // pictureBox1
+            // pictureBoxMin
             // 
-            this.pictureBox1.Image = global::IMEI_Reader.Properties.Resources.Warning;
-            this.pictureBox1.Location = new System.Drawing.Point(355, 28);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(20, 20);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 6;
-            this.pictureBox1.TabStop = false;
+            this.pictureBoxMin.Image = global::IMEI_Reader.Properties.Resources.Warning;
+            this.pictureBoxMin.Location = new System.Drawing.Point(355, 28);
+            this.pictureBoxMin.Name = "pictureBoxMin";
+            this.pictureBoxMin.Size = new System.Drawing.Size(20, 20);
+            this.pictureBoxMin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxMin.TabIndex = 6;
+            this.pictureBoxMin.TabStop = false;
             // 
             // label7
             // 
@@ -128,7 +128,8 @@
             this.textBoxCurrent.Location = new System.Drawing.Point(88, 108);
             this.textBoxCurrent.Name = "textBoxCurrent";
             this.textBoxCurrent.Size = new System.Drawing.Size(261, 21);
-            this.textBoxCurrent.TabIndex = 2;
+            this.textBoxCurrent.TabIndex = 5;
+            this.textBoxCurrent.Tag = "3";
             this.textBoxCurrent.TextChanged += new System.EventHandler(this.textBoxCurrent_TextChanged);
             this.textBoxCurrent.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
             // 
@@ -138,7 +139,8 @@
             this.textBoxMax.Location = new System.Drawing.Point(88, 69);
             this.textBoxMax.Name = "textBoxMax";
             this.textBoxMax.Size = new System.Drawing.Size(261, 21);
-            this.textBoxMax.TabIndex = 2;
+            this.textBoxMax.TabIndex = 4;
+            this.textBoxMax.Tag = "2";
             this.textBoxMax.TextChanged += new System.EventHandler(this.textBoxMax_TextChanged);
             this.textBoxMax.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
             // 
@@ -157,7 +159,8 @@
             this.textBoxMin.Location = new System.Drawing.Point(88, 28);
             this.textBoxMin.Name = "textBoxMin";
             this.textBoxMin.Size = new System.Drawing.Size(261, 21);
-            this.textBoxMin.TabIndex = 1;
+            this.textBoxMin.TabIndex = 3;
+            this.textBoxMin.Tag = "1";
             this.textBoxMin.TextChanged += new System.EventHandler(this.textBoxMin_TextChanged);
             this.textBoxMin.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
             // 
@@ -172,10 +175,11 @@
             // 
             // buttonSave
             // 
+            this.buttonSave.Enabled = false;
             this.buttonSave.Location = new System.Drawing.Point(230, 3);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
-            this.buttonSave.TabIndex = 5;
+            this.buttonSave.TabIndex = 9;
             this.buttonSave.Text = "保存";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
@@ -185,7 +189,7 @@
             this.buttonCancel.Location = new System.Drawing.Point(311, 3);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 6;
+            this.buttonCancel.TabIndex = 10;
             this.buttonCancel.Text = "取消";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
@@ -198,7 +202,6 @@
             this.buttonImport.TabIndex = 9;
             this.buttonImport.Text = "导入";
             this.buttonImport.UseVisualStyleBackColor = true;
-            this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
             // groupBox2
             // 
@@ -225,7 +228,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(193, 21);
-            this.textBox3.TabIndex = 11;
+            this.textBox3.TabIndex = 8;
             // 
             // label6
             // 
@@ -244,7 +247,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(193, 21);
-            this.textBox2.TabIndex = 3;
+            this.textBox2.TabIndex = 7;
             this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
             // 
             // label5
@@ -264,7 +267,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(193, 21);
-            this.textBox1.TabIndex = 2;
+            this.textBox1.TabIndex = 6;
             this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
             // 
             // label4
@@ -282,7 +285,7 @@
             this.radioButton_1.Location = new System.Drawing.Point(137, 16);
             this.radioButton_1.Name = "radioButton_1";
             this.radioButton_1.Size = new System.Drawing.Size(71, 16);
-            this.radioButton_1.TabIndex = 10;
+            this.radioButton_1.TabIndex = 1;
             this.radioButton_1.TabStop = true;
             this.radioButton_1.Tag = "1";
             this.radioButton_1.Text = "顺序递增";
@@ -295,7 +298,7 @@
             this.radioButton_0.Location = new System.Drawing.Point(8, 16);
             this.radioButton_0.Name = "radioButton_0";
             this.radioButton_0.Size = new System.Drawing.Size(71, 16);
-            this.radioButton_0.TabIndex = 10;
+            this.radioButton_0.TabIndex = 0;
             this.radioButton_0.TabStop = true;
             this.radioButton_0.Tag = "0";
             this.radioButton_0.Text = "手动输入";
@@ -309,7 +312,7 @@
             this.radioButton_2.Location = new System.Drawing.Point(278, 16);
             this.radioButton_2.Name = "radioButton_2";
             this.radioButton_2.Size = new System.Drawing.Size(71, 16);
-            this.radioButton_2.TabIndex = 10;
+            this.radioButton_2.TabIndex = 2;
             this.radioButton_2.TabStop = true;
             this.radioButton_2.Tag = "2";
             this.radioButton_2.Text = "外部导入";
@@ -369,9 +372,9 @@
             this.Load += new System.EventHandler(this.WriterConfig_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCurrent)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMin)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBoxTop.ResumeLayout(false);
@@ -408,8 +411,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox textBoxCurrent;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBoxMin;
+        private System.Windows.Forms.PictureBox pictureBoxCurrent;
+        private System.Windows.Forms.PictureBox pictureBoxMax;
     }
 }

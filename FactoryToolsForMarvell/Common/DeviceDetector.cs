@@ -44,7 +44,7 @@ namespace Common
         private void updateDeviceCount(object o)
         {
             deviceCount = WMIUsbQuery.GetDeviceCount();
-            form.Invoke(handler, Messages.MSG_UPDATE_DEVICE_COUNT, deviceCount);
+            form.Invoke(handler, Messages.MSG_UPDATE_DEVICE_COUNT,0, deviceCount);
         }
 
 
@@ -58,13 +58,10 @@ namespace Common
                 if (mbo != null && mbo.ClassPath.ClassName == "Win32_USBControllerDevice")
                 {
                     String dependent = (mbo["Dependent"] as String).Split(new Char[] { '=' })[1];
-
-                   // string VIDPID = "VID_" + vid.ToString("X4") + "&PID_" + pid.ToString("X4") + "&MI_" + mi.ToString("D2");
-
-    
+   
                     deviceCount = WMIUsbQuery.GetDeviceCount();
                     
-                    form.Invoke(handler, Messages.MSG_UPDATE_DEVICE_COUNT, deviceCount);
+                    form.Invoke(handler, Messages.MSG_UPDATE_DEVICE_COUNT,0, deviceCount);
 
                 }
             }

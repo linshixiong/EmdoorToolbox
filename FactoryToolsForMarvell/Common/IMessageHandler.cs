@@ -5,11 +5,12 @@ using System.Text;
 namespace Common
 {
   
-    public delegate void MessageHandler(int msgId, object obj);
+    public delegate void MessageHandler(int msgId,int requestCode, object obj);
+
 
     public interface IMessageHandler
     {
 
-        void HandleMessge(int msgId, object obj);
+        void HandleMessge(int msgId, int requestCode, object obj);
     }
 }

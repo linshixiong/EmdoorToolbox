@@ -71,6 +71,9 @@
             this.USBConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.label8 = new System.Windows.Forms.Label();
+            this.textBoxIMEI2 = new System.Windows.Forms.TextBox();
+            this.checkBoxIMEI2 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.panelProgress.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -86,6 +89,7 @@
             this.groupBox1.Controls.Add(this.checkBoxSwVersion);
             this.groupBox1.Controls.Add(this.checkBoxBt);
             this.groupBox1.Controls.Add(this.checkBoxWifi);
+            this.groupBox1.Controls.Add(this.checkBoxIMEI2);
             this.groupBox1.Controls.Add(this.checkBoxIMEI);
             this.groupBox1.Controls.Add(this.checkBoxSN);
             this.groupBox1.Controls.Add(this.textBoxSwVersion);
@@ -96,13 +100,15 @@
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.checkBoxAutoRead);
             this.groupBox1.Controls.Add(this.textBoxSN);
+            this.groupBox1.Controls.Add(this.textBoxIMEI2);
             this.groupBox1.Controls.Add(this.textBoxIMEI);
+            this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("黑体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox1.Location = new System.Drawing.Point(12, 28);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(477, 343);
+            this.groupBox1.Size = new System.Drawing.Size(477, 396);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "打印项";
@@ -111,7 +117,7 @@
             // 
             this.checkBoxAutoPoweroff.AutoSize = true;
             this.checkBoxAutoPoweroff.Font = new System.Drawing.Font("黑体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.checkBoxAutoPoweroff.Location = new System.Drawing.Point(262, 313);
+            this.checkBoxAutoPoweroff.Location = new System.Drawing.Point(249, 370);
             this.checkBoxAutoPoweroff.Name = "checkBoxAutoPoweroff";
             this.checkBoxAutoPoweroff.Size = new System.Drawing.Size(96, 18);
             this.checkBoxAutoPoweroff.TabIndex = 8;
@@ -124,7 +130,7 @@
             this.checkBoxAutoPrint.AutoSize = true;
             this.checkBoxAutoPrint.Checked = true;
             this.checkBoxAutoPrint.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxAutoPrint.Location = new System.Drawing.Point(170, 313);
+            this.checkBoxAutoPrint.Location = new System.Drawing.Point(157, 370);
             this.checkBoxAutoPrint.Name = "checkBoxAutoPrint";
             this.checkBoxAutoPrint.Size = new System.Drawing.Size(82, 18);
             this.checkBoxAutoPrint.TabIndex = 22;
@@ -135,7 +141,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(362, 314);
+            this.label7.Location = new System.Drawing.Point(349, 371);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(70, 14);
             this.label7.TabIndex = 21;
@@ -144,7 +150,7 @@
             // textBoxPrintCount
             // 
             this.textBoxPrintCount.Font = new System.Drawing.Font("黑体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBoxPrintCount.Location = new System.Drawing.Point(438, 310);
+            this.textBoxPrintCount.Location = new System.Drawing.Point(425, 367);
             this.textBoxPrintCount.Name = "textBoxPrintCount";
             this.textBoxPrintCount.Size = new System.Drawing.Size(22, 23);
             this.textBoxPrintCount.TabIndex = 20;
@@ -155,7 +161,7 @@
             // checkBoxSwVersion
             // 
             this.checkBoxSwVersion.AutoSize = true;
-            this.checkBoxSwVersion.Location = new System.Drawing.Point(453, 272);
+            this.checkBoxSwVersion.Location = new System.Drawing.Point(453, 332);
             this.checkBoxSwVersion.Name = "checkBoxSwVersion";
             this.checkBoxSwVersion.Size = new System.Drawing.Size(15, 14);
             this.checkBoxSwVersion.TabIndex = 18;
@@ -165,7 +171,7 @@
             // checkBoxBt
             // 
             this.checkBoxBt.AutoSize = true;
-            this.checkBoxBt.Location = new System.Drawing.Point(453, 212);
+            this.checkBoxBt.Location = new System.Drawing.Point(453, 272);
             this.checkBoxBt.Name = "checkBoxBt";
             this.checkBoxBt.Size = new System.Drawing.Size(15, 14);
             this.checkBoxBt.TabIndex = 18;
@@ -175,7 +181,7 @@
             // checkBoxWifi
             // 
             this.checkBoxWifi.AutoSize = true;
-            this.checkBoxWifi.Location = new System.Drawing.Point(453, 152);
+            this.checkBoxWifi.Location = new System.Drawing.Point(453, 210);
             this.checkBoxWifi.Name = "checkBoxWifi";
             this.checkBoxWifi.Size = new System.Drawing.Size(15, 14);
             this.checkBoxWifi.TabIndex = 18;
@@ -205,8 +211,8 @@
             // textBoxSwVersion
             // 
             this.textBoxSwVersion.BackColor = System.Drawing.Color.White;
-            this.textBoxSwVersion.Font = new System.Drawing.Font("黑体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBoxSwVersion.Location = new System.Drawing.Point(82, 266);
+            this.textBoxSwVersion.Font = new System.Drawing.Font("黑体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxSwVersion.Location = new System.Drawing.Point(82, 326);
             this.textBoxSwVersion.Name = "textBoxSwVersion";
             this.textBoxSwVersion.ReadOnly = true;
             this.textBoxSwVersion.Size = new System.Drawing.Size(365, 26);
@@ -216,7 +222,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("黑体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(27, 272);
+            this.label6.Location = new System.Drawing.Point(27, 332);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(49, 14);
             this.label6.TabIndex = 15;
@@ -225,8 +231,8 @@
             // textBoxBt
             // 
             this.textBoxBt.BackColor = System.Drawing.Color.White;
-            this.textBoxBt.Font = new System.Drawing.Font("黑体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBoxBt.Location = new System.Drawing.Point(82, 206);
+            this.textBoxBt.Font = new System.Drawing.Font("黑体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxBt.Location = new System.Drawing.Point(82, 266);
             this.textBoxBt.Name = "textBoxBt";
             this.textBoxBt.ReadOnly = true;
             this.textBoxBt.Size = new System.Drawing.Size(365, 26);
@@ -236,7 +242,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("黑体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(13, 212);
+            this.label5.Location = new System.Drawing.Point(13, 272);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(63, 14);
             this.label5.TabIndex = 13;
@@ -245,8 +251,8 @@
             // textBoxWifi
             // 
             this.textBoxWifi.BackColor = System.Drawing.Color.White;
-            this.textBoxWifi.Font = new System.Drawing.Font("黑体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBoxWifi.Location = new System.Drawing.Point(82, 146);
+            this.textBoxWifi.Font = new System.Drawing.Font("黑体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxWifi.Location = new System.Drawing.Point(82, 206);
             this.textBoxWifi.Name = "textBoxWifi";
             this.textBoxWifi.ReadOnly = true;
             this.textBoxWifi.Size = new System.Drawing.Size(365, 26);
@@ -256,7 +262,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("黑体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(13, 152);
+            this.label4.Location = new System.Drawing.Point(13, 210);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 14);
             this.label4.TabIndex = 11;
@@ -267,7 +273,7 @@
             this.checkBoxAutoRead.AutoSize = true;
             this.checkBoxAutoRead.Checked = true;
             this.checkBoxAutoRead.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxAutoRead.Location = new System.Drawing.Point(82, 313);
+            this.checkBoxAutoRead.Location = new System.Drawing.Point(69, 370);
             this.checkBoxAutoRead.Name = "checkBoxAutoRead";
             this.checkBoxAutoRead.Size = new System.Drawing.Size(82, 18);
             this.checkBoxAutoRead.TabIndex = 1;
@@ -279,7 +285,7 @@
             // 
             this.textBoxSN.BackColor = System.Drawing.Color.White;
             this.textBoxSN.Enabled = false;
-            this.textBoxSN.Font = new System.Drawing.Font("黑体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxSN.Font = new System.Drawing.Font("黑体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBoxSN.Location = new System.Drawing.Point(82, 26);
             this.textBoxSN.Name = "textBoxSN";
             this.textBoxSN.ReadOnly = true;
@@ -289,7 +295,7 @@
             // textBoxIMEI
             // 
             this.textBoxIMEI.BackColor = System.Drawing.Color.White;
-            this.textBoxIMEI.Font = new System.Drawing.Font("黑体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxIMEI.Font = new System.Drawing.Font("黑体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBoxIMEI.Location = new System.Drawing.Point(82, 86);
             this.textBoxIMEI.Name = "textBoxIMEI";
             this.textBoxIMEI.ReadOnly = true;
@@ -320,7 +326,7 @@
             // 
             this.panelProgress.Controls.Add(this.label3);
             this.panelProgress.Controls.Add(this.pictureBox1);
-            this.panelProgress.Location = new System.Drawing.Point(171, 377);
+            this.panelProgress.Location = new System.Drawing.Point(171, 430);
             this.panelProgress.Name = "panelProgress";
             this.panelProgress.Size = new System.Drawing.Size(130, 39);
             this.panelProgress.TabIndex = 10;
@@ -350,7 +356,7 @@
             // 
             this.buttonPrint.Enabled = false;
             this.buttonPrint.Font = new System.Drawing.Font("黑体", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonPrint.Location = new System.Drawing.Point(412, 385);
+            this.buttonPrint.Location = new System.Drawing.Point(412, 438);
             this.buttonPrint.Name = "buttonPrint";
             this.buttonPrint.Size = new System.Drawing.Size(80, 30);
             this.buttonPrint.TabIndex = 3;
@@ -363,7 +369,7 @@
             this.labelMsg.AutoSize = true;
             this.labelMsg.Font = new System.Drawing.Font("黑体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelMsg.ForeColor = System.Drawing.Color.Black;
-            this.labelMsg.Location = new System.Drawing.Point(12, 393);
+            this.labelMsg.Location = new System.Drawing.Point(12, 446);
             this.labelMsg.Name = "labelMsg";
             this.labelMsg.Size = new System.Drawing.Size(49, 14);
             this.labelMsg.TabIndex = 7;
@@ -373,7 +379,7 @@
             // 
             this.buttonRefresh.Enabled = false;
             this.buttonRefresh.Font = new System.Drawing.Font("黑体", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonRefresh.Location = new System.Drawing.Point(307, 385);
+            this.buttonRefresh.Location = new System.Drawing.Point(307, 438);
             this.buttonRefresh.Name = "buttonRefresh";
             this.buttonRefresh.Size = new System.Drawing.Size(80, 30);
             this.buttonRefresh.TabIndex = 2;
@@ -390,7 +396,7 @@
             this.HelpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(504, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(504, 24);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -399,13 +405,13 @@
             this.FileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ExitToolStripMenuItem});
             this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
-            this.FileToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.FileToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.FileToolStripMenuItem.Text = "文件";
             // 
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
             this.ExitToolStripMenuItem.Text = "退出";
             this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -417,14 +423,14 @@
             this.PoweroffToolStripMenuItem,
             this.RebootToolStripMenuItem});
             this.OperatorToolStripMenuItem.Name = "OperatorToolStripMenuItem";
-            this.OperatorToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.OperatorToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.OperatorToolStripMenuItem.Text = "操作";
             // 
             // ReadToolStripMenuItem
             // 
             this.ReadToolStripMenuItem.Enabled = false;
             this.ReadToolStripMenuItem.Name = "ReadToolStripMenuItem";
-            this.ReadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.ReadToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
             this.ReadToolStripMenuItem.Text = "读取";
             this.ReadToolStripMenuItem.Click += new System.EventHandler(this.ReadToolStripMenuItem_Click);
             // 
@@ -432,7 +438,7 @@
             // 
             this.PrintToolStripMenuItem.Enabled = false;
             this.PrintToolStripMenuItem.Name = "PrintToolStripMenuItem";
-            this.PrintToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.PrintToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
             this.PrintToolStripMenuItem.Text = "打印";
             this.PrintToolStripMenuItem.Click += new System.EventHandler(this.PrintToolStripMenuItem_Click);
             // 
@@ -440,7 +446,7 @@
             // 
             this.PoweroffToolStripMenuItem.Enabled = false;
             this.PoweroffToolStripMenuItem.Name = "PoweroffToolStripMenuItem";
-            this.PoweroffToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.PoweroffToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
             this.PoweroffToolStripMenuItem.Text = "关机";
             this.PoweroffToolStripMenuItem.Click += new System.EventHandler(this.PoweroffToolStripMenuItem_Click);
             // 
@@ -448,7 +454,7 @@
             // 
             this.RebootToolStripMenuItem.Enabled = false;
             this.RebootToolStripMenuItem.Name = "RebootToolStripMenuItem";
-            this.RebootToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.RebootToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
             this.RebootToolStripMenuItem.Text = "重启";
             this.RebootToolStripMenuItem.Click += new System.EventHandler(this.RebootToolStripMenuItem_Click);
             // 
@@ -461,14 +467,14 @@
             this.PrinterConfigToolStripMenuItem,
             this.USBConfigToolStripMenuItem});
             this.OptionToolStripMenuItem.Name = "OptionToolStripMenuItem";
-            this.OptionToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.OptionToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.OptionToolStripMenuItem.Text = "选项";
             // 
             // AutoReadToolStripMenuItem
             // 
             this.AutoReadToolStripMenuItem.CheckOnClick = true;
             this.AutoReadToolStripMenuItem.Name = "AutoReadToolStripMenuItem";
-            this.AutoReadToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.AutoReadToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.AutoReadToolStripMenuItem.Text = "自动读取";
             this.AutoReadToolStripMenuItem.Click += new System.EventHandler(this.AutoReadToolStripMenuItem_Click);
             // 
@@ -476,7 +482,7 @@
             // 
             this.AutoPrintToolStripMenuItem1.CheckOnClick = true;
             this.AutoPrintToolStripMenuItem1.Name = "AutoPrintToolStripMenuItem1";
-            this.AutoPrintToolStripMenuItem1.Size = new System.Drawing.Size(148, 22);
+            this.AutoPrintToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
             this.AutoPrintToolStripMenuItem1.Text = "自动打印";
             this.AutoPrintToolStripMenuItem1.Click += new System.EventHandler(this.AutoPrintToolStripMenuItem1_Click);
             // 
@@ -484,21 +490,21 @@
             // 
             this.AutoPoweroffToolStripMenuItem.CheckOnClick = true;
             this.AutoPoweroffToolStripMenuItem.Name = "AutoPoweroffToolStripMenuItem";
-            this.AutoPoweroffToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.AutoPoweroffToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.AutoPoweroffToolStripMenuItem.Text = "完成后关机";
             this.AutoPoweroffToolStripMenuItem.Click += new System.EventHandler(this.AutoPoweroffToolStripMenuItem_Click);
             // 
             // PrinterConfigToolStripMenuItem
             // 
             this.PrinterConfigToolStripMenuItem.Name = "PrinterConfigToolStripMenuItem";
-            this.PrinterConfigToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.PrinterConfigToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.PrinterConfigToolStripMenuItem.Text = "打印机配置";
             this.PrinterConfigToolStripMenuItem.Click += new System.EventHandler(this.PrinterConfigToolStripMenuItem_Click);
             // 
             // USBConfigToolStripMenuItem
             // 
             this.USBConfigToolStripMenuItem.Name = "USBConfigToolStripMenuItem";
-            this.USBConfigToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.USBConfigToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.USBConfigToolStripMenuItem.Text = "USB连接参数";
             this.USBConfigToolStripMenuItem.Click += new System.EventHandler(this.USBConfigToolStripMenuItem_Click);
             // 
@@ -507,21 +513,51 @@
             this.HelpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AboutToolStripMenuItem1});
             this.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem";
-            this.HelpToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.HelpToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.HelpToolStripMenuItem.Text = "帮助";
             // 
             // AboutToolStripMenuItem1
             // 
             this.AboutToolStripMenuItem1.Name = "AboutToolStripMenuItem1";
-            this.AboutToolStripMenuItem1.Size = new System.Drawing.Size(100, 22);
+            this.AboutToolStripMenuItem1.Size = new System.Drawing.Size(94, 22);
             this.AboutToolStripMenuItem1.Text = "关于";
             this.AboutToolStripMenuItem1.Click += new System.EventHandler(this.AboutToolStripMenuItem1_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("黑体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label8.Location = new System.Drawing.Point(34, 152);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(42, 14);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "IMEI2";
+            // 
+            // textBoxIMEI2
+            // 
+            this.textBoxIMEI2.BackColor = System.Drawing.Color.White;
+            this.textBoxIMEI2.Font = new System.Drawing.Font("黑体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxIMEI2.Location = new System.Drawing.Point(82, 146);
+            this.textBoxIMEI2.Name = "textBoxIMEI2";
+            this.textBoxIMEI2.ReadOnly = true;
+            this.textBoxIMEI2.Size = new System.Drawing.Size(364, 26);
+            this.textBoxIMEI2.TabIndex = 5;
+            // 
+            // checkBoxIMEI2
+            // 
+            this.checkBoxIMEI2.AutoSize = true;
+            this.checkBoxIMEI2.Location = new System.Drawing.Point(453, 152);
+            this.checkBoxIMEI2.Name = "checkBoxIMEI2";
+            this.checkBoxIMEI2.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxIMEI2.TabIndex = 18;
+            this.checkBoxIMEI2.UseVisualStyleBackColor = true;
+            this.checkBoxIMEI2.CheckedChanged += new System.EventHandler(this.checkBoxIMEI2_CheckedChanged);
             // 
             // Printer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(504, 425);
+            this.ClientSize = new System.Drawing.Size(504, 476);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonPrint);
@@ -592,6 +628,9 @@
         private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem1;
         private System.Windows.Forms.CheckBox checkBoxAutoPoweroff;
         private System.Windows.Forms.ToolStripMenuItem AutoPrintToolStripMenuItem1;
+        private System.Windows.Forms.CheckBox checkBoxIMEI2;
+        private System.Windows.Forms.TextBox textBoxIMEI2;
+        private System.Windows.Forms.Label label8;
     }
 }
 

@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.IO;
 
 using Common;
+using IMEI_Reader.Properties;
 
 namespace IMEI_Reader
 {
@@ -21,8 +22,7 @@ namespace IMEI_Reader
         {
             InitializeComponent();
 
-            
-
+          
         }
 
         private void WriterConfig_Load(object sender, EventArgs e)
@@ -35,9 +35,43 @@ namespace IMEI_Reader
 
         private void initUI()
         {
+            int maxLength = 0;
+            string title = "";
+            switch (source)
+            {
+                case CodeType.TYPE_SN:
+                    maxLength = 32;
+                    title = "SN";
+                    break;
+                case CodeType.TYPE_IMEI:
+                    title = "IMEI";
+                    maxLength = 15;
+                    break;
+                case CodeType.TYPE_IMEI2:
+                    title = "IMEI2";
+                    maxLength = 15;
+                    break;
+                case CodeType.TYPE_WIFI_MAC:
+                    maxLength = 12;
+                    title = "WIFI地址";
+                    break;
+                case CodeType.TYPE_BT_MAC:
+                    maxLength = 12;
+                    title = "蓝牙地址";
+                    break;
 
+                default:
+                    maxLength = 0;
+                    break;
+            }
+
+            textBoxMin.MaxLength = maxLength;
+            textBoxMax.MaxLength = maxLength;
+            textBoxCurrent.MaxLength = maxLength;
+            this.Text = title + this.Text;
             switch (inputType)
             {
+
                 case 0:
                     radioButton_0.Checked = true;
                     break;
@@ -55,6 +89,76 @@ namespace IMEI_Reader
 
         }
 
+        private string[] getSavedData()
+        {
+            string [] data=new string[3];
+            switch (source)
+            {
+                case CodeType.TYPE_SN:
+                    data[0] = Settings.Default.SN_MIN;
+                    data[1] = Settings.Default.SN_MAX;
+                    data[2] = Settings.Default.SN_CUR;
+                    break;
+                case CodeType.TYPE_IMEI:
+                    data[0] = Settings.Default.IMEI_MIN;
+                    data[1] = Settings.Default.IMEI_MAX;
+                    data[2] = Settings.Default.IMEI_CUR;
+                    break;
+                case CodeType.TYPE_IMEI2:
+                    data[0] = Settings.Default.IMEI2_MIN;
+                    data[1] = Settings.Default.IMEI2_MAX;
+                    data[2] = Settings.Default.IMEI2_CUR;
+                    break;
+                case CodeType.TYPE_WIFI_MAC:
+                    data[0] = Settings.Default.WIFI_MIN;
+                    data[1] = Settings.Default.WIFI_MAX;
+                    data[2] = Settings.Default.WIFI_CUR;
+                    break;
+                case CodeType.TYPE_BT_MAC:
+                    data[0] = Settings.Default.BT_MIN;
+                    data[1] = Settings.Default.BT_MAX;
+                    data[2] = Settings.Default.BT_CUR;
+                    break;
+                default:
+                    break;
+            }
+            return data;
+        }
+
+        private void saveData(string min, string max, string current)
+        {
+            switch (source)
+            {
+                case CodeType.TYPE_SN:
+                    Settings.Default.SN_MIN = min;
+                    Settings.Default.SN_MAX = max;
+                    Settings.Default.SN_CUR = current;
+                    break;
+                case CodeType.TYPE_IMEI:
+                    Settings.Default.IMEI_MIN = min;
+                    Settings.Default.IMEI_MAX = max;
+                    Settings.Default.IMEI_CUR = current;
+                    break;
+                case CodeType.TYPE_IMEI2:
+                    Settings.Default.IMEI2_MIN = min;
+                    Settings.Default.IMEI2_MAX = max;
+                    Settings.Default.IMEI2_CUR = current;
+                    break;
+                case CodeType.TYPE_WIFI_MAC:
+                    Settings.Default.WIFI_MIN = min;
+                    Settings.Default.WIFI_MAX = max;
+                    Settings.Default.WIFI_CUR = current;
+                    break;
+                case CodeType.TYPE_BT_MAC:
+                    Settings.Default.BT_MIN = min;
+                    Settings.Default.BT_MAX = max;
+                    Settings.Default.BT_CUR = current;
+                    break;
+                default:
+                    break;
+            }
+            Settings.Default.Save();
+        }
 
         private int getInputType(int source)
         {
@@ -64,6 +168,8 @@ namespace IMEI_Reader
                     return Settings.Default.InputSNType;
                 case CodeType.TYPE_IMEI:
                     return Settings.Default.InputIMEIType;
+                case CodeType.TYPE_IMEI2:
+                    return Settings.Default.InputIMEI2Type;
                 case CodeType.TYPE_WIFI_MAC:
                     return Settings.Default.InputWIFIType;
                 case CodeType.TYPE_BT_MAC:
@@ -83,6 +189,9 @@ namespace IMEI_Reader
                 case CodeType.TYPE_IMEI:
                       Settings.Default.InputIMEIType = inputType;
                       break;
+                case CodeType.TYPE_IMEI2:
+                      Settings.Default.InputIMEI2Type = inputType;
+                      break;
                 case CodeType.TYPE_WIFI_MAC:
                       Settings.Default.InputWIFIType = inputType;
                       break;
@@ -90,7 +199,7 @@ namespace IMEI_Reader
                       Settings.Default.InputBTType = inputType;
                       break;
                 default:
-                      Settings.Default.InputSNType = inputType;
+                      //Settings.Default.InputSNType = inputType;
                       break;
                      
 
@@ -105,192 +214,31 @@ namespace IMEI_Reader
             this.Close();
         }
 
-
-
-        private bool CheckHexInput()
-        {
-            string min = textBoxMin.Text.Trim();
-            string max = textBoxMax.Text.Trim();
-            string current = textBoxCurrent.Text.Trim();
-
-            //bool isHex = Util.IsHexString("ABCD123456");
-            int length = 12;
-
-            if (min.Length != length)
-            {
-                MessageBox.Show("最小值必须为"+length+"位","错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
-                return false;
-            }
-            if (max.Length != length )
-            {
-                MessageBox.Show("最大值必须为" + length + "位", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            if (current.Length > 0 && current.Length != length)
-            {
-                MessageBox.Show("当前值必须为" + length + "位", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (!Util.IsHexString(min) )
-            {
-                MessageBox.Show("最小值必须为十六进制格式", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            if (!Util.IsHexString(max))
-            {
-                MessageBox.Show("最大值必须为十六进制格式", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            if (current.Length>0&&!Util.IsHexString(current))
-            {
-                MessageBox.Show("当前值必须为十六进制格式", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (max.CompareTo(min) <= 0)
-            {
-                MessageBox.Show("最大值必须大于最小值", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (current.Length > 0)
-            {
-                if (current.CompareTo(min) < 0||current.CompareTo(max)>0)
-                {
-                    MessageBox.Show("当前值必须在最小值与最大值之间", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-
-            }
-            return true;
-        }
-
-        private bool CheckSNInput()
-        {
-            string min = textBoxMin.Text.Trim();
-            string max = textBoxMax.Text.Trim();
-            string current = textBoxCurrent.Text.Trim();
-
-
-            if (min.Length == 0 || max.Length == 0)
-            {
-                MessageBox.Show("最小值与最大值不能为空", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            char endChar = min[min.Length - 1];
-            if (!Char.IsDigit(endChar))
-            {
-                MessageBox.Show("最小值必须以数字结尾", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            endChar = max[max.Length - 1];
-            if (!Char.IsDigit(endChar))
-            {
-                MessageBox.Show("最大值必须以数字结尾", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            if (current.Length > 0)
-            {
-                endChar = current[current.Length - 1];
-                if (!Char.IsDigit(endChar))
-                {
-                    MessageBox.Show("当前值必须以数字结尾", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-            }
-
-
-            if (min.Length != max.Length)
-            {
-                MessageBox.Show("最小值与最大值长度必须相等", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (current.Length > 0 && current.Length != min.Length)
-            {
-                MessageBox.Show("当前值长度无效", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            if (max.CompareTo(min) <= 0)
-            {
-                MessageBox.Show("最大值必须大于最小值", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (current.Length > 0)
-            {
-                if (current.CompareTo(min) < 0 || current.CompareTo(max) > 0)
-                {
-                    MessageBox.Show("当前值必须在最小值与最大值之间", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-
-            }
-           
-
-            return true;
-        }
-
-
-        private bool CheckIMEIInput()
-        {
-            return false;
-        }
-
         private void buttonSave_Click(object sender, EventArgs e)
         {
             setInputType(source, inputType);
+            saveData(textBoxMin.Text.Trim(), textBoxMax.Text.Trim(), textBoxCurrent.Text.Trim());
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
-
-
-
-        //private void textBox_TextChanged(object sender, EventArgs e)
-        //{
-
-        //    if (!radioButton_1.Checked)
-        //    {
-        //        return;
-        //    }
-        //    TextBox textBox = (TextBox)sender;
-        //    /*
-        //    if (config.ConfigType != DataType.SN)
-        //    {
-
-        //        textBox.Text = textBox.Text.Replace(":", "").Trim();
-
-        //        if (!Util.IsHexString(textBox.Text))
-        //        {
-        //            textBox.Clear();
-        //        }
-        //    }*/
-        //    if (textBoxMax.Text.Length == 0 || textBoxMin.Text.Length == 0)
-        //    {
-        //        buttonSave.Enabled = false;
-        //    }
-        //    else
-        //    {
-        //        buttonSave.Enabled = true;
-        //    }
-
-        //}
-
 
         private void textBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
 
-            int maxLength = 12;
+            int maxLength = 0;
 
-            if (source == CodeType.TYPE_IMEI)
+            if (source == CodeType.TYPE_IMEI||source==CodeType.TYPE_IMEI2)
             {
-                maxLength = 14;
+                maxLength = 15;
             }
             else if (source == CodeType.TYPE_SN)
             {
                 maxLength = 32;
+            }
+            else
+            {
+                maxLength = 12;
             }
 
 
@@ -301,9 +249,13 @@ namespace IMEI_Reader
 
             else if (e.KeyChar != '\b')
             {
-                if (source == CodeType.TYPE_IMEI)
+                if (source == CodeType.TYPE_IMEI||source==CodeType.TYPE_IMEI2)
                 {
-                    e.Handled = "0123456789".IndexOf(char.ToUpper(e.KeyChar)) < 0;
+                    e.Handled = !Char.IsDigit(e.KeyChar);
+                }
+                else if (source == CodeType.TYPE_SN)
+                {
+                    e.Handled = !Char.IsLetterOrDigit(e.KeyChar);
                 }
                 else
                 {
@@ -311,13 +263,6 @@ namespace IMEI_Reader
                 }
                
             }
-
-        }
-
-        private void buttonImport_Click(object sender, EventArgs e)
-        {
-           
-
 
         }
 
@@ -338,13 +283,15 @@ namespace IMEI_Reader
                 }
                 else if (inputType == 1)
                 {
-                    if (string.IsNullOrEmpty(textBoxMin.Text) || string.IsNullOrEmpty(textBoxMax.Text))
-                    {
-                        buttonSave.Enabled = false;
-                    }
+                    buttonSave.Enabled = false;
+
+                    string[] data = getSavedData();
+                    textBoxMin.Text = data[0];
+                    textBoxMax.Text = data[1];
+                    textBoxCurrent.Text = data[2];
+
                 }
 
-                
 
             }
         }
@@ -352,20 +299,80 @@ namespace IMEI_Reader
         private void textBoxMin_TextChanged(object sender, EventArgs e)
         {
            
-            
+           textBoxCurrent.Text= textBoxMin.Text;
+           checkInput((TextBox)sender);
 
         }
 
         private void textBoxMax_TextChanged(object sender, EventArgs e)
         {
-
+            checkInput((TextBox)sender);
         }
 
         private void textBoxCurrent_TextChanged(object sender, EventArgs e)
         {
-
+            checkInput((TextBox)sender);
         }
 
+        private void checkInput(TextBox textBox)
+        {
+            bool valid = true;
+
+            int tag = Convert.ToInt32(textBox.Tag);
+            PictureBox pictureBox=null;
+            switch (tag)
+            {
+                case 1:
+                    pictureBox= pictureBoxMin ;
+                    break;
+                case 2:
+                    pictureBox = pictureBoxMax;
+                    break;
+                case 3:
+                    pictureBox = pictureBoxCurrent;
+                    break;
+            }
+
+            if (textBox.Text.Trim().Length > 0)
+            {
+                switch (source)
+                {
+                    case CodeType.TYPE_SN:
+                        valid = Util.IsValidSN(textBox.Text.Trim());
+                        break;
+                    case CodeType.TYPE_IMEI:
+                    case  CodeType.TYPE_IMEI2:
+                        valid = Util.IsValidIMEI(textBox.Text.Trim());
+                        break;
+                    case CodeType.TYPE_WIFI_MAC:
+                    case CodeType.TYPE_BT_MAC:
+                        valid = Util.IsValidMAC(textBox.Text.Trim());
+                        break;
+                }
+               
+                pictureBox.Image = valid ? Resources.Tick : Resources.Error;
+                pictureBox.Tag = valid;
+                
+            }
+            else
+            {
+                pictureBox.Image = Resources.Warning;
+                pictureBox.Tag = false;
+            }
+
+
+
+            if (Convert.ToBoolean(pictureBoxMin.Tag) && Convert.ToBoolean(pictureBoxMax.Tag) && Convert.ToBoolean(pictureBoxCurrent.Tag) )
+            {
+                buttonSave.Enabled = true;
+            }
+            else
+            {
+                buttonSave.Enabled = false;
+            }
+           
+
+        }
 
     }
 }

@@ -39,6 +39,11 @@ namespace IMEI_Reader
 
             textBoxIMEI.Enabled = checkBoxIMEI.Checked;
             textBoxIMEI.BackColor = checkBoxIMEI.Checked ? Color.White :  System.Drawing.SystemColors.Control;
+
+            this.checkBoxIMEI2.Checked = Settings.Default.IMEI2_Selected;
+            textBoxIMEI2.Enabled = checkBoxIMEI2.Checked;
+            textBoxIMEI2.BackColor = checkBoxIMEI2.Checked ? Color.White : System.Drawing.SystemColors.Control;
+            
             
             this.checkBoxWifi.Checked = Settings.Default.WIFI_Selected;
             textBoxWifi.Enabled = checkBoxWifi.Checked;
@@ -60,7 +65,7 @@ namespace IMEI_Reader
 
         }
 
-        public void HandleMessge(int msgId, object obj)
+        public void HandleMessge(int msgId, int requestCode, object obj)
         {
             string errorMsg = null;
             switch (msgId)
@@ -82,6 +87,7 @@ namespace IMEI_Reader
                     RebootToolStripMenuItem.Enabled = false;
                     checkBoxSN.Enabled = false;
                     checkBoxIMEI.Enabled = false;
+                    checkBoxIMEI2.Enabled = false;
                     checkBoxWifi.Enabled = false;
                     checkBoxBt.Enabled = false;
                     checkBoxSwVersion.Enabled = false;
@@ -102,7 +108,10 @@ namespace IMEI_Reader
                     {
                         textBoxIMEI.Text = result[CodeType.TYPE_IMEI];
                     }
-
+                    if (checkBoxIMEI2.Checked)
+                    {
+                        textBoxIMEI2.Text = result[CodeType.TYPE_IMEI2];
+                    }
                     if (checkBoxWifi.Checked)
                     {
                         textBoxWifi.Text = result[CodeType.TYPE_WIFI_MAC];
@@ -127,6 +136,7 @@ namespace IMEI_Reader
 
                     checkBoxSN.Enabled = true;
                     checkBoxIMEI.Enabled = true;
+                    checkBoxIMEI2.Enabled = true;
                     checkBoxWifi.Enabled = true;
                     checkBoxBt.Enabled = true;
                     checkBoxSwVersion.Enabled = true;
@@ -148,6 +158,7 @@ namespace IMEI_Reader
                     RebootToolStripMenuItem.Enabled = true;
                     checkBoxSN.Enabled = true;
                     checkBoxIMEI.Enabled = true;
+                    checkBoxIMEI2.Enabled = true;
                     checkBoxWifi.Enabled = true;
                     checkBoxBt.Enabled = true;
                     checkBoxSwVersion.Enabled = true;
@@ -164,6 +175,7 @@ namespace IMEI_Reader
         {
             textBoxSN.Clear();
             textBoxIMEI.Clear();
+            textBoxIMEI2.Clear();
             textBoxWifi.Clear();
             textBoxBt.Clear();
             textBoxSwVersion.Clear();
@@ -217,6 +229,7 @@ namespace IMEI_Reader
         {
             textBoxSN.Clear();
             textBoxIMEI.Clear();
+            textBoxIMEI2.Clear();
             textBoxWifi.Clear();
             textBoxBt.Clear();
             textBoxSwVersion.Clear();
@@ -230,6 +243,10 @@ namespace IMEI_Reader
             if (checkBoxIMEI.Checked)
             {
                 cmds.Add(CodeType.TYPE_IMEI);
+            }
+            if (checkBoxIMEI2.Checked)
+            {
+                cmds.Add(CodeType.TYPE_IMEI2);
             }
             if (checkBoxWifi.Checked)
             {
@@ -292,7 +309,20 @@ namespace IMEI_Reader
                     }
                 }
             }
-
+            if (checkBoxIMEI2.Checked)
+            {
+                if (string.IsNullOrEmpty(textBoxIMEI2.Text.Trim()))
+                {
+                    goto ERROR;
+                }
+                else
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_IMEI2, textBoxIMEI2.Text.Trim()));
+                    }
+                }
+            }
             if (checkBoxWifi.Checked)
             {
                 if (string.IsNullOrEmpty(textBoxWifi.Text.Trim()))
@@ -365,28 +395,7 @@ namespace IMEI_Reader
 
         }
 
-        /*
-        private void textBox_TextChanged(object sender, EventArgs e)
-        {
-
-            TextBox textBox = (TextBox)sender;
-
-
-
-            if (string.IsNullOrEmpty(textBox.Text.Trim()) || string.IsNullOrEmpty(textBox.Text.Trim()))
-            {
-                buttonPrint.Enabled = false;
-
-            }
-            else
-            {
-                buttonPrint.Enabled = true;
-            }
-        }*/
-
  
-
-
         private void checkBoxSN_CheckedChanged(object sender, EventArgs e)
         {
             Settings.Default.SN_Selected = checkBoxSN.Checked;
@@ -406,6 +415,16 @@ namespace IMEI_Reader
             textBoxIMEI.Enabled = checkBoxIMEI.Checked;
             textBoxIMEI.BackColor = checkBoxIMEI.Checked ? Color.White :  System.Drawing.SystemColors.Control;
         }
+
+        private void checkBoxIMEI2_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.IMEI2_Selected = checkBoxIMEI2.Checked;
+            Settings.Default.Save();
+
+            textBoxIMEI2.Enabled = checkBoxIMEI2.Checked;
+            textBoxIMEI2.BackColor = checkBoxIMEI2.Checked ? Color.White : System.Drawing.SystemColors.Control;
+        }
+
 
         private void checkBoxWifi_CheckedChanged(object sender, EventArgs e)
         {
@@ -620,6 +639,8 @@ namespace IMEI_Reader
                     return "S/N:";
                 case CodeType.TYPE_IMEI:
                     return "IMEI:";
+                case CodeType.TYPE_IMEI2:
+                    return "IMEI2:";
                 case CodeType.TYPE_WIFI_MAC:
                     return "WIFI MAC:";
                 case CodeType.TYPE_BT_MAC:
@@ -711,6 +732,7 @@ namespace IMEI_Reader
             AboutBox about = new AboutBox();
             about.ShowDialog();
         }
+
 
 
 

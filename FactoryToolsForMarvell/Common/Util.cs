@@ -32,41 +32,7 @@ namespace Common
     public static class Util
     {
 
-        /// <summary>
-        /// 运行CMD命令
-        /// </summary>
-        /// <param name="cmd">命令</param>
-        /// <returns></returns>
-        public static string Cmd(string cmd, string param)
-        {
-            Process proc = new Process();
-            proc.StartInfo.CreateNoWindow = true;
-            proc.StartInfo.UseShellExecute = false; //此属性必须设置成false 
-            proc.StartInfo.RedirectStandardOutput = true;// 此属性必须设置成true 
-
-            proc.StartInfo.FileName = cmd;
-            proc.StartInfo.Arguments = param;
-
-            proc.Start();
-
-            string output = proc.StandardOutput.ReadToEnd();
-            return output;
-        }
-
-        public static bool IsVenderSupport(int vid)
-        {
-
-            string str_vids = "0x18d1,0x04e8".ToUpper();// Settings.Default.vid_list.ToUpper();
-            string [] array =str_vids.Split(',');
-            if (array != null && array.Length > 0)
-            {
-                List<string>  vid_list = new List<string>(array);
-                string str_vid ="0X"+ vid.ToString("X4").ToUpper();
-                return vid_list.Contains(str_vid);
-            }
-            return false;
-        }
-
+      
         public static bool IsProcessOpen(string name)
         {
             foreach (Process clsProcess in Process.GetProcesses())
@@ -79,9 +45,9 @@ namespace Common
             return false;
         }
 
-        public static bool IsHexString(string str)
+        public static bool IsValidMAC(string str)
         {
-            if (string.IsNullOrEmpty(str))
+            if (string.IsNullOrEmpty(str)||str.Length!=12)
             {
                 return false;
             }
@@ -90,239 +56,34 @@ namespace Common
             return match;
 
         }
-        public static string[] GetResult(string str)
-        {
-            if (str != null&&str.Contains("[")&&str.Contains("]"))
-            {
-                string [] result = new string[2];
-
-                string value = str.Substring(1,str.IndexOf("]")-1);
-                string msg=str.Substring(str.IndexOf("]")+1);
-                result[0] = value;
-                result[1] = msg;
-                return result;
-            }
-            else 
-            {
-                return null;
-            }
-        }
 
         /// <summary>
-        /// 将字符串转换成ASCII编码，16进制表示
+        /// 判断是否合法的SN号，SN必须为数字字母组合，并且长度在6到32之间，末尾必须为数字
         /// </summary>
+        /// <param name="sn"></param>
         /// <returns></returns>
-        public static string ConvertStringToASCII(string source, bool addSeparator)
+        public static bool IsValidSN(string sn)
         {
-            if (string.IsNullOrEmpty(source))
-            {
-                return null;
-            }
-            byte[] ba = System.Text.ASCIIEncoding.Default.GetBytes(source);
-            StringBuilder sb = new StringBuilder();
-            foreach (byte b in ba)
-            {
-                if (addSeparator)
-                {
-                    sb.Append(b.ToString("X") + ":");
-                }
-                else
-                {
-                    sb.Append(b.ToString("X")); 
-                }
-            }
-            if (addSeparator)
-            {
-                return sb.ToString().Trim(':');
-            }
-            else
-            {
-                return sb.ToString();
-            }
-
-        }
-
-        
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="trimLastChar"></param>
-        /// <returns></returns>
-        public static string ConvertASCIIToString(string source, bool containSeparator)
-        {
-            if (string.IsNullOrEmpty(source))
-            {
-                return null;
-            }
-
-            if (containSeparator)
-            {
-
-                string[] temp = source.Split(':');
-                if (temp != null)
-                {
-                    StringBuilder sb = new StringBuilder();
-                    foreach (string s in temp)
-                    {
-                        if (s.Length == 2)
-                        {
-                            byte b = Convert.ToByte(s, 16);
-                            char c = (char)b;
-                            if (c != '\0')
-                            {
-                                sb.Append(c);
-                            }
-                        }
-                    }
-                    return sb.ToString();
-                }
-            }
-            else
-            {
-                StringBuilder sb = new StringBuilder();
-                byte[] data = new byte[source.Length % 2];
-
-                try
-                {
-                    for (int index = 0; index < source.Length; index += 2)
-                    {
-                        String s= source.Substring(index, 2);
-                        byte b = Convert.ToByte(s, 16);
-                        char c = (char)b;
-                        if (c != '\0')
-                        {
-                            sb.Append(c);
-                        }
-
-                    }
-                }
-                catch (Exception ex)
-                {
-                }
-                return sb.ToString();
-
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// 判断输入的字符串是否符合格式（XX:XX:XX）
-        /// </summary>
-        /// <param name="result"></param>
-        /// <returns></returns>
-        public static bool IsResultString(string result)
-        {
-           
-            if (string.IsNullOrEmpty(result))
+            if (sn == null)
             {
                 return false;
             }
-            string[] temp = result.Split(':');
-            string pstr = "^[0-9a-fA-F]{2,2}$";
-           
-            foreach (string s in temp)
+            if (sn.Length < 6||sn.Length>32)
             {
-               
-                bool match = Regex.IsMatch(s, pstr);
-                if (!match)
+                return false;
+            }
+            foreach (Char c in sn)
+            {
+                if (!Char.IsLetterOrDigit(c))
                 {
                     return false;
                 }
-
             }
 
-            return true;
+            return Char.IsDigit(sn[sn.Length-1]);
         }
 
-        //默认密钥向量
-        private static byte[] Keys = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
-
-        private static string encryptKey = "xrt87_?>";
-
-        /// <summary>
-        /// DES加密字符串
-        /// </summary>
-        /// <param name="encryptString">待加密的字符串</param>
-        /// <param name="encryptKey">加密密钥,要求为8位</param>
-        /// <returns>加密成功返回加密后的字符串，失败返回源串</returns>
-        public static string EncryptDES(string encryptString)
-        {
-            try
-            {
-                byte[] rgbKey = Encoding.UTF8.GetBytes(encryptKey.Substring(0, 8));
-                byte[] rgbIV = Keys;
-                byte[] inputByteArray = Encoding.UTF8.GetBytes(encryptString);
-                DESCryptoServiceProvider dCSP = new DESCryptoServiceProvider();
-                MemoryStream mStream = new MemoryStream();
-                CryptoStream cStream = new CryptoStream(mStream, dCSP.CreateEncryptor(rgbKey, rgbIV), CryptoStreamMode.Write);
-                cStream.Write(inputByteArray, 0, inputByteArray.Length);
-                cStream.FlushFinalBlock();
-                return Convert.ToBase64String(mStream.ToArray());
-            }
-            catch
-            {
-                return encryptString;
-            }
-        }
-
-        /// <summary>
-        /// DES解密字符串
-        /// </summary>
-        /// <param name="decryptString">待解密的字符串</param>
-        /// <param name="decryptKey">解密密钥,要求为8位,和加密密钥相同</param>
-        /// <returns>解密成功返回解密后的字符串，失败返源串</returns>
-        public static string DecryptDES(string decryptString)
-        {
-            try
-            {
-                byte[] rgbKey = Encoding.UTF8.GetBytes(encryptKey);
-                byte[] rgbIV = Keys;
-                byte[] inputByteArray = Convert.FromBase64String(decryptString);
-                DESCryptoServiceProvider DCSP = new DESCryptoServiceProvider();
-                MemoryStream mStream = new MemoryStream();
-                CryptoStream cStream = new CryptoStream(mStream, DCSP.CreateDecryptor(rgbKey, rgbIV), CryptoStreamMode.Write);
-                cStream.Write(inputByteArray, 0, inputByteArray.Length);
-                cStream.FlushFinalBlock();
-                return Encoding.UTF8.GetString(mStream.ToArray());
-            }
-            catch
-            {
-                return decryptString;
-            }
-        }
-
-        public static string GetStringFromMixData(byte[] buff)
-        {
-            if (buff == null)
-            {
-                return null;
-            }
-            for (int index = 0; index < buff.Length; index++)
-            {
-                byte b = buff[index];
-
-                buff[index] = b -= 128;  
-            }
-            string str = Encoding.ASCII.GetString(buff);
-            return str;
-        }
-
-        public static byte[] GetDataAfterMix(string input)
-        {
-            byte[] buff = Encoding.ASCII.GetBytes(input);
-
-            for (int index = 0; index < buff.Length; index++)
-            {
-                byte b = buff[index];
-               
-                buff[index] = b += 128;
-                char c = (char)buff[index];
-            }
-            return buff;
-        }
-
+      
         public static String CalculateIMEI(String imeiString)
         {
            // String imeiString = header + sn;
@@ -337,11 +98,28 @@ namespace Common
         /// <returns></returns>
         public static bool IsValidIMEI(String imeiString)
         {
-            if (imeiString.Length != 15)
+            if (string.IsNullOrEmpty(imeiString) || imeiString.Length < 14 || imeiString.Length>15)
             {
                 return false;
             }
-            return imeiString.Equals(CalculateIMEI(imeiString.Substring(0, 14)));
+
+            foreach (Char c in imeiString)
+            {
+                if (!Char.IsDigit(c))
+                {
+                    return false;
+                }
+            }
+
+
+            if (imeiString.Length == 15)
+            {
+                return imeiString.Equals(CalculateIMEI(imeiString.Substring(0, 14)));
+            }
+            else
+            {
+                return true;
+            }
 
         }
 
@@ -383,5 +161,29 @@ namespace Common
             }
         }
 
+        /// <summary>
+        /// 将MAC地址转换成XX:XX:XX:XX:XX格式
+        /// </summary>
+        /// <param name="mac"></param>
+        /// <returns></returns>
+        public static string GetMACToWrite(string mac)
+        {
+
+            if (mac.Length != 12)
+            {
+                return null;
+            }
+            else
+            {
+                return string.Format("{0}:{1}:{2}:{3}:{4}:{5}",
+                    mac.Substring(0, 2), 
+                    mac.Substring(2, 2),
+                    mac.Substring(4, 2),
+                    mac.Substring(6, 2),
+                    mac.Substring(8, 2),
+                    mac.Substring(10, 2));
+            }
+
+        }
     }
 }
