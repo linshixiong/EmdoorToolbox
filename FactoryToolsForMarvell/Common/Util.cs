@@ -32,7 +32,7 @@ namespace Common
     public static class Util
     {
 
-      
+
         public static bool IsProcessOpen(string name)
         {
             foreach (Process clsProcess in Process.GetProcesses())
@@ -47,7 +47,7 @@ namespace Common
 
         public static bool IsValidMAC(string str)
         {
-            if (string.IsNullOrEmpty(str)||str.Length!=12)
+            if (string.IsNullOrEmpty(str) || str.Length != 12)
             {
                 return false;
             }
@@ -68,7 +68,7 @@ namespace Common
             {
                 return false;
             }
-            if (sn.Length < 6||sn.Length>32)
+            if (sn.Length < 6 || sn.Length > 32)
             {
                 return false;
             }
@@ -83,10 +83,10 @@ namespace Common
             return true;
         }
 
-      
+
         public static String CalculateIMEI(String imeiString)
         {
-           // String imeiString = header + sn;
+            // String imeiString = header + sn;
 
             return imeiString + GetIMEICheckDigit(imeiString);
         }
@@ -98,7 +98,7 @@ namespace Common
         /// <returns></returns>
         public static bool IsValidIMEI(String imeiString)
         {
-            if (string.IsNullOrEmpty(imeiString) || imeiString.Length < 14 || imeiString.Length>15)
+            if (string.IsNullOrEmpty(imeiString) || imeiString.Length < 14 || imeiString.Length > 15)
             {
                 return false;
             }
@@ -176,7 +176,7 @@ namespace Common
             else
             {
                 return string.Format("{0}:{1}:{2}:{3}:{4}:{5}",
-                    mac.Substring(0, 2), 
+                    mac.Substring(0, 2),
                     mac.Substring(2, 2),
                     mac.Substring(4, 2),
                     mac.Substring(6, 2),
@@ -185,5 +185,146 @@ namespace Common
             }
 
         }
+
+
+
+        public static string GetNextSN(string sn)
+        {
+            char[] chars = sn.ToCharArray();
+            bool increase = true;
+            for (int i = chars.Length - 1; i >= 0; i--)
+            {
+                if (!increase)
+                {
+                    break;
+                }
+               
+                char c = chars[i];
+                if (!Char.IsLetterOrDigit(c))
+                {
+                    continue;
+                }
+
+                if (c == '9')
+                {
+                    chars[i] = '0';
+                    increase = true;
+                }
+                else if (c == 'z' )
+                {
+                    chars[i] = 'a';
+                    increase = true;
+                }
+                else if (c == 'Z')
+                {
+                    chars[i] = 'A';
+                    increase = true;
+                }
+                else
+                {
+                    c++;
+                    chars[i] = c;
+                    increase = false;
+                }
+
+            }
+
+            return new string(chars);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static string GetNextIMEI(string imei)
+        {
+            if (string.IsNullOrEmpty(imei)||imei.Length<14||imei.Length>15)
+            {
+                return null;
+            }
+            char[] chars = imei.ToCharArray();
+           
+            bool increase = true;
+
+            
+           
+            for (int i = 13; i >= 0; i--)
+            {
+                if (!increase)
+                {
+                    break;
+                }
+                char c = chars[i];
+
+
+                int index = "0123456789".IndexOf(c);
+
+                if (index < 0)
+                {
+                    break;
+                }
+
+                if (c == '9')
+                {
+                    chars[i] = '0';
+                    increase = true;
+                }
+                else
+                {
+                    c++;
+                    chars[i] = c;
+                    increase = false;
+                }
+
+
+            }
+            if (chars.Length == 14)
+            {
+                return new string(chars);
+            }
+            else
+            {
+                string newImei=new string(chars,0,14);
+                return string.Format("{0}{1}",newImei,GetIMEICheckDigit(newImei));
+            }
+        }
+
+        public static string GetNextMAC(string mac)
+        {
+            char[] chars = mac.ToCharArray();
+            bool increase = true;
+            for (int i = chars.Length - 1; i >= 0; i--)
+            {
+                if (!increase)
+                {
+                    break;
+                }
+                char c = chars[i];
+                if (c == '9')
+                {
+                    chars[i] = 'A';
+                    increase = false;
+                }
+                else if (c == 'f' || c == 'F')
+                {
+                    chars[i] = '0';
+                    increase = true;
+                }
+                else
+                {
+                    c++;
+                    chars[i] = c;
+                    increase = false;
+                }
+
+            }
+
+            return new string(chars);
+        }
     }
+
+
+
 }
