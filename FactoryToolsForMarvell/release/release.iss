@@ -22,7 +22,7 @@ Name: chs; MessagesFile: compiler:Default.isl
 
 
 [Files]
-Source: "..\Tools\bin\Release\BarcodeTools.exe"; DestDir: "{app}";Flags:ignoreversion
+Source: "..\Tools\bin\Release\FactoryTools.exe"; DestDir: "{app}";Flags:ignoreversion
 Source: "..\Tools\bin\Release\Common.dll"; DestDir: "{app}";Flags:ignoreversion
 Source: "..\Tools\bin\Release\Managed.AndroidDebugBridge.dll"; DestDir: "{app}";Flags:ignoreversion
 Source: "barcode.ico"; DestDir: "{app}";Flags:ignoreversion
@@ -37,9 +37,9 @@ Source: "readme.txt"; DestDir: "{app}"; Flags:ignoreversion isreadme
 
 
 [Icons]
-Name: "{group}\条码打印(Marvell)"; Filename: "{app}\BarcodeTools.exe";IconFilename:"{app}\barcode.ico"
-Name: "{group}\USB连接设置"; Filename: "{app}\BarcodeTools.exe";Parameters:"usb_config";IconFilename:"{app}\setting.ico"
-Name: "{group}\串号烧录(Marvell)"; Filename: "{app}\BarcodeTools.exe";Parameters:"write";IconFilename:"{app}\download.ico"
+Name: "{group}\条码打印(Marvell)"; Filename: "{app}\FactoryTools.exe";IconFilename:"{app}\barcode.ico"
+Name: "{group}\USB连接设置"; Filename: "{app}\FactoryTools.exe";Parameters:"usb_config";IconFilename:"{app}\setting.ico"
+Name: "{group}\串号烧录(Marvell)"; Filename: "{app}\FactoryTools.exe";Parameters:"write";IconFilename:"{app}\download.ico"
 Name: "{group}\卸载"; Filename: "{app}\unins000.exe"
 ;Name: "{commondesktop}\条码打印(Marvell)"; Filename: "{app}\BarcodeTools.exe";IconFilename:"{app}\barcode.ico"
 ;Name: "{commondesktop}\串号烧录(Marvell)"; Filename: "{app}\BarcodeTools.exe";Parameters:"write";IconFilename:"{app}\download.ico"
