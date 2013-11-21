@@ -445,7 +445,7 @@
             this.textBoxBt.Name = "textBoxBt";
             this.textBoxBt.Size = new System.Drawing.Size(317, 26);
             this.textBoxBt.TabIndex = 1;
-            this.textBoxBt.TextChanged += new System.EventHandler(this.textBoxWifi_TextChanged);
+            this.textBoxBt.TextChanged += new System.EventHandler(this.textBoxMac_TextChanged);
             this.textBoxBt.ReadOnlyChanged += new System.EventHandler(this.textBox_ReadOnlyChanged);
             this.textBoxBt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxBt_KeyDown);
             this.textBoxBt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxWifi_KeyPress);
@@ -460,6 +460,7 @@
             this.textBoxIMEI2.Name = "textBoxIMEI2";
             this.textBoxIMEI2.Size = new System.Drawing.Size(317, 26);
             this.textBoxIMEI2.TabIndex = 1;
+            this.textBoxIMEI2.TextChanged += new System.EventHandler(this.textBoxIMEI_TextChanged);
             this.textBoxIMEI2.ReadOnlyChanged += new System.EventHandler(this.textBox_ReadOnlyChanged);
             this.textBoxIMEI2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxIMEI2_KeyDown);
             // 
@@ -474,7 +475,7 @@
             this.textBoxWifi.Name = "textBoxWifi";
             this.textBoxWifi.Size = new System.Drawing.Size(317, 26);
             this.textBoxWifi.TabIndex = 1;
-            this.textBoxWifi.TextChanged += new System.EventHandler(this.textBoxWifi_TextChanged);
+            this.textBoxWifi.TextChanged += new System.EventHandler(this.textBoxMac_TextChanged);
             this.textBoxWifi.ReadOnlyChanged += new System.EventHandler(this.textBox_ReadOnlyChanged);
             this.textBoxWifi.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxWifi_KeyDown);
             this.textBoxWifi.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxWifi_KeyPress);
@@ -489,6 +490,7 @@
             this.textBoxIMEI.Name = "textBoxIMEI";
             this.textBoxIMEI.Size = new System.Drawing.Size(317, 26);
             this.textBoxIMEI.TabIndex = 1;
+            this.textBoxIMEI.TextChanged += new System.EventHandler(this.textBoxIMEI_TextChanged);
             this.textBoxIMEI.ReadOnlyChanged += new System.EventHandler(this.textBox_ReadOnlyChanged);
             this.textBoxIMEI.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxIMEI_KeyDown);
             // 
@@ -702,6 +704,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "串号烧写器";
             this.Load += new System.EventHandler(this.Writer_Load);
+            this.Activated += new System.EventHandler(this.Writer_Activated);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Writer_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

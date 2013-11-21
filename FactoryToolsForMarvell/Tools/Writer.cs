@@ -477,6 +477,7 @@ namespace IMEI_Reader
                 this.updateInputBox();
             }
 
+            setFocus();
         }
 
 
@@ -493,6 +494,8 @@ namespace IMEI_Reader
             textBoxIMEI2.Text = (Settings.Default.InputIMEI2Type == 0) ? "" : Settings.Default.IMEI2_CUR;
             textBoxWifi.Text = (Settings.Default.InputWIFIType == 0) ? "" : Settings.Default.WIFI_CUR;
             textBoxBt.Text = (Settings.Default.InputBTType == 0) ? "" : Settings.Default.BT_CUR;
+
+            
         }
 
         private void buttonWrite_Click(object sender, EventArgs e)
@@ -525,7 +528,11 @@ namespace IMEI_Reader
 
         private void textBoxSN_TextChanged(object sender, EventArgs e)
         {
+            bool valid = textBoxSN.Text.Trim().Length==0|| Util.IsValidSN(textBoxSN.Text.Trim());
 
+            textBoxSN.BackColor = valid ? Color.White : Color.Red;
+
+            textBoxSN.ForeColor = valid ? System.Drawing.Color.RoyalBlue: Color.Silver;
         }
 
         private void textBoxSN_KeyPress(object sender, KeyPressEventArgs e)
@@ -534,13 +541,22 @@ namespace IMEI_Reader
             if (e.KeyChar != '\b' && e.KeyChar != 22 && e.KeyChar != 3)
             {
 
-                e.Handled = "0123456789ABCDEF".IndexOf(char.ToUpper(e.KeyChar)) < 0;
-
+                e.Handled = !Char.IsLetterOrDigit(e.KeyChar);
 
             }
         }
 
-        private void textBoxWifi_TextChanged(object sender, EventArgs e)
+        private void textBoxIMEI_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            bool valid = textBox.Text.Trim().Length == 0 || Util.IsValidIMEI(textBox.Text.Trim());
+
+            textBox.BackColor = valid ? Color.White : Color.Red;
+
+            textBox.ForeColor = valid ? System.Drawing.Color.RoyalBlue : Color.Silver;
+        }
+
+        private void textBoxMac_TextChanged(object sender, EventArgs e)
         {
             TextBox textBox = (TextBox)sender;
 
@@ -549,14 +565,15 @@ namespace IMEI_Reader
             {
                 text = text.Substring(0, 12);
             }
-            if (Util.IsValidMAC(text))
-            {
-                textBox.Text = text;
-            }
-            else
-            {
-                textBox.Clear();
-            }
+           
+            textBox.Text = text;
+
+
+            bool valid = text.Length == 0 || Util.IsValidMAC(text);
+
+            textBox.BackColor = valid ? Color.White : Color.Red;
+
+            textBox.ForeColor = valid ? System.Drawing.Color.RoyalBlue : Color.Silver;
 
         }
 
@@ -634,6 +651,7 @@ namespace IMEI_Reader
         private void USBConfigToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UsbConfig config = new UsbConfig();
+            config.StartPosition = FormStartPosition.CenterParent;
             config.ShowDialog();
         }
 
@@ -730,6 +748,35 @@ namespace IMEI_Reader
         private void pictureBox_MouseEnter(object sender, EventArgs e)
         {
             toolTip1.SetToolTip((Control)sender, "点击重新烧写");
+        }
+
+        private void Writer_Activated(object sender, EventArgs e)
+        {
+            setFocus();
+        }
+
+        private void setFocus()
+        {
+            if (!textBoxSN.ReadOnly && textBoxSN.Enabled)
+            {
+                textBoxSN.Focus();
+            }
+            else if (!textBoxIMEI.ReadOnly && textBoxIMEI.Enabled)
+            {
+                textBoxIMEI.Focus();
+            }
+            else if (!textBoxIMEI2.ReadOnly && textBoxIMEI2.Enabled)
+            {
+                textBoxIMEI2.Focus();
+            }
+            else if (!textBoxWifi.ReadOnly && textBoxWifi.Enabled)
+            {
+                textBoxWifi.Focus();
+            }
+            else if (!textBoxBt.ReadOnly && textBoxBt.Enabled)
+            {
+                textBoxBt.Focus();
+            }
         }
 
 

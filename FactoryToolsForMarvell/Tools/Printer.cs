@@ -539,55 +539,6 @@ namespace IMEI_Reader
 
             }
 
-
-
-            //for (int index = 0; index < count; index++)
-            //{
-            //    //字体样式
-            //    int t_x = Settings.Default.T_X;
-            //    int t_y = Settings.Default.T_Y;
-            //    int t_height = Settings.Default.T_H;
-            //    int t_rotation = Settings.Default.T_R;
-            //    int t_font_style = Settings.Default.T_S;
-            //    int t_under_line = Settings.Default.T_L;
-
-            //    //条码样式
-            //    string b_y = (t_y + t_height + Settings.Default.Gap1).ToString();
-            //    string b_height = Settings.Default.B_Height.ToString();
-            //    string b_readable = Settings.Default.B_Readable.ToString();
-            //    string b_rotation = Settings.Default.B_Rotation.ToString();
-            //    string b_narrow = Settings.Default.B_Narrow.ToString();
-            //    string b_wide = Settings.Default.B_Wide.ToString();
-
-            //    /*
-            //    if (index > 0)
-            //    {
-            //        t_x = 30 * 12 * index + 2 * 12 * index + t_x;
-            //    }*/
-
-            //    string sn = textBoxSN.Text;
-
-
-            //    //打印SN字符    
-            //    TSCLib.windowsfont(t_x, t_y, t_height, 0, t_font_style, t_under_line, "Times new Roman", "S/N:" + sn);
-
-
-            //    //打印SN条码
-            //    TSCLib.barcode(t_x.ToString(), b_y, "128", b_height, b_readable, "0", b_narrow, b_wide, sn);
-
-            //    TSCLib.printlabel("1", "1");
-            //    /*
-            //    string imei = textBoxIMEI.Text;
-
-            //    //打印IMEI字符
-            //    t_y = Convert.ToInt32(b_y) + Settings.Default.B_Height + Settings.Default.Gap2;
-            //    TSCLib.windowsfont(t_x, t_y, t_height, 0, t_font_style, t_under_line, "Times new Roman", "IMEI:" + imei);
-            //    b_y = (t_y + t_height + Settings.Default.Gap1).ToString();
-            //    TSCLib.barcode(t_x.ToString(), b_y, "128", b_height, b_readable, "0", b_narrow, b_wide, imei);*/
-            //}
-
-
-
             TSCLib.closeport();
             TSCLib.formfeed();
         }
@@ -724,6 +675,7 @@ namespace IMEI_Reader
         private void USBConfigToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UsbConfig config = new UsbConfig();
+            config.StartPosition = FormStartPosition.CenterParent;
             config.ShowDialog();
         }
 

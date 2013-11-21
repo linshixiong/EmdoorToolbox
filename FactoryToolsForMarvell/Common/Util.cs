@@ -80,7 +80,7 @@ namespace Common
                 }
             }
 
-            return Char.IsDigit(sn[sn.Length-1]);
+            return true;
         }
 
       
