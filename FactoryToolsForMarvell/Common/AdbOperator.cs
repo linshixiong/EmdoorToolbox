@@ -113,16 +113,17 @@ namespace Common
             {
                 return;
             }
-            form.Invoke(handler, Messages.MSG_READ_START,0, null);
+            form.Invoke(handler, Messages.MSG_READ_START, 0, null);
 
 
 
             bool success = true;
             string error_msg = null;
-
+            int error_code = 0;
             if (!StartAdbProcess())
             {
                 error_msg = "adb进程启动失败";
+                error_code = -1;
                 success = false;
             }
             if (isCanceled)
@@ -135,14 +136,15 @@ namespace Common
             }
             if (success)
             {
-                form.Invoke(handler, Messages.MSG_READ_STATE_CHANGE,0, "正在检查设备...");
-                int deviceCount = GetDeviceCount();
-
+                form.Invoke(handler, Messages.MSG_READ_STATE_CHANGE, 0, "正在检查设备...");
+                //int deviceCount = GetDeviceCount();
+                bool ok = CheckAdbShell();
 
                 if (isCanceled)
                 {
                     goto END;
                 }
+                /*
                 if (deviceCount == 0)
                 {
                     //无设备
@@ -155,10 +157,22 @@ namespace Common
                     error_msg = "无法对大于1台设备进行烧录，请拔除多余的设备";
                     success = false;
 
+                }*/
+
+                if (!ok)
+                {
+                    error_msg = "无法执行adb命令";
+                    error_code = -2;
+                    success = false;
+                    
+                    //MessageBox.Show(error_msg);
+                    //return;
+
                 }
+
                 else
                 {
-                    form.Invoke(handler, Messages.MSG_READ_STATE_CHANGE,0, "正在读取序列号...");
+                    form.Invoke(handler, Messages.MSG_READ_STATE_CHANGE, 0, "正在读取序列号...");
                     string cmdResult = null;
                     Dictionary<int, string> results = new Dictionary<int, string>();
                     foreach (int cmd in cmds)
@@ -170,11 +184,11 @@ namespace Common
                                 results.Add(CodeType.TYPE_SN, sn);
                                 break;
                             case CodeType.TYPE_IMEI:
-                                string imei = ExcuteIMEIReadCmd(0,out cmdResult);
+                                string imei = ExcuteIMEIReadCmd(0, out cmdResult);
                                 results.Add(CodeType.TYPE_IMEI, imei);
                                 break;
                             case CodeType.TYPE_IMEI2:
-                                string imei2 = ExcuteIMEIReadCmd(1,out cmdResult);
+                                string imei2 = ExcuteIMEIReadCmd(1, out cmdResult);
                                 results.Add(CodeType.TYPE_IMEI2, imei2);
                                 break;
                             case CodeType.TYPE_WIFI_MAC:
@@ -196,7 +210,7 @@ namespace Common
                     }
 
 
-                    form.Invoke(handler, Messages.MSG_READ_SUCCESS,0, results);
+                    form.Invoke(handler, Messages.MSG_READ_SUCCESS, 0, results);
                     DateTime dtStop = DateTime.Now;
 
                     TimeSpan ts = dtStop - dtStart;
@@ -208,7 +222,7 @@ namespace Common
         END:
             if (!success && !isCanceled)
             {
-                form.Invoke(handler, Messages.MSG_READ_FAIL,0, error_msg);
+                form.Invoke(handler, Messages.MSG_READ_FAIL, error_code, error_msg);
             }
 
         }
@@ -226,9 +240,11 @@ namespace Common
 
             bool success = true;
             string error_msg = null;
+            int error_code = 0;
             if (!StartAdbProcess())
             {
                 error_msg = "adb进程启动失败";
+                error_code = -1;
                 success = false;
             }
             if (isCanceled)
@@ -242,13 +258,14 @@ namespace Common
             if (success)
             {
                 form.Invoke(handler, Messages.MSG_WRITE_STATE_CHANGE,0, "正在检查设备...");
-                int deviceCount = GetDeviceCount();
-
+                //int deviceCount = GetDeviceCount();
+                bool ok = CheckAdbShell();
 
                 if (isCanceled)
                 {
                     goto END;
                 }
+                /*
                 if (deviceCount == 0)
                 {
                     //无设备
@@ -261,6 +278,12 @@ namespace Common
                     error_msg = "无法对大于1台设备进行烧录，请拔除多余的设备";
                     success = false;
 
+                }*/
+                if (!ok)
+                {
+                    error_msg = "无法执行adb命令";
+                    error_code = -2;
+                    success = false;
                 }
                 else
                 {
@@ -313,7 +336,7 @@ namespace Common
         END:
             if (!success && !isCanceled)
             {
-                form.Invoke(handler, Messages.MSG_WRITE_FAIL,0, error_msg);
+                form.Invoke(handler, Messages.MSG_WRITE_FAIL,error_code, error_msg);
             }
 
         }
@@ -325,9 +348,11 @@ namespace Common
             string cmd = o.ToString();
             bool success = true;
             string error_msg = null;
+            int error_code = 0;
             if (!StartAdbProcess())
             {
                 error_msg = "adb进程启动失败";
+                error_code = -1;
                 success = false;
             }
             if (isCanceled)
@@ -342,12 +367,12 @@ namespace Common
             if (success)
             {
                 form.Invoke(handler, Messages.MSG_WRITE_STATE_CHANGE, 0,"正在检查设备...");
-                int deviceCount = GetDeviceCount();
-
+                //int deviceCount = GetDeviceCount();
+                bool ok = CheckAdbShell();
                 if (isCanceled)
                 {
                     goto END;
-                }
+                }/*
                 if (deviceCount == 0)
                 {
                     //无设备
@@ -360,6 +385,12 @@ namespace Common
                     error_msg = "无法对大于1台设备进行烧录，请拔除多余的设备";
                     success = false;
 
+                }*/
+                if (!ok)
+                {
+                    error_msg = "无法执行adb命令";
+                    error_code = -2;
+                    success = false;
                 }
                 else
                 {
@@ -383,7 +414,7 @@ namespace Common
             CommandResultReceiver receiver = new CommandResultReceiver();
             receiver.TrimLines = true;
             bool success;
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 if (isCanceled)
                 {
@@ -450,7 +481,7 @@ namespace Common
             receiver.TrimLines = true;
             error = null;
             bool success;
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 if (isCanceled)
                 {
@@ -505,7 +536,7 @@ namespace Common
             CommandResultReceiver receiver = new CommandResultReceiver();
             receiver.TrimLines = true;
             bool success;
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 if (isCanceled)
                 {
@@ -560,7 +591,7 @@ namespace Common
             receiver.TrimLines = true;
             error = null;
             bool success;
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 if (isCanceled)
                 {
@@ -614,7 +645,7 @@ namespace Common
             CommandResultReceiver receiver = new CommandResultReceiver();
             receiver.TrimLines = true;
             bool success;
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 if (isCanceled)
                 {
@@ -670,7 +701,7 @@ namespace Common
             receiver.TrimLines = true;
             error = null;
             bool success;
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 if (isCanceled)
                 {
@@ -724,7 +755,7 @@ namespace Common
             CommandResultReceiver receiver = new CommandResultReceiver();
             receiver.TrimLines = true;
             bool success;
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 if (isCanceled)
                 {
@@ -780,7 +811,7 @@ namespace Common
             receiver.TrimLines = true;
             error = null;
             bool success;
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 if (isCanceled)
                 {
@@ -834,7 +865,7 @@ namespace Common
             CommandResultReceiver receiver = new CommandResultReceiver();
             receiver.TrimLines = true;
             bool success;
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 if (isCanceled)
                 {
@@ -886,7 +917,7 @@ namespace Common
             CommandResultReceiver receiver = new CommandResultReceiver();
             receiver.TrimLines = true;
             bool success;
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 if (isCanceled)
                 {
@@ -917,7 +948,7 @@ namespace Common
         {
             bool success;
             int count = 0;
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 3; i++)
             {
                 if (isCanceled)
                 {
@@ -941,6 +972,49 @@ namespace Common
 
             }
             return count;
+        }
+
+        private bool CheckAdbShell()
+        {
+            CommandResultReceiver receiver = new CommandResultReceiver();
+            receiver.TrimLines = true;
+            bool success;
+            for (int i = 0; i <= 3; i++)
+            {
+                if (isCanceled)
+                {
+                    return false;
+                }
+                success = true;
+                try
+                {
+                    AdbHelper.Instance.GetDevices(AndroidDebugBridge.SocketAddress)[0].ExecuteShellCommand("echo hello", receiver);
+                }
+                catch (Exception)
+                {
+                    success = false;
+                    Thread.Sleep(1000);
+                }
+
+                if (success)
+                {
+                    break;
+                }
+
+            }
+
+            if (receiver.ResultLines != null && receiver.ResultLines.Length > 0)
+            {
+                string result = receiver.ResultLines[receiver.ResultLines.Length - 1];
+
+                return result.Equals("hello");
+
+            }
+
+            else
+            {
+                return false;
+            }
         }
 
 

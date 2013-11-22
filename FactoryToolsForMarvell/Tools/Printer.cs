@@ -163,7 +163,15 @@ namespace IMEI_Reader
                     checkBoxBt.Enabled = true;
                     checkBoxSwVersion.Enabled = true;
                     errorMsg=obj.ToString();
-                    MessageBox.Show(errorMsg,"错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
+
+                    if (requestCode == -1)
+                    {
+                        MessageBox.Show("无法启动adb进程，请尝试重新启动此程序！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else if(requestCode==-2)
+                    {
+                        MessageBox.Show("无法执行adb命令，建议重启平板电脑系统并重试。\n是否确定重启平板电脑？", "错误", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                    }
                     break;
                 default :
                     break;
@@ -631,18 +639,25 @@ namespace IMEI_Reader
 
         private void PoweroffToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AdbOperator ao = new AdbOperator(mHandler, this);
-            Thread thread = new Thread(new ParameterizedThreadStart(ao.StartExcuteTcmd));
+            if (MessageBox.Show("是否确定关闭平板电脑系统？", "关闭平板电脑", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+            {
 
-            thread.Start("poweroff");
+                AdbOperator ao = new AdbOperator(mHandler, this);
+                Thread thread = new Thread(new ParameterizedThreadStart(ao.StartExcuteTcmd));
+
+                thread.Start("poweroff");
+            }
         }
 
         private void RebootToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AdbOperator ao = new AdbOperator(mHandler, this);
-            Thread thread = new Thread(new ParameterizedThreadStart(ao.StartExcuteTcmd));
+            if (MessageBox.Show("是否确定重启平板电脑系统？", "重启平板电脑", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
+            {
+                AdbOperator ao = new AdbOperator(mHandler, this);
+                Thread thread = new Thread(new ParameterizedThreadStart(ao.StartExcuteTcmd));
 
-            thread.Start("reboot");
+                thread.Start("reboot");
+            }
         }
 
         private void AutoReadToolStripMenuItem_Click(object sender, EventArgs e)
