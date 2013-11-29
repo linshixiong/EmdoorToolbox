@@ -94,7 +94,7 @@ namespace IMEI_Reader
         }
 
 
-        private void HandleProgress(int requestCode,int progress)
+        private void HandleProgress(int requestCode, int progress)
         {
 
             PictureBox pictureBox = null;
@@ -102,18 +102,44 @@ namespace IMEI_Reader
             {
                 case CodeType.TYPE_SN:
                     pictureBox = pictureBoxSN;
+                    if (progress == 1)
+                    {
+                        Settings.Default.SN_CUR = Util.GetNextSN(textBoxSN.Text.Trim());
+                        Settings.Default.Save();
+                    }
+
                     break;
                 case CodeType.TYPE_IMEI:
                     pictureBox = pictureBoxIMEI;
+                    if (progress == 1)
+                    {
+                        Settings.Default.IMEI_CUR = Util.GetNextIMEI(textBoxIMEI.Text.Trim());
+                        Settings.Default.Save();
+                    }
                     break;
                 case CodeType.TYPE_IMEI2:
                     pictureBox = pictureBoxIMEI2;
+                    if (progress == 1)
+                    {
+                        Settings.Default.IMEI2_CUR = Util.GetNextIMEI(textBoxIMEI2.Text.Trim());
+                        Settings.Default.Save();
+                    }
                     break;
                 case CodeType.TYPE_WIFI_MAC:
                     pictureBox = pictureBoxWIFI;
+                    if (progress == 1)
+                    {
+                        Settings.Default.WIFI_CUR= Util.GetNextMAC(textBoxWifi.Text.Trim());
+                        Settings.Default.Save();
+                    }
                     break;
                 case CodeType.TYPE_BT_MAC:
                     pictureBox = pictureBoxBT;
+                    if (progress == 1)
+                    {
+                        Settings.Default.BT_CUR = Util.GetNextMAC(textBoxBt.Text.Trim());
+                        Settings.Default.Save();
+                    }
                     break;
             }
             if (pictureBox != null)
@@ -127,27 +153,32 @@ namespace IMEI_Reader
                 {
                     pictureBox.Image = Resources.Tick;
                 }
-                else if(progress==2)
+                else if (progress == 2)
                 {
                     pictureBox.Image = Resources.Error;
                 }
-                pictureBox.Enabled = (progress==2);
-                
+                pictureBox.Enabled = (progress == 2);
+
             }
+           
+
         }
 
         private void UpdateUI()
         {
+            updateInputBox();
             if (deviceCount <= 0)
             {
                 labelMsg.Text = "请连接设备";
-                labelMsg.ForeColor = Color.Red;              
+                labelMsg.ForeColor = Color.Red;
+               
             }
             else if (deviceCount == 1)
             {
                 labelMsg.Text = "设备已连接";
                 labelMsg.ForeColor = Color.Green;
-                if (checkBoxAutoWrite.Checked&& !isWriting)
+                
+                if (checkBoxAutoWrite.Checked && !isWriting)
                 {
                     CheckAndStartWrite();
                 }
@@ -155,9 +186,9 @@ namespace IMEI_Reader
             else
             {
                 labelMsg.Text = "连接设备过多";
-                labelMsg.ForeColor = Color.Red;            
+                labelMsg.ForeColor = Color.Red;
             }
-            buttonWrite.Enabled = (deviceCount==1);
+            buttonWrite.Enabled = (deviceCount == 1);
             WriteToolStripMenuItem.Enabled = (deviceCount == 1);
             PoweroffToolStripMenuItem.Enabled = (deviceCount == 1);
             RebootToolStripMenuItem.Enabled = (deviceCount == 1);
@@ -180,7 +211,7 @@ namespace IMEI_Reader
                 }
                 else if (textBoxIMEI2.Enabled && !textBoxIMEI2.ReadOnly)
                 {
-                    textBoxIMEI.Focus();
+                    textBoxIMEI2.Focus();
                 }
                 else if (textBoxWifi.Enabled && !textBoxWifi.ReadOnly)
                 {
@@ -192,7 +223,7 @@ namespace IMEI_Reader
                 }
                 else
                 {
-                    CheckAndStartWrite();
+                    buttonWrite.Focus();
                 }
 
 
@@ -207,7 +238,7 @@ namespace IMEI_Reader
                 {
                     textBoxIMEI2.Focus();
                 }
-                else if (textBoxWifi.Enabled&&!textBoxWifi.ReadOnly)
+                else if (textBoxWifi.Enabled && !textBoxWifi.ReadOnly)
                 {
                     textBoxWifi.Focus();
                 }
@@ -217,7 +248,7 @@ namespace IMEI_Reader
                 }
                 else
                 {
-                    CheckAndStartWrite();
+                    buttonWrite.Focus();
                 }
             }
         }
@@ -236,7 +267,7 @@ namespace IMEI_Reader
                 }
                 else
                 {
-                    CheckAndStartWrite();
+                    buttonWrite.Focus();
                 }
             }
         }
@@ -251,7 +282,7 @@ namespace IMEI_Reader
                 }
                 else
                 {
-                    CheckAndStartWrite();
+                    buttonWrite.Focus();
                 }
             }
         }
@@ -260,7 +291,7 @@ namespace IMEI_Reader
         {
             if (e.KeyCode == Keys.Enter)
             {
-                CheckAndStartWrite();
+                buttonWrite.Focus();
             }
         }
 
@@ -273,70 +304,107 @@ namespace IMEI_Reader
             int count = Settings.Default.PrintCount;
             if (checkBoxSN.Checked)
             {
+                if (checkBoxScan.Checked)
+                {
+                    InputDialog dialog = new InputDialog(CodeType.TYPE_SN);
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        textBoxSN.Text = dialog.Input;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
                 if (string.IsNullOrEmpty(textBoxSN.Text.Trim()))
                 {
                     goto ERROR;
                 }
-                else
-                {
-
-                    codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_SN, textBoxSN.Text.Trim()));
-
-
-                }
+                codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_SN, textBoxSN.Text.Trim()));
             }
+
             if (checkBoxIMEI.Checked)
             {
+                if (checkBoxScan.Checked)
+                {
+                    InputDialog dialog = new InputDialog(CodeType.TYPE_IMEI);
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        textBoxIMEI.Text = dialog.Input;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
                 if (string.IsNullOrEmpty(textBoxIMEI.Text.Trim()))
                 {
                     goto ERROR;
                 }
-                else
-                {
-
-                    codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_IMEI, textBoxIMEI.Text.Trim()));
-
-                }
+                codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_IMEI, textBoxIMEI.Text.Trim()));
             }
             if (checkBoxIMEI2.Checked)
             {
+                if (checkBoxScan.Checked)
+                {
+                    InputDialog dialog = new InputDialog(CodeType.TYPE_IMEI2);
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        textBoxIMEI2.Text = dialog.Input;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
                 if (string.IsNullOrEmpty(textBoxIMEI2.Text.Trim()))
                 {
                     goto ERROR;
                 }
-                else
-                {
+                codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_IMEI2, textBoxIMEI2.Text.Trim()));
 
-                    codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_IMEI2, textBoxIMEI2.Text.Trim()));
-
-                }
             }
             if (checkBoxWifi.Checked)
             {
+                if (checkBoxScan.Checked)
+                {
+                    InputDialog dialog = new InputDialog(CodeType.TYPE_WIFI_MAC);
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        textBoxWifi.Text = dialog.Input;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
                 if (string.IsNullOrEmpty(textBoxWifi.Text.Trim()))
                 {
                     goto ERROR;
                 }
-                else
-                {
+                codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_WIFI_MAC, Util.GetMACToWrite(textBoxWifi.Text.Trim())));
 
-                    codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_WIFI_MAC, Util.GetMACToWrite( textBoxWifi.Text.Trim())));
-
-                }
             }
 
             if (checkBoxBt.Checked)
             {
+                if (checkBoxScan.Checked)
+                {
+                    InputDialog dialog = new InputDialog(CodeType.TYPE_BT_MAC);
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        textBoxBt.Text = dialog.Input;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
                 if (string.IsNullOrEmpty(textBoxBt.Text.Trim()))
                 {
                     goto ERROR;
                 }
-                else
-                {
-
-                    codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_BT_MAC, Util.GetMACToWrite(textBoxBt.Text.Trim())));
-
-                }
+                codes.Add(new KeyValuePair<int, string>(CodeType.TYPE_BT_MAC, Util.GetMACToWrite(textBoxBt.Text.Trim())));
             }
             pictureBoxSN.Visible = false;
             pictureBoxIMEI.Visible = false;
@@ -353,22 +421,19 @@ namespace IMEI_Reader
                 isWriting = false;
             }
         }
-
+         
 
         private void Write(List<KeyValuePair<int, string>> codes)
         {
             AdbOperator ao = new AdbOperator(mHandler, this);
             Thread thread = new Thread(new ParameterizedThreadStart(ao.StartExcuteWriteCmd));
             thread.Start(codes);
-            
+
         }
-
-
-
 
         private void DoActionAfterWrite()
         {
-            int action = checkBoxAutoPoweroff.Checked?1:0;
+            int action = checkBoxAutoPoweroff.Checked ? 1 : 0;
             String cmd = null;
             switch (action)
             {
@@ -384,16 +449,15 @@ namespace IMEI_Reader
 
             AdbOperator ao = new AdbOperator(mHandler, this);
             Thread thread = new Thread(new ParameterizedThreadStart(ao.StartExcuteTcmd));
-            
+
             thread.Start(cmd);
         }
-
 
         private void checkBoxSN_CheckedChanged(object sender, EventArgs e)
         {
             textBoxSN.Enabled = checkBoxSN.Checked;
             textBoxSN.BackColor = checkBoxSN.Checked ? Color.White : System.Drawing.SystemColors.Control;
-            linkLabelSN.Visible = checkBoxSN.Checked;
+            //linkLabelSN.Visible = checkBoxSN.Checked;
             if (!checkBoxSN.Checked)
             {
                 pictureBoxSN.Visible = false;
@@ -406,7 +470,7 @@ namespace IMEI_Reader
         {
             textBoxIMEI.Enabled = checkBoxIMEI.Checked;
             textBoxIMEI.BackColor = checkBoxIMEI.Checked ? Color.White : System.Drawing.SystemColors.Control;
-            linkLabelIMEI.Visible = checkBoxIMEI.Checked;
+            //linkLabelIMEI.Visible = checkBoxIMEI.Checked;
             if (!checkBoxIMEI.Checked)
             {
                 pictureBoxIMEI.Visible = false;
@@ -420,7 +484,7 @@ namespace IMEI_Reader
         {
             textBoxIMEI2.Enabled = checkBoxIMEI2.Checked;
             textBoxIMEI2.BackColor = checkBoxIMEI2.Checked ? Color.White : System.Drawing.SystemColors.Control;
-            linkLabelIMEI2.Visible = checkBoxIMEI2.Checked;
+            //linkLabelIMEI2.Visible = checkBoxIMEI2.Checked;
             if (!checkBoxIMEI2.Checked)
             {
                 pictureBoxIMEI2.Visible = false;
@@ -434,7 +498,7 @@ namespace IMEI_Reader
         {
             textBoxWifi.Enabled = checkBoxWifi.Checked;
             textBoxWifi.BackColor = checkBoxWifi.Checked ? Color.White : System.Drawing.SystemColors.Control;
-            linkLabelWifi.Visible = checkBoxWifi.Checked;
+            //linkLabelWifi.Visible = checkBoxWifi.Checked;
             if (!checkBoxWifi.Checked)
             {
                 pictureBoxWIFI.Visible = false;
@@ -447,7 +511,7 @@ namespace IMEI_Reader
         {
             textBoxBt.Enabled = checkBoxBt.Checked;
             textBoxBt.BackColor = checkBoxBt.Checked ? Color.White : System.Drawing.SystemColors.Control;
-            linkLabelBt.Visible = checkBoxBt.Checked;
+            //linkLabelBt.Visible = checkBoxBt.Checked;
             if (!checkBoxBt.Checked)
             {
                 pictureBoxBT.Visible = false;
@@ -469,8 +533,8 @@ namespace IMEI_Reader
             int tag = Convert.ToInt32(((LinkLabel)sender).Tag);
 
             WriterConfig config = new WriterConfig();
-            config.Top = this.Top+70;
-            config.Left = this.Left+60;
+            config.Top = this.Top + 70;
+            config.Left = this.Left + 60;
             config.Tag = tag;
             if (config.ShowDialog() == DialogResult.OK)
             {
@@ -483,23 +547,17 @@ namespace IMEI_Reader
 
         private void updateInputBox()
         {
-            textBoxSN.ReadOnly = !(Settings.Default.InputSNType == 0);
-            textBoxIMEI.ReadOnly = !(Settings.Default.InputIMEIType == 0);
-            textBoxIMEI2.ReadOnly = !(Settings.Default.InputIMEI2Type == 0);
-            textBoxWifi.ReadOnly = !(Settings.Default.InputWIFIType == 0);
-            textBoxBt.ReadOnly = !(Settings.Default.InputBTType == 0);
-
             textBoxSN.Text = (Settings.Default.InputSNType == 0) ? "" : Settings.Default.SN_CUR;
             textBoxIMEI.Text = (Settings.Default.InputIMEIType == 0) ? "" : Settings.Default.IMEI_CUR;
             textBoxIMEI2.Text = (Settings.Default.InputIMEI2Type == 0) ? "" : Settings.Default.IMEI2_CUR;
             textBoxWifi.Text = (Settings.Default.InputWIFIType == 0) ? "" : Settings.Default.WIFI_CUR;
             textBoxBt.Text = (Settings.Default.InputBTType == 0) ? "" : Settings.Default.BT_CUR;
-
-            
         }
+
 
         private void buttonWrite_Click(object sender, EventArgs e)
         {
+
             this.CheckAndStartWrite();
         }
 
@@ -510,6 +568,7 @@ namespace IMEI_Reader
             checkBoxIMEI2.Checked = Settings.Default.WriteIMEI2Checked;
             checkBoxWifi.Checked = Settings.Default.WriteWIFIChecked;
             checkBoxBt.Checked = Settings.Default.WriteBTChecked;
+            checkBoxScan.Checked = Settings.Default.ScanInput;
             checkBoxPrint.Checked = Settings.Default.PrintAfterWrite;
             checkBoxAutoPoweroff.Checked = Settings.Default.AutoPoweroff;
             AutoPoweroffToolStripMenuItem.Checked = Settings.Default.AutoPoweroff;
@@ -522,17 +581,19 @@ namespace IMEI_Reader
             pictureBoxIMEI2.Tag = CodeType.TYPE_IMEI2;
             pictureBoxWIFI.Tag = CodeType.TYPE_WIFI_MAC;
             pictureBoxBT.Tag = CodeType.TYPE_BT_MAC;
-      
+
+
+
             updateInputBox();
         }
 
         private void textBoxSN_TextChanged(object sender, EventArgs e)
         {
-            bool valid = textBoxSN.Text.Trim().Length==0|| Util.IsValidSN(textBoxSN.Text.Trim());
+            bool valid = textBoxSN.Text.Trim().Length == 0 || Util.IsValidSN(textBoxSN.Text.Trim());
 
             textBoxSN.BackColor = valid ? Color.White : Color.Red;
 
-            textBoxSN.ForeColor = valid ? System.Drawing.Color.RoyalBlue: Color.Silver;
+            textBoxSN.ForeColor = valid ? System.Drawing.Color.RoyalBlue : Color.Silver;
         }
 
         private void textBoxSN_KeyPress(object sender, KeyPressEventArgs e)
@@ -565,7 +626,7 @@ namespace IMEI_Reader
             {
                 text = text.Substring(0, 12);
             }
-           
+
             textBox.Text = text;
 
 
@@ -692,7 +753,7 @@ namespace IMEI_Reader
                 Settings.Default.PrintCount = Convert.ToInt32(textBoxPrintCount.Text);
                 Settings.Default.Save();
             }
-           
+
         }
 
         private void textBoxPrintCount_KeyPress(object sender, KeyPressEventArgs e)
@@ -702,15 +763,6 @@ namespace IMEI_Reader
             {
                 e.Handled = true;
             }
-        }
-
-        private void textBox_ReadOnlyChanged(object sender, EventArgs e)
-        {
-
-            TextBox textBox = (TextBox)sender;
-                         
-            textBox.BorderStyle = textBox.ReadOnly ? BorderStyle.FixedSingle : BorderStyle.Fixed3D;       
-           
         }
 
         private void pictureBox_Click(object sender, EventArgs e)
@@ -777,6 +829,13 @@ namespace IMEI_Reader
             {
                 textBoxBt.Focus();
             }
+        }
+
+        private void checkBoxScan_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Default.ScanInput = checkBoxScan.Checked;
+            Settings.Default.Save();
+            updateInputBox();
         }
 
 

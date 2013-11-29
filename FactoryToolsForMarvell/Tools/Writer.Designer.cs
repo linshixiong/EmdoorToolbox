@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBoxScan = new System.Windows.Forms.CheckBox();
             this.labelPrintCount = new System.Windows.Forms.Label();
             this.textBoxPrintCount = new System.Windows.Forms.TextBox();
             this.checkBoxPrint = new System.Windows.Forms.CheckBox();
@@ -39,11 +40,6 @@
             this.pictureBoxIMEI2 = new System.Windows.Forms.PictureBox();
             this.pictureBoxIMEI = new System.Windows.Forms.PictureBox();
             this.pictureBoxSN = new System.Windows.Forms.PictureBox();
-            this.linkLabelBt = new System.Windows.Forms.LinkLabel();
-            this.linkLabelIMEI2 = new System.Windows.Forms.LinkLabel();
-            this.linkLabelWifi = new System.Windows.Forms.LinkLabel();
-            this.linkLabelIMEI = new System.Windows.Forms.LinkLabel();
-            this.linkLabelSN = new System.Windows.Forms.LinkLabel();
             this.checkBoxAutoWrite = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -94,6 +90,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBoxScan);
             this.groupBox1.Controls.Add(this.labelPrintCount);
             this.groupBox1.Controls.Add(this.textBoxPrintCount);
             this.groupBox1.Controls.Add(this.checkBoxPrint);
@@ -103,11 +100,6 @@
             this.groupBox1.Controls.Add(this.pictureBoxIMEI2);
             this.groupBox1.Controls.Add(this.pictureBoxIMEI);
             this.groupBox1.Controls.Add(this.pictureBoxSN);
-            this.groupBox1.Controls.Add(this.linkLabelBt);
-            this.groupBox1.Controls.Add(this.linkLabelIMEI2);
-            this.groupBox1.Controls.Add(this.linkLabelWifi);
-            this.groupBox1.Controls.Add(this.linkLabelIMEI);
-            this.groupBox1.Controls.Add(this.linkLabelSN);
             this.groupBox1.Controls.Add(this.checkBoxAutoWrite);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label6);
@@ -132,10 +124,22 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "选择项";
             // 
+            // checkBoxScan
+            // 
+            this.checkBoxScan.AutoSize = true;
+            this.checkBoxScan.Font = new System.Drawing.Font("黑体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.checkBoxScan.Location = new System.Drawing.Point(25, 317);
+            this.checkBoxScan.Name = "checkBoxScan";
+            this.checkBoxScan.Size = new System.Drawing.Size(82, 18);
+            this.checkBoxScan.TabIndex = 15;
+            this.checkBoxScan.Text = "扫描输入";
+            this.checkBoxScan.UseVisualStyleBackColor = true;
+            this.checkBoxScan.CheckedChanged += new System.EventHandler(this.checkBoxScan_CheckedChanged);
+            // 
             // labelPrintCount
             // 
             this.labelPrintCount.AutoSize = true;
-            this.labelPrintCount.Location = new System.Drawing.Point(343, 313);
+            this.labelPrintCount.Location = new System.Drawing.Point(389, 318);
             this.labelPrintCount.Name = "labelPrintCount";
             this.labelPrintCount.Size = new System.Drawing.Size(70, 14);
             this.labelPrintCount.TabIndex = 26;
@@ -145,10 +149,10 @@
             // 
             this.textBoxPrintCount.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxPrintCount.Font = new System.Drawing.Font("黑体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBoxPrintCount.Location = new System.Drawing.Point(414, 313);
+            this.textBoxPrintCount.Location = new System.Drawing.Point(460, 318);
             this.textBoxPrintCount.Name = "textBoxPrintCount";
             this.textBoxPrintCount.Size = new System.Drawing.Size(22, 16);
-            this.textBoxPrintCount.TabIndex = 25;
+            this.textBoxPrintCount.TabIndex = 19;
             this.textBoxPrintCount.Text = "3";
             this.textBoxPrintCount.TextChanged += new System.EventHandler(this.textBoxPrintCount_TextChanged);
             this.textBoxPrintCount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxPrintCount_KeyPress);
@@ -158,10 +162,10 @@
             this.checkBoxPrint.AutoSize = true;
             this.checkBoxPrint.Checked = true;
             this.checkBoxPrint.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxPrint.Location = new System.Drawing.Point(257, 312);
+            this.checkBoxPrint.Location = new System.Drawing.Point(303, 317);
             this.checkBoxPrint.Name = "checkBoxPrint";
             this.checkBoxPrint.Size = new System.Drawing.Size(82, 18);
-            this.checkBoxPrint.TabIndex = 24;
+            this.checkBoxPrint.TabIndex = 18;
             this.checkBoxPrint.Text = "打印条码";
             this.checkBoxPrint.UseVisualStyleBackColor = true;
             this.checkBoxPrint.CheckedChanged += new System.EventHandler(this.checkBoxPrint_CheckedChanged);
@@ -169,10 +173,10 @@
             // checkBoxAutoPoweroff
             // 
             this.checkBoxAutoPoweroff.AutoSize = true;
-            this.checkBoxAutoPoweroff.Location = new System.Drawing.Point(155, 312);
+            this.checkBoxAutoPoweroff.Location = new System.Drawing.Point(201, 317);
             this.checkBoxAutoPoweroff.Name = "checkBoxAutoPoweroff";
             this.checkBoxAutoPoweroff.Size = new System.Drawing.Size(96, 18);
-            this.checkBoxAutoPoweroff.TabIndex = 23;
+            this.checkBoxAutoPoweroff.TabIndex = 17;
             this.checkBoxAutoPoweroff.Text = "完成后关机";
             this.checkBoxAutoPoweroff.UseVisualStyleBackColor = true;
             this.checkBoxAutoPoweroff.CheckedChanged += new System.EventHandler(this.checkBoxPoweroff_CheckedChanged);
@@ -247,79 +251,14 @@
             this.pictureBoxSN.Click += new System.EventHandler(this.pictureBox_Click);
             this.pictureBoxSN.MouseEnter += new System.EventHandler(this.pictureBox_MouseEnter);
             // 
-            // linkLabelBt
-            // 
-            this.linkLabelBt.AutoSize = true;
-            this.linkLabelBt.Font = new System.Drawing.Font("黑体", 10F);
-            this.linkLabelBt.Location = new System.Drawing.Point(419, 277);
-            this.linkLabelBt.Name = "linkLabelBt";
-            this.linkLabelBt.Size = new System.Drawing.Size(35, 14);
-            this.linkLabelBt.TabIndex = 5;
-            this.linkLabelBt.TabStop = true;
-            this.linkLabelBt.Tag = "5";
-            this.linkLabelBt.Text = "配置";
-            this.linkLabelBt.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
-            // 
-            // linkLabelIMEI2
-            // 
-            this.linkLabelIMEI2.AutoSize = true;
-            this.linkLabelIMEI2.Font = new System.Drawing.Font("黑体", 10F);
-            this.linkLabelIMEI2.Location = new System.Drawing.Point(419, 158);
-            this.linkLabelIMEI2.Name = "linkLabelIMEI2";
-            this.linkLabelIMEI2.Size = new System.Drawing.Size(35, 14);
-            this.linkLabelIMEI2.TabIndex = 5;
-            this.linkLabelIMEI2.TabStop = true;
-            this.linkLabelIMEI2.Tag = "3";
-            this.linkLabelIMEI2.Text = "配置";
-            this.linkLabelIMEI2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
-            // 
-            // linkLabelWifi
-            // 
-            this.linkLabelWifi.AutoSize = true;
-            this.linkLabelWifi.Font = new System.Drawing.Font("黑体", 10F);
-            this.linkLabelWifi.Location = new System.Drawing.Point(419, 217);
-            this.linkLabelWifi.Name = "linkLabelWifi";
-            this.linkLabelWifi.Size = new System.Drawing.Size(35, 14);
-            this.linkLabelWifi.TabIndex = 5;
-            this.linkLabelWifi.TabStop = true;
-            this.linkLabelWifi.Tag = "4";
-            this.linkLabelWifi.Text = "配置";
-            this.linkLabelWifi.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
-            // 
-            // linkLabelIMEI
-            // 
-            this.linkLabelIMEI.AutoSize = true;
-            this.linkLabelIMEI.Font = new System.Drawing.Font("黑体", 10F);
-            this.linkLabelIMEI.Location = new System.Drawing.Point(419, 97);
-            this.linkLabelIMEI.Name = "linkLabelIMEI";
-            this.linkLabelIMEI.Size = new System.Drawing.Size(35, 14);
-            this.linkLabelIMEI.TabIndex = 5;
-            this.linkLabelIMEI.TabStop = true;
-            this.linkLabelIMEI.Tag = "2";
-            this.linkLabelIMEI.Text = "配置";
-            this.linkLabelIMEI.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
-            // 
-            // linkLabelSN
-            // 
-            this.linkLabelSN.AutoSize = true;
-            this.linkLabelSN.Font = new System.Drawing.Font("黑体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.linkLabelSN.Location = new System.Drawing.Point(419, 37);
-            this.linkLabelSN.Name = "linkLabelSN";
-            this.linkLabelSN.Size = new System.Drawing.Size(35, 14);
-            this.linkLabelSN.TabIndex = 5;
-            this.linkLabelSN.TabStop = true;
-            this.linkLabelSN.Tag = "1";
-            this.linkLabelSN.Text = "配置";
-            this.linkLabelSN.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_LinkClicked);
-            // 
             // checkBoxAutoWrite
             // 
             this.checkBoxAutoWrite.AutoSize = true;
             this.checkBoxAutoWrite.Font = new System.Drawing.Font("黑体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.checkBoxAutoWrite.Location = new System.Drawing.Point(67, 312);
+            this.checkBoxAutoWrite.Location = new System.Drawing.Point(113, 317);
             this.checkBoxAutoWrite.Name = "checkBoxAutoWrite";
             this.checkBoxAutoWrite.Size = new System.Drawing.Size(82, 18);
-            this.checkBoxAutoWrite.TabIndex = 4;
+            this.checkBoxAutoWrite.TabIndex = 16;
             this.checkBoxAutoWrite.Text = "自动烧写";
             this.checkBoxAutoWrite.UseVisualStyleBackColor = true;
             this.checkBoxAutoWrite.CheckedChanged += new System.EventHandler(this.checkBoxAutoWrite_CheckedChanged);
@@ -379,10 +318,10 @@
             this.checkBoxBt.AutoSize = true;
             this.checkBoxBt.Checked = true;
             this.checkBoxBt.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxBt.Location = new System.Drawing.Point(398, 278);
+            this.checkBoxBt.Location = new System.Drawing.Point(436, 278);
             this.checkBoxBt.Name = "checkBoxBt";
             this.checkBoxBt.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxBt.TabIndex = 2;
+            this.checkBoxBt.TabIndex = 13;
             this.checkBoxBt.UseVisualStyleBackColor = true;
             this.checkBoxBt.CheckedChanged += new System.EventHandler(this.checkBoxBt_CheckedChanged);
             // 
@@ -391,10 +330,10 @@
             this.checkBoxIMEI2.AutoSize = true;
             this.checkBoxIMEI2.Checked = true;
             this.checkBoxIMEI2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxIMEI2.Location = new System.Drawing.Point(398, 158);
+            this.checkBoxIMEI2.Location = new System.Drawing.Point(436, 158);
             this.checkBoxIMEI2.Name = "checkBoxIMEI2";
             this.checkBoxIMEI2.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxIMEI2.TabIndex = 2;
+            this.checkBoxIMEI2.TabIndex = 7;
             this.checkBoxIMEI2.UseVisualStyleBackColor = true;
             this.checkBoxIMEI2.CheckedChanged += new System.EventHandler(this.checkBoxIMEI2_CheckedChanged);
             // 
@@ -403,10 +342,10 @@
             this.checkBoxWifi.AutoSize = true;
             this.checkBoxWifi.Checked = true;
             this.checkBoxWifi.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxWifi.Location = new System.Drawing.Point(398, 217);
+            this.checkBoxWifi.Location = new System.Drawing.Point(436, 217);
             this.checkBoxWifi.Name = "checkBoxWifi";
             this.checkBoxWifi.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxWifi.TabIndex = 2;
+            this.checkBoxWifi.TabIndex = 10;
             this.checkBoxWifi.UseVisualStyleBackColor = true;
             this.checkBoxWifi.CheckedChanged += new System.EventHandler(this.checkBoxWifi_CheckedChanged);
             // 
@@ -415,10 +354,10 @@
             this.checkBoxIMEI.AutoSize = true;
             this.checkBoxIMEI.Checked = true;
             this.checkBoxIMEI.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxIMEI.Location = new System.Drawing.Point(398, 97);
+            this.checkBoxIMEI.Location = new System.Drawing.Point(436, 97);
             this.checkBoxIMEI.Name = "checkBoxIMEI";
             this.checkBoxIMEI.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxIMEI.TabIndex = 2;
+            this.checkBoxIMEI.TabIndex = 4;
             this.checkBoxIMEI.UseVisualStyleBackColor = true;
             this.checkBoxIMEI.CheckedChanged += new System.EventHandler(this.checkBoxIMEI_CheckedChanged);
             // 
@@ -427,10 +366,10 @@
             this.checkBoxSN.AutoSize = true;
             this.checkBoxSN.Checked = true;
             this.checkBoxSN.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxSN.Location = new System.Drawing.Point(398, 37);
+            this.checkBoxSN.Location = new System.Drawing.Point(436, 37);
             this.checkBoxSN.Name = "checkBoxSN";
             this.checkBoxSN.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxSN.TabIndex = 2;
+            this.checkBoxSN.TabIndex = 1;
             this.checkBoxSN.UseVisualStyleBackColor = true;
             this.checkBoxSN.CheckedChanged += new System.EventHandler(this.checkBoxSN_CheckedChanged);
             // 
@@ -443,10 +382,9 @@
             this.textBoxBt.Location = new System.Drawing.Point(75, 271);
             this.textBoxBt.MaxLength = 120;
             this.textBoxBt.Name = "textBoxBt";
-            this.textBoxBt.Size = new System.Drawing.Size(317, 26);
-            this.textBoxBt.TabIndex = 1;
+            this.textBoxBt.Size = new System.Drawing.Size(350, 26);
+            this.textBoxBt.TabIndex = 12;
             this.textBoxBt.TextChanged += new System.EventHandler(this.textBoxMac_TextChanged);
-            this.textBoxBt.ReadOnlyChanged += new System.EventHandler(this.textBox_ReadOnlyChanged);
             this.textBoxBt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxBt_KeyDown);
             this.textBoxBt.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxWifi_KeyPress);
             // 
@@ -458,10 +396,9 @@
             this.textBoxIMEI2.Location = new System.Drawing.Point(75, 151);
             this.textBoxIMEI2.MaxLength = 15;
             this.textBoxIMEI2.Name = "textBoxIMEI2";
-            this.textBoxIMEI2.Size = new System.Drawing.Size(317, 26);
-            this.textBoxIMEI2.TabIndex = 1;
+            this.textBoxIMEI2.Size = new System.Drawing.Size(350, 26);
+            this.textBoxIMEI2.TabIndex = 6;
             this.textBoxIMEI2.TextChanged += new System.EventHandler(this.textBoxIMEI_TextChanged);
-            this.textBoxIMEI2.ReadOnlyChanged += new System.EventHandler(this.textBox_ReadOnlyChanged);
             this.textBoxIMEI2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxIMEI2_KeyDown);
             // 
             // textBoxWifi
@@ -473,10 +410,9 @@
             this.textBoxWifi.Location = new System.Drawing.Point(75, 211);
             this.textBoxWifi.MaxLength = 120;
             this.textBoxWifi.Name = "textBoxWifi";
-            this.textBoxWifi.Size = new System.Drawing.Size(317, 26);
-            this.textBoxWifi.TabIndex = 1;
+            this.textBoxWifi.Size = new System.Drawing.Size(350, 26);
+            this.textBoxWifi.TabIndex = 9;
             this.textBoxWifi.TextChanged += new System.EventHandler(this.textBoxMac_TextChanged);
-            this.textBoxWifi.ReadOnlyChanged += new System.EventHandler(this.textBox_ReadOnlyChanged);
             this.textBoxWifi.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxWifi_KeyDown);
             this.textBoxWifi.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxWifi_KeyPress);
             // 
@@ -488,10 +424,9 @@
             this.textBoxIMEI.Location = new System.Drawing.Point(75, 91);
             this.textBoxIMEI.MaxLength = 15;
             this.textBoxIMEI.Name = "textBoxIMEI";
-            this.textBoxIMEI.Size = new System.Drawing.Size(317, 26);
-            this.textBoxIMEI.TabIndex = 1;
+            this.textBoxIMEI.Size = new System.Drawing.Size(350, 26);
+            this.textBoxIMEI.TabIndex = 3;
             this.textBoxIMEI.TextChanged += new System.EventHandler(this.textBoxIMEI_TextChanged);
-            this.textBoxIMEI.ReadOnlyChanged += new System.EventHandler(this.textBox_ReadOnlyChanged);
             this.textBoxIMEI.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxIMEI_KeyDown);
             // 
             // textBoxSN
@@ -503,10 +438,9 @@
             this.textBoxSN.Location = new System.Drawing.Point(75, 31);
             this.textBoxSN.MaxLength = 32;
             this.textBoxSN.Name = "textBoxSN";
-            this.textBoxSN.Size = new System.Drawing.Size(317, 26);
+            this.textBoxSN.Size = new System.Drawing.Size(350, 26);
             this.textBoxSN.TabIndex = 0;
             this.textBoxSN.TextChanged += new System.EventHandler(this.textBoxSN_TextChanged);
-            this.textBoxSN.ReadOnlyChanged += new System.EventHandler(this.textBox_ReadOnlyChanged);
             this.textBoxSN.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxSN_KeyDown);
             this.textBoxSN.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxSN_KeyPress);
             // 
@@ -546,8 +480,8 @@
             this.buttonWrite.Location = new System.Drawing.Point(425, 388);
             this.buttonWrite.Name = "buttonWrite";
             this.buttonWrite.Size = new System.Drawing.Size(80, 30);
-            this.buttonWrite.TabIndex = 1;
-            this.buttonWrite.Text = "烧写";
+            this.buttonWrite.TabIndex = 20;
+            this.buttonWrite.Text = "开始";
             this.buttonWrite.UseVisualStyleBackColor = true;
             this.buttonWrite.Click += new System.EventHandler(this.buttonWrite_Click);
             // 
@@ -638,7 +572,7 @@
             // 
             this.AutoWriteToolStripMenuItem.CheckOnClick = true;
             this.AutoWriteToolStripMenuItem.Name = "AutoWriteToolStripMenuItem";
-            this.AutoWriteToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.AutoWriteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.AutoWriteToolStripMenuItem.Text = "自动烧写";
             this.AutoWriteToolStripMenuItem.Click += new System.EventHandler(this.AutoWriteToolStripMenuItem_Click);
             // 
@@ -646,7 +580,7 @@
             // 
             this.AutoPoweroffToolStripMenuItem.CheckOnClick = true;
             this.AutoPoweroffToolStripMenuItem.Name = "AutoPoweroffToolStripMenuItem";
-            this.AutoPoweroffToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.AutoPoweroffToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.AutoPoweroffToolStripMenuItem.Text = "完成后关机";
             this.AutoPoweroffToolStripMenuItem.Click += new System.EventHandler(this.AutoPoweroffToolStripMenuItem_Click);
             // 
@@ -654,21 +588,21 @@
             // 
             this.PrintAfterWriteToolStripMenuItem.CheckOnClick = true;
             this.PrintAfterWriteToolStripMenuItem.Name = "PrintAfterWriteToolStripMenuItem";
-            this.PrintAfterWriteToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.PrintAfterWriteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.PrintAfterWriteToolStripMenuItem.Text = "打印条码";
             this.PrintAfterWriteToolStripMenuItem.Click += new System.EventHandler(this.PrintAfterWriteToolStripMenuItem_Click);
             // 
             // PrinterConfigToolStripMenuItem
             // 
             this.PrinterConfigToolStripMenuItem.Name = "PrinterConfigToolStripMenuItem";
-            this.PrinterConfigToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.PrinterConfigToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.PrinterConfigToolStripMenuItem.Text = "打印机配置";
             this.PrinterConfigToolStripMenuItem.Click += new System.EventHandler(this.PrinterConfigToolStripMenuItem_Click);
             // 
             // USBConfigToolStripMenuItem
             // 
             this.USBConfigToolStripMenuItem.Name = "USBConfigToolStripMenuItem";
-            this.USBConfigToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.USBConfigToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.USBConfigToolStripMenuItem.Text = "USB连接参数";
             this.USBConfigToolStripMenuItem.Click += new System.EventHandler(this.USBConfigToolStripMenuItem_Click);
             // 
@@ -741,10 +675,6 @@
         private System.Windows.Forms.Button buttonWrite;
         private System.Windows.Forms.CheckBox checkBoxAutoWrite;
         private System.Windows.Forms.Label labelMsg;
-        private System.Windows.Forms.LinkLabel linkLabelBt;
-        private System.Windows.Forms.LinkLabel linkLabelWifi;
-        private System.Windows.Forms.LinkLabel linkLabelIMEI;
-        private System.Windows.Forms.LinkLabel linkLabelSN;
         private System.Windows.Forms.Panel panelProgress;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -772,10 +702,10 @@
         private System.Windows.Forms.TextBox textBoxPrintCount;
         private System.Windows.Forms.ToolStripMenuItem PrintAfterWriteToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBoxIMEI2;
-        private System.Windows.Forms.LinkLabel linkLabelIMEI2;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.CheckBox checkBoxIMEI2;
         private System.Windows.Forms.TextBox textBoxIMEI2;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.CheckBox checkBoxScan;
     }
 }

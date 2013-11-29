@@ -802,5 +802,17 @@ namespace IMEI_Reader {
                 this["BT_CUR"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ScanInput {
+            get {
+                return ((bool)(this["ScanInput"]));
+            }
+            set {
+                this["ScanInput"] = value;
+            }
+        }
     }
 }
