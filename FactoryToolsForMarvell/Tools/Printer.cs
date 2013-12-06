@@ -35,12 +35,13 @@ namespace IMEI_Reader
             textBoxSN.Enabled = checkBoxSN.Checked;
             textBoxSN.BackColor = checkBoxSN.Checked ? Color.White :  System.Drawing.SystemColors.Control;
             
-            this.checkBoxIMEI.Checked = Settings.Default.IMEI_Selected;
-
+            this.checkBoxIMEI.Checked = Settings.Default.DevicePlatform==0&& Settings.Default.IMEI_Selected;
+            this.checkBoxIMEI.Enabled = Settings.Default.DevicePlatform == 0;
             textBoxIMEI.Enabled = checkBoxIMEI.Checked;
             textBoxIMEI.BackColor = checkBoxIMEI.Checked ? Color.White :  System.Drawing.SystemColors.Control;
 
-            this.checkBoxIMEI2.Checked = Settings.Default.IMEI2_Selected;
+            this.checkBoxIMEI2.Checked = Settings.Default.DevicePlatform == 0 && Settings.Default.IMEI2_Selected;
+            this.checkBoxIMEI2.Enabled = Settings.Default.DevicePlatform == 0;
             textBoxIMEI2.Enabled = checkBoxIMEI2.Checked;
             textBoxIMEI2.BackColor = checkBoxIMEI2.Checked ? Color.White : System.Drawing.SystemColors.Control;
             
@@ -135,8 +136,8 @@ namespace IMEI_Reader
 
 
                     checkBoxSN.Enabled = true;
-                    checkBoxIMEI.Enabled = true;
-                    checkBoxIMEI2.Enabled = true;
+                    checkBoxIMEI.Enabled = Settings.Default.DevicePlatform == 0;
+                    checkBoxIMEI2.Enabled = Settings.Default.DevicePlatform == 0;
                     checkBoxWifi.Enabled = true;
                     checkBoxBt.Enabled = true;
                     checkBoxSwVersion.Enabled = true;
@@ -157,8 +158,8 @@ namespace IMEI_Reader
                     PoweroffToolStripMenuItem.Enabled = true;
                     RebootToolStripMenuItem.Enabled = true;
                     checkBoxSN.Enabled = true;
-                    checkBoxIMEI.Enabled = true;
-                    checkBoxIMEI2.Enabled = true;
+                    checkBoxIMEI.Enabled =  Settings.Default.DevicePlatform == 0;
+                    checkBoxIMEI2.Enabled = Settings.Default.DevicePlatform == 0; ;
                     checkBoxWifi.Enabled = true;
                     checkBoxBt.Enabled = true;
                     checkBoxSwVersion.Enabled = true;
@@ -219,7 +220,7 @@ namespace IMEI_Reader
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
             detetor.RemoveUSBEventWatcher();
-            AdbOperator.CleanUpAdbProcess();
+            CmdExecutor.CleanUpAdbProcess();
             this.Dispose();
             Environment.Exit(0);
         }
@@ -278,8 +279,8 @@ namespace IMEI_Reader
                 }
                 return;
             }
-            AdbOperator ao = new AdbOperator(mHandler, this);
-            Thread thread = new Thread(new ParameterizedThreadStart(ao.StartExcuteReadCmd));
+            CmdExecutor executor = CmdExecutor.GetCmdExecutor(Settings.Default.DevicePlatform, mHandler, this);
+            Thread thread = new Thread(new ParameterizedThreadStart(executor.StartExcuteReadCmd));
             thread.Start(cmds);
         }
 
@@ -612,14 +613,6 @@ namespace IMEI_Reader
             }
         }
 
-        private void linkLabelUsbConfig_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            UsbConfig usbConfig = new UsbConfig();
-            if (usbConfig.ShowDialog() == DialogResult.OK)
-            {
-                detetor.updateDeviceCount();
-            }
-        }
 
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -642,10 +635,11 @@ namespace IMEI_Reader
             if (MessageBox.Show("是否确定关闭平板电脑系统？", "关闭平板电脑", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
             {
 
-                AdbOperator ao = new AdbOperator(mHandler, this);
-                Thread thread = new Thread(new ParameterizedThreadStart(ao.StartExcuteTcmd));
+                CmdExecutor executor = CmdExecutor.GetCmdExecutor(Settings.Default.DevicePlatform, mHandler, this);
+                Thread thread = new Thread(new ParameterizedThreadStart(executor.StartPowerOff));
+                thread.Start(null);
 
-                thread.Start("poweroff");
+               
             }
         }
 
@@ -653,10 +647,9 @@ namespace IMEI_Reader
         {
             if (MessageBox.Show("是否确定重启平板电脑系统？", "重启平板电脑", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.OK)
             {
-                AdbOperator ao = new AdbOperator(mHandler, this);
-                Thread thread = new Thread(new ParameterizedThreadStart(ao.StartExcuteTcmd));
-
-                thread.Start("reboot");
+                CmdExecutor executor = CmdExecutor.GetCmdExecutor(Settings.Default.DevicePlatform, mHandler, this);
+                Thread thread = new Thread(new ParameterizedThreadStart(executor.StartReboot));
+                thread.Start("");
             }
         }
 
@@ -691,7 +684,21 @@ namespace IMEI_Reader
         {
             UsbConfig config = new UsbConfig();
             config.StartPosition = FormStartPosition.CenterParent;
-            config.ShowDialog();
+
+            if (config.ShowDialog() == DialogResult.OK)
+            {
+                this.checkBoxIMEI.Checked = Settings.Default.DevicePlatform == 0 && Settings.Default.IMEI_Selected;
+                this.checkBoxIMEI.Enabled = Settings.Default.DevicePlatform == 0;
+                textBoxIMEI.Enabled = checkBoxIMEI.Checked;
+                textBoxIMEI.BackColor = checkBoxIMEI.Checked ? Color.White : System.Drawing.SystemColors.Control;
+
+                this.checkBoxIMEI2.Checked = Settings.Default.DevicePlatform == 0 && Settings.Default.IMEI2_Selected;
+                this.checkBoxIMEI2.Enabled = Settings.Default.DevicePlatform == 0;
+                textBoxIMEI2.Enabled = checkBoxIMEI2.Checked;
+                textBoxIMEI2.BackColor = checkBoxIMEI2.Checked ? Color.White : System.Drawing.SystemColors.Control;
+                detetor.updateDeviceCount();
+
+            }
         }
 
         private void AboutToolStripMenuItem1_Click(object sender, EventArgs e)

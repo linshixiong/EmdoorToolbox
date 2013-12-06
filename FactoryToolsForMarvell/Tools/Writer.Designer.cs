@@ -603,7 +603,7 @@
             // 
             this.USBConfigToolStripMenuItem.Name = "USBConfigToolStripMenuItem";
             this.USBConfigToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.USBConfigToolStripMenuItem.Text = "USB连接参数";
+            this.USBConfigToolStripMenuItem.Text = "设备连接参数";
             this.USBConfigToolStripMenuItem.Click += new System.EventHandler(this.USBConfigToolStripMenuItem_Click);
             // 
             // HelpToolStripMenuItem

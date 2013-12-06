@@ -36,6 +36,7 @@
             this.checkBoxSwVersion = new System.Windows.Forms.CheckBox();
             this.checkBoxBt = new System.Windows.Forms.CheckBox();
             this.checkBoxWifi = new System.Windows.Forms.CheckBox();
+            this.checkBoxIMEI2 = new System.Windows.Forms.CheckBox();
             this.checkBoxIMEI = new System.Windows.Forms.CheckBox();
             this.checkBoxSN = new System.Windows.Forms.CheckBox();
             this.textBoxSwVersion = new System.Windows.Forms.TextBox();
@@ -46,7 +47,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.checkBoxAutoRead = new System.Windows.Forms.CheckBox();
             this.textBoxSN = new System.Windows.Forms.TextBox();
+            this.textBoxIMEI2 = new System.Windows.Forms.TextBox();
             this.textBoxIMEI = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panelProgress = new System.Windows.Forms.Panel();
@@ -71,9 +74,6 @@
             this.USBConfigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.label8 = new System.Windows.Forms.Label();
-            this.textBoxIMEI2 = new System.Windows.Forms.TextBox();
-            this.checkBoxIMEI2 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.panelProgress.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -188,6 +188,16 @@
             this.checkBoxWifi.UseVisualStyleBackColor = true;
             this.checkBoxWifi.CheckedChanged += new System.EventHandler(this.checkBoxWifi_CheckedChanged);
             // 
+            // checkBoxIMEI2
+            // 
+            this.checkBoxIMEI2.AutoSize = true;
+            this.checkBoxIMEI2.Location = new System.Drawing.Point(453, 152);
+            this.checkBoxIMEI2.Name = "checkBoxIMEI2";
+            this.checkBoxIMEI2.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxIMEI2.TabIndex = 18;
+            this.checkBoxIMEI2.UseVisualStyleBackColor = true;
+            this.checkBoxIMEI2.CheckedChanged += new System.EventHandler(this.checkBoxIMEI2_CheckedChanged);
+            // 
             // checkBoxIMEI
             // 
             this.checkBoxIMEI.AutoSize = true;
@@ -292,6 +302,16 @@
             this.textBoxSN.Size = new System.Drawing.Size(365, 26);
             this.textBoxSN.TabIndex = 5;
             // 
+            // textBoxIMEI2
+            // 
+            this.textBoxIMEI2.BackColor = System.Drawing.Color.White;
+            this.textBoxIMEI2.Font = new System.Drawing.Font("黑体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBoxIMEI2.Location = new System.Drawing.Point(82, 146);
+            this.textBoxIMEI2.Name = "textBoxIMEI2";
+            this.textBoxIMEI2.ReadOnly = true;
+            this.textBoxIMEI2.Size = new System.Drawing.Size(364, 26);
+            this.textBoxIMEI2.TabIndex = 5;
+            // 
             // textBoxIMEI
             // 
             this.textBoxIMEI.BackColor = System.Drawing.Color.White;
@@ -301,6 +321,16 @@
             this.textBoxIMEI.ReadOnly = true;
             this.textBoxIMEI.Size = new System.Drawing.Size(364, 26);
             this.textBoxIMEI.TabIndex = 5;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("黑体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label8.Location = new System.Drawing.Point(34, 152);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(42, 14);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "IMEI2";
             // 
             // label2
             // 
@@ -474,7 +504,7 @@
             // 
             this.AutoReadToolStripMenuItem.CheckOnClick = true;
             this.AutoReadToolStripMenuItem.Name = "AutoReadToolStripMenuItem";
-            this.AutoReadToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.AutoReadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.AutoReadToolStripMenuItem.Text = "自动读取";
             this.AutoReadToolStripMenuItem.Click += new System.EventHandler(this.AutoReadToolStripMenuItem_Click);
             // 
@@ -482,7 +512,7 @@
             // 
             this.AutoPrintToolStripMenuItem1.CheckOnClick = true;
             this.AutoPrintToolStripMenuItem1.Name = "AutoPrintToolStripMenuItem1";
-            this.AutoPrintToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
+            this.AutoPrintToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.AutoPrintToolStripMenuItem1.Text = "自动打印";
             this.AutoPrintToolStripMenuItem1.Click += new System.EventHandler(this.AutoPrintToolStripMenuItem1_Click);
             // 
@@ -490,22 +520,22 @@
             // 
             this.AutoPoweroffToolStripMenuItem.CheckOnClick = true;
             this.AutoPoweroffToolStripMenuItem.Name = "AutoPoweroffToolStripMenuItem";
-            this.AutoPoweroffToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.AutoPoweroffToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.AutoPoweroffToolStripMenuItem.Text = "完成后关机";
             this.AutoPoweroffToolStripMenuItem.Click += new System.EventHandler(this.AutoPoweroffToolStripMenuItem_Click);
             // 
             // PrinterConfigToolStripMenuItem
             // 
             this.PrinterConfigToolStripMenuItem.Name = "PrinterConfigToolStripMenuItem";
-            this.PrinterConfigToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.PrinterConfigToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.PrinterConfigToolStripMenuItem.Text = "打印机配置";
             this.PrinterConfigToolStripMenuItem.Click += new System.EventHandler(this.PrinterConfigToolStripMenuItem_Click);
             // 
             // USBConfigToolStripMenuItem
             // 
             this.USBConfigToolStripMenuItem.Name = "USBConfigToolStripMenuItem";
-            this.USBConfigToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.USBConfigToolStripMenuItem.Text = "USB连接参数";
+            this.USBConfigToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.USBConfigToolStripMenuItem.Text = "设备连接参数";
             this.USBConfigToolStripMenuItem.Click += new System.EventHandler(this.USBConfigToolStripMenuItem_Click);
             // 
             // HelpToolStripMenuItem
@@ -522,36 +552,6 @@
             this.AboutToolStripMenuItem1.Size = new System.Drawing.Size(94, 22);
             this.AboutToolStripMenuItem1.Text = "关于";
             this.AboutToolStripMenuItem1.Click += new System.EventHandler(this.AboutToolStripMenuItem1_Click);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("黑体", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(34, 152);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(42, 14);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "IMEI2";
-            // 
-            // textBoxIMEI2
-            // 
-            this.textBoxIMEI2.BackColor = System.Drawing.Color.White;
-            this.textBoxIMEI2.Font = new System.Drawing.Font("黑体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBoxIMEI2.Location = new System.Drawing.Point(82, 146);
-            this.textBoxIMEI2.Name = "textBoxIMEI2";
-            this.textBoxIMEI2.ReadOnly = true;
-            this.textBoxIMEI2.Size = new System.Drawing.Size(364, 26);
-            this.textBoxIMEI2.TabIndex = 5;
-            // 
-            // checkBoxIMEI2
-            // 
-            this.checkBoxIMEI2.AutoSize = true;
-            this.checkBoxIMEI2.Location = new System.Drawing.Point(453, 152);
-            this.checkBoxIMEI2.Name = "checkBoxIMEI2";
-            this.checkBoxIMEI2.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxIMEI2.TabIndex = 18;
-            this.checkBoxIMEI2.UseVisualStyleBackColor = true;
-            this.checkBoxIMEI2.CheckedChanged += new System.EventHandler(this.checkBoxIMEI2_CheckedChanged);
             // 
             // Printer
             // 

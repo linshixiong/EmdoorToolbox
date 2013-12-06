@@ -421,12 +421,13 @@ namespace IMEI_Reader
                 isWriting = false;
             }
         }
-         
+
 
         private void Write(List<KeyValuePair<int, string>> codes)
         {
-            AdbOperator ao = new AdbOperator(mHandler, this);
-            Thread thread = new Thread(new ParameterizedThreadStart(ao.StartExcuteWriteCmd));
+
+            CmdExecutor executor = CmdExecutor.GetCmdExecutor(Settings.Default.DevicePlatform,mHandler,this);
+            Thread thread = new Thread(new ParameterizedThreadStart(executor.StartExcuteWriteCmd));
             thread.Start(codes);
 
         }
@@ -434,23 +435,27 @@ namespace IMEI_Reader
         private void DoActionAfterWrite()
         {
             int action = checkBoxAutoPoweroff.Checked ? 1 : 0;
-            String cmd = null;
+
             switch (action)
             {
                 case 1:
-                    cmd = "poweroff";
+                    {
+                        CmdExecutor executor = CmdExecutor.GetCmdExecutor(Settings.Default.DevicePlatform, mHandler, this);
+                        Thread thread = new Thread(new ParameterizedThreadStart(executor.StartPowerOff));
+                        thread.Start(null);
+                    }
                     break;
                 case 2:
-                    cmd = "reboot";
+                    {
+                        CmdExecutor executor = CmdExecutor.GetCmdExecutor(Settings.Default.DevicePlatform, mHandler, this);
+                        Thread thread = new Thread(new ParameterizedThreadStart(executor.StartReboot));
+                        thread.Start("");
+                    }
                     break;
                 default:
                     return;
             }
 
-            AdbOperator ao = new AdbOperator(mHandler, this);
-            Thread thread = new Thread(new ParameterizedThreadStart(ao.StartExcuteTcmd));
-
-            thread.Start(cmd);
         }
 
         private void checkBoxSN_CheckedChanged(object sender, EventArgs e)
@@ -523,7 +528,7 @@ namespace IMEI_Reader
         private void Writer_FormClosed(object sender, FormClosedEventArgs e)
         {
             detetor.RemoveUSBEventWatcher();
-            AdbOperator.CleanUpAdbProcess();
+            CmdExecutor.CleanUpAdbProcess();
             this.Dispose();
             Environment.Exit(0);
         }
@@ -547,11 +552,11 @@ namespace IMEI_Reader
 
         private void updateInputBox()
         {
-            textBoxSN.Text = (Settings.Default.InputSNType == 0) ? "" : Settings.Default.SN_CUR;
-            textBoxIMEI.Text = (Settings.Default.InputIMEIType == 0) ? "" : Settings.Default.IMEI_CUR;
-            textBoxIMEI2.Text = (Settings.Default.InputIMEI2Type == 0) ? "" : Settings.Default.IMEI2_CUR;
-            textBoxWifi.Text = (Settings.Default.InputWIFIType == 0) ? "" : Settings.Default.WIFI_CUR;
-            textBoxBt.Text = (Settings.Default.InputBTType == 0) ? "" : Settings.Default.BT_CUR;
+            textBoxSN.Text = Settings.Default.SN_CUR;
+            textBoxIMEI.Text =  Settings.Default.IMEI_CUR;
+            textBoxIMEI2.Text = Settings.Default.IMEI2_CUR;
+            textBoxWifi.Text = Settings.Default.WIFI_CUR;
+            textBoxBt.Text =  Settings.Default.BT_CUR;
         }
 
 
@@ -564,8 +569,10 @@ namespace IMEI_Reader
         private void Writer_Load(object sender, EventArgs e)
         {
             checkBoxSN.Checked = Settings.Default.WriteSNChecked;
-            checkBoxIMEI.Checked = Settings.Default.WriteIMEIChecked;
-            checkBoxIMEI2.Checked = Settings.Default.WriteIMEI2Checked;
+            this.checkBoxIMEI.Checked = Settings.Default.DevicePlatform == 0 && Settings.Default.WriteIMEIChecked;
+            this.checkBoxIMEI.Enabled = Settings.Default.DevicePlatform == 0;
+            this.checkBoxIMEI2.Checked = Settings.Default.DevicePlatform == 0 && Settings.Default.WriteIMEI2Checked;
+            this.checkBoxIMEI2.Enabled = Settings.Default.DevicePlatform == 0;
             checkBoxWifi.Checked = Settings.Default.WriteWIFIChecked;
             checkBoxBt.Checked = Settings.Default.WriteBTChecked;
             checkBoxScan.Checked = Settings.Default.ScanInput;
@@ -675,18 +682,16 @@ namespace IMEI_Reader
         }
         private void PoweroffToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AdbOperator ao = new AdbOperator(mHandler, this);
-            Thread thread = new Thread(new ParameterizedThreadStart(ao.StartExcuteTcmd));
-
-            thread.Start("poweroff");
+            CmdExecutor executor = CmdExecutor.GetCmdExecutor(Settings.Default.DevicePlatform, mHandler, this);
+            Thread thread = new Thread(new ParameterizedThreadStart(executor.StartPowerOff));
+            thread.Start(null);
         }
 
         private void RebootToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AdbOperator ao = new AdbOperator(mHandler, this);
-            Thread thread = new Thread(new ParameterizedThreadStart(ao.StartExcuteTcmd));
-
-            thread.Start("reboot");
+            CmdExecutor executor = CmdExecutor.GetCmdExecutor(Settings.Default.DevicePlatform, mHandler, this);
+            Thread thread = new Thread(new ParameterizedThreadStart(executor.StartReboot));
+            thread.Start("");
         }
 
         private void AutoWriteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -713,7 +718,21 @@ namespace IMEI_Reader
         {
             UsbConfig config = new UsbConfig();
             config.StartPosition = FormStartPosition.CenterParent;
-            config.ShowDialog();
+
+            if (config.ShowDialog() == DialogResult.OK)
+            {
+                this.checkBoxIMEI.Checked = Settings.Default.DevicePlatform == 0 && Settings.Default.IMEI_Selected;
+                this.checkBoxIMEI.Enabled = Settings.Default.DevicePlatform == 0;
+                textBoxIMEI.Enabled = checkBoxIMEI.Checked;
+                textBoxIMEI.BackColor = checkBoxIMEI.Checked ? Color.White : System.Drawing.SystemColors.Control;
+
+                this.checkBoxIMEI2.Checked = Settings.Default.DevicePlatform == 0 && Settings.Default.IMEI2_Selected;
+                this.checkBoxIMEI2.Enabled = Settings.Default.DevicePlatform == 0;
+                textBoxIMEI2.Enabled = checkBoxIMEI2.Checked;
+                textBoxIMEI2.BackColor = checkBoxIMEI2.Checked ? Color.White : System.Drawing.SystemColors.Control;
+                detetor.updateDeviceCount();
+
+            }
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
