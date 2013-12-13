@@ -188,7 +188,7 @@ namespace IMEI_Reader
                 labelMsg.Text = "连接设备过多";
                 labelMsg.ForeColor = Color.Red;
             }
-            buttonWrite.Enabled = (deviceCount == 1);
+            updateButtonState(); 
             WriteToolStripMenuItem.Enabled = (deviceCount == 1);
             PoweroffToolStripMenuItem.Enabled = (deviceCount == 1);
             RebootToolStripMenuItem.Enabled = (deviceCount == 1);
@@ -201,102 +201,7 @@ namespace IMEI_Reader
 
         }
 
-        private void textBoxSN_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                if (textBoxIMEI.Enabled && !textBoxIMEI.ReadOnly)
-                {
-                    textBoxIMEI.Focus();
-                }
-                else if (textBoxIMEI2.Enabled && !textBoxIMEI2.ReadOnly)
-                {
-                    textBoxIMEI2.Focus();
-                }
-                else if (textBoxWifi.Enabled && !textBoxWifi.ReadOnly)
-                {
-                    textBoxWifi.Focus();
-                }
-                else if (textBoxBt.Enabled && !textBoxBt.ReadOnly)
-                {
-                    textBoxBt.Focus();
-                }
-                else
-                {
-                    buttonWrite.Focus();
-                }
-
-
-            }
-        }
-
-        private void textBoxIMEI_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                if (textBoxIMEI2.Enabled && !textBoxIMEI2.ReadOnly)
-                {
-                    textBoxIMEI2.Focus();
-                }
-                else if (textBoxWifi.Enabled && !textBoxWifi.ReadOnly)
-                {
-                    textBoxWifi.Focus();
-                }
-                else if (textBoxBt.Enabled && !textBoxBt.ReadOnly)
-                {
-                    textBoxBt.Focus();
-                }
-                else
-                {
-                    buttonWrite.Focus();
-                }
-            }
-        }
-
-        private void textBoxIMEI2_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                if (textBoxWifi.Enabled && !textBoxWifi.ReadOnly)
-                {
-                    textBoxWifi.Focus();
-                }
-                else if (textBoxBt.Enabled && !textBoxBt.ReadOnly)
-                {
-                    textBoxBt.Focus();
-                }
-                else
-                {
-                    buttonWrite.Focus();
-                }
-            }
-        }
-
-        private void textBoxWifi_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                if (textBoxBt.Enabled && !textBoxBt.ReadOnly)
-                {
-                    textBoxBt.Focus();
-                }
-                else
-                {
-                    buttonWrite.Focus();
-                }
-            }
-        }
-
-        private void textBoxBt_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                buttonWrite.Focus();
-            }
-        }
-
-
-
+       
         private void CheckAndStartWrite()
         {
             isWriting = true;
@@ -304,7 +209,7 @@ namespace IMEI_Reader
             int count = Settings.Default.PrintCount;
             if (checkBoxSN.Checked)
             {
-                if (checkBoxScan.Checked)
+                if (comboBoxSN.SelectedIndex==1)
                 {
                     InputDialog dialog = new InputDialog(CodeType.TYPE_SN);
                     if (dialog.ShowDialog() == DialogResult.OK)
@@ -325,7 +230,7 @@ namespace IMEI_Reader
 
             if (checkBoxIMEI.Checked)
             {
-                if (checkBoxScan.Checked)
+                if (comboBoxIMEI.SelectedIndex == 1)
                 {
                     InputDialog dialog = new InputDialog(CodeType.TYPE_IMEI);
                     if (dialog.ShowDialog() == DialogResult.OK)
@@ -345,7 +250,7 @@ namespace IMEI_Reader
             }
             if (checkBoxIMEI2.Checked)
             {
-                if (checkBoxScan.Checked)
+                if (comboBoxIMEI2.SelectedIndex == 1)
                 {
                     InputDialog dialog = new InputDialog(CodeType.TYPE_IMEI2);
                     if (dialog.ShowDialog() == DialogResult.OK)
@@ -366,7 +271,7 @@ namespace IMEI_Reader
             }
             if (checkBoxWifi.Checked)
             {
-                if (checkBoxScan.Checked)
+                if (comboBoxWIFI.SelectedIndex == 1)
                 {
                     InputDialog dialog = new InputDialog(CodeType.TYPE_WIFI_MAC);
                     if (dialog.ShowDialog() == DialogResult.OK)
@@ -388,7 +293,7 @@ namespace IMEI_Reader
 
             if (checkBoxBt.Checked)
             {
-                if (checkBoxScan.Checked)
+                if (comboBoxBT.SelectedIndex == 1)
                 {
                     InputDialog dialog = new InputDialog(CodeType.TYPE_BT_MAC);
                     if (dialog.ShowDialog() == DialogResult.OK)
@@ -462,6 +367,7 @@ namespace IMEI_Reader
         {
             textBoxSN.Enabled = checkBoxSN.Checked;
             textBoxSN.BackColor = checkBoxSN.Checked ? Color.White : System.Drawing.SystemColors.Control;
+            comboBoxSN.Enabled = checkBoxSN.Checked;
             //linkLabelSN.Visible = checkBoxSN.Checked;
             if (!checkBoxSN.Checked)
             {
@@ -469,12 +375,14 @@ namespace IMEI_Reader
             }
             Settings.Default.WriteSNChecked = checkBoxSN.Checked;
             Settings.Default.Save();
+            updateButtonState();
         }
 
         private void checkBoxIMEI_CheckedChanged(object sender, EventArgs e)
         {
             textBoxIMEI.Enabled = checkBoxIMEI.Checked;
             textBoxIMEI.BackColor = checkBoxIMEI.Checked ? Color.White : System.Drawing.SystemColors.Control;
+            comboBoxIMEI.Enabled = checkBoxIMEI.Checked;
             //linkLabelIMEI.Visible = checkBoxIMEI.Checked;
             if (!checkBoxIMEI.Checked)
             {
@@ -482,6 +390,7 @@ namespace IMEI_Reader
             }
             Settings.Default.WriteIMEIChecked = checkBoxIMEI.Checked;
             Settings.Default.Save();
+            updateButtonState();
         }
 
 
@@ -490,12 +399,14 @@ namespace IMEI_Reader
             textBoxIMEI2.Enabled = checkBoxIMEI2.Checked;
             textBoxIMEI2.BackColor = checkBoxIMEI2.Checked ? Color.White : System.Drawing.SystemColors.Control;
             //linkLabelIMEI2.Visible = checkBoxIMEI2.Checked;
+            comboBoxIMEI2.Enabled = checkBoxIMEI2.Checked;
             if (!checkBoxIMEI2.Checked)
             {
                 pictureBoxIMEI2.Visible = false;
             }
             Settings.Default.WriteIMEI2Checked = checkBoxIMEI2.Checked;
             Settings.Default.Save();
+            updateButtonState();
         }
 
 
@@ -503,6 +414,7 @@ namespace IMEI_Reader
         {
             textBoxWifi.Enabled = checkBoxWifi.Checked;
             textBoxWifi.BackColor = checkBoxWifi.Checked ? Color.White : System.Drawing.SystemColors.Control;
+            comboBoxWIFI.Enabled = checkBoxWifi.Checked;
             //linkLabelWifi.Visible = checkBoxWifi.Checked;
             if (!checkBoxWifi.Checked)
             {
@@ -510,6 +422,7 @@ namespace IMEI_Reader
             }
             Settings.Default.WriteWIFIChecked = checkBoxWifi.Checked;
             Settings.Default.Save();
+            updateButtonState();
         }
 
         private void checkBoxBt_CheckedChanged(object sender, EventArgs e)
@@ -517,12 +430,14 @@ namespace IMEI_Reader
             textBoxBt.Enabled = checkBoxBt.Checked;
             textBoxBt.BackColor = checkBoxBt.Checked ? Color.White : System.Drawing.SystemColors.Control;
             //linkLabelBt.Visible = checkBoxBt.Checked;
+            comboBoxBT.Enabled = checkBoxBt.Checked;
             if (!checkBoxBt.Checked)
             {
                 pictureBoxBT.Visible = false;
             }
             Settings.Default.WriteBTChecked = checkBoxBt.Checked;
             Settings.Default.Save();
+            updateButtonState();
         }
 
         private void Writer_FormClosed(object sender, FormClosedEventArgs e)
@@ -575,7 +490,6 @@ namespace IMEI_Reader
             this.checkBoxIMEI2.Enabled = Settings.Default.DevicePlatform == 0;
             checkBoxWifi.Checked = Settings.Default.WriteWIFIChecked;
             checkBoxBt.Checked = Settings.Default.WriteBTChecked;
-            checkBoxScan.Checked = Settings.Default.ScanInput;
             checkBoxPrint.Checked = Settings.Default.PrintAfterWrite;
             checkBoxAutoPoweroff.Checked = Settings.Default.AutoPoweroff;
             AutoPoweroffToolStripMenuItem.Checked = Settings.Default.AutoPoweroff;
@@ -583,6 +497,13 @@ namespace IMEI_Reader
             AutoWriteToolStripMenuItem.Checked = Settings.Default.AutoWrite;
             PrintAfterWriteToolStripMenuItem.Checked = Settings.Default.PrintAfterWrite;
             textBoxPrintCount.Text = Settings.Default.PrintCount.ToString();
+
+            comboBoxSN.SelectedIndex = Settings.Default.InputSNType;
+            comboBoxIMEI.SelectedIndex = Settings.Default.InputIMEIType;
+            comboBoxIMEI2.SelectedIndex = Settings.Default.InputIMEI2Type;
+            comboBoxWIFI.SelectedIndex = Settings.Default.InputWIFIType;
+            comboBoxBT.SelectedIndex = Settings.Default.InputBTType;
+
             pictureBoxSN.Tag = CodeType.TYPE_SN;
             pictureBoxIMEI.Tag = CodeType.TYPE_IMEI;
             pictureBoxIMEI2.Tag = CodeType.TYPE_IMEI2;
@@ -594,6 +515,32 @@ namespace IMEI_Reader
             updateInputBox();
         }
 
+        private void updateButtonState()
+        {
+            bool enabled = true;// (deviceCount == 1);
+            if (textBoxSN.Enabled&&comboBoxSN.SelectedIndex!=1)
+            {
+                enabled = enabled && Convert.ToBoolean(textBoxSN.Tag);
+            }
+            if (textBoxIMEI.Enabled&&comboBoxIMEI.SelectedIndex!=1)
+            {
+                enabled = enabled && Convert.ToBoolean(textBoxIMEI.Tag);
+            }
+            if (textBoxIMEI2.Enabled&&comboBoxIMEI2.SelectedIndex!=1)
+            {
+                enabled = enabled && Convert.ToBoolean(textBoxIMEI2.Tag);
+            }
+            if (textBoxWifi.Enabled&&comboBoxWIFI.SelectedIndex!=1)
+            {
+                enabled = enabled && Convert.ToBoolean(textBoxWifi.Tag);
+            }
+            if (textBoxBt.Enabled&&comboBoxBT.SelectedIndex!=1)
+            {
+                enabled = enabled && Convert.ToBoolean(textBoxBt.Tag);
+            }
+            buttonWrite.Enabled = enabled;
+        }
+
         private void textBoxSN_TextChanged(object sender, EventArgs e)
         {
             bool valid = textBoxSN.Text.Trim().Length == 0 || Util.IsValidSN(textBoxSN.Text.Trim());
@@ -601,6 +548,8 @@ namespace IMEI_Reader
             textBoxSN.BackColor = valid ? Color.White : Color.Red;
 
             textBoxSN.ForeColor = valid ? System.Drawing.Color.RoyalBlue : Color.Silver;
+            textBoxSN.Tag = valid;
+            updateButtonState();
         }
 
         private void textBoxSN_KeyPress(object sender, KeyPressEventArgs e)
@@ -622,6 +571,8 @@ namespace IMEI_Reader
             textBox.BackColor = valid ? Color.White : Color.Red;
 
             textBox.ForeColor = valid ? System.Drawing.Color.RoyalBlue : Color.Silver;
+            textBox.Tag = valid;
+            updateButtonState();
         }
 
         private void textBoxMac_TextChanged(object sender, EventArgs e)
@@ -642,7 +593,8 @@ namespace IMEI_Reader
             textBox.BackColor = valid ? Color.White : Color.Red;
 
             textBox.ForeColor = valid ? System.Drawing.Color.RoyalBlue : Color.Silver;
-
+            textBox.Tag = valid;
+            updateButtonState();
         }
 
         private void textBoxWifi_KeyPress(object sender, KeyPressEventArgs e)
@@ -850,11 +802,49 @@ namespace IMEI_Reader
             }
         }
 
-        private void checkBoxScan_CheckedChanged(object sender, EventArgs e)
+        private void comboBoxSN_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Settings.Default.ScanInput = checkBoxScan.Checked;
+            textBoxSN.Enabled = comboBoxSN.SelectedIndex != 1;
+            textBoxSN.BackColor = comboBoxSN.SelectedIndex != 1 ? Color.White : System.Drawing.SystemColors.Control;
+            Settings.Default.InputSNType = comboBoxSN.SelectedIndex;
             Settings.Default.Save();
-            updateInputBox();
+            updateButtonState();
+        }
+
+        private void comboBoxIMEI_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            textBoxIMEI.ReadOnly = comboBoxIMEI.SelectedIndex == 1;
+            textBoxIMEI.BackColor = comboBoxIMEI.SelectedIndex != 1 ? Color.White : System.Drawing.SystemColors.Control;
+            Settings.Default.InputIMEIType = comboBoxIMEI.SelectedIndex;
+            Settings.Default.Save();
+            updateButtonState();
+        }
+
+        private void comboBoxIMEI2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            textBoxIMEI2.ReadOnly = comboBoxIMEI2.SelectedIndex == 1;
+            textBoxIMEI2.BackColor = comboBoxIMEI2.SelectedIndex != 1 ? Color.White : System.Drawing.SystemColors.Control;
+            Settings.Default.InputIMEI2Type = comboBoxIMEI2.SelectedIndex;
+            Settings.Default.Save();
+            updateButtonState();
+        }
+
+        private void comboBoxWIFI_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            textBoxWifi.ReadOnly = comboBoxWIFI.SelectedIndex == 1;
+            textBoxWifi.BackColor = comboBoxWIFI.SelectedIndex != 1 ? Color.White : System.Drawing.SystemColors.Control;
+            Settings.Default.InputWIFIType = comboBoxWIFI.SelectedIndex;
+            Settings.Default.Save();
+            updateButtonState();
+        }
+
+        private void comboBoxBT_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            textBoxBt.ReadOnly = comboBoxBT.SelectedIndex == 1;
+            textBoxBt.BackColor = comboBoxBT.SelectedIndex != 1 ? Color.White : System.Drawing.SystemColors.Control;
+            Settings.Default.InputBTType = comboBoxBT.SelectedIndex;
+            Settings.Default.Save();
+            updateButtonState();
         }
 
 
